@@ -1,5 +1,7 @@
-import { router } from "express";
-import { getGoals, setGoal, updateGoal, deleteGoal } from "../controllers/goalController";
+const express = require('express');
+const router = express.Router();
+const { getGoals, setGoal, updateGoal, deleteGoal } = require('../controllers/goalController');
+
 
 router.get('/', getGoals);
 
@@ -11,4 +13,4 @@ router.delete('/:id', deleteGoal);
 
 
 
-export default router;
+module.exports = router;

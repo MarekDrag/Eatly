@@ -2,7 +2,7 @@
   "name": "eatly",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
+  "type": "commonjs",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",
@@ -10,6 +10,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
+    "express-async-handler": "^1.2.0",
     "mongoose": "^6.2.8",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
