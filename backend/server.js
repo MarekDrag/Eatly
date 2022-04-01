@@ -20,14 +20,3 @@ app.use(errorHandler);
 app.listen(port, () => console.log(`Server started on port: ${port}`));
 
 
-//test
-async function main(){
-
-    const dish = new Dish({
-        text: 'hej'
-    })
-
-    await dish.save();
-};
-
-main();

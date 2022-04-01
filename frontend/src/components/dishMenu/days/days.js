@@ -1,10 +1,9 @@
 import React from 'react';
 import style from './days.module.css';
 
-function Days(){
-    const dates = ["21.03", "22.03", "23.03", "24.03", "25.03", "26.03", "27.03"];
+function Days(props){
     
-    
+    const dates = [...props.dates];
 
     function Day(props){
         const dishes = ['','Ogórkowa', 'Pomidorowa', 'Placki']
@@ -31,7 +30,7 @@ function Days(){
 
             </div>
     )}
-
+    
     return(
         <>
             <Day day='Poniedziałek' date={dates[0]}/>

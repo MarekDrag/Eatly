@@ -1,5 +1,5 @@
 import React from 'react';
-import style from './site-navbar.module.css';
+import style from './siteNav.module.css';
 
 function SiteNavbar(){
     

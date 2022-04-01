@@ -1,19 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PlannerSettings from './planner-settings/planner-settings';
-import SiteNavbar from '../site-navbar/site-navbar';
+import SiteNavbar from '../siteNav/siteNav';
 import style from './dishMenu.module.css';
 import Days from './days/days';
 
 function DishMenu(){
-    
+    const [dates, setDates] = useState('');
+    const updateDates = (data) => {
+        setDates(data);
+      };
     
     return(
         <div className={style.container}>
             <SiteNavbar/>
             <section className={style.dishMenuContainer}>
-                <PlannerSettings/>
+                <PlannerSettings update={updateDates}/>
                 <Headers/>
-                <Days/>
+                <Days dates={dates}/>
             </section>
         </div>
     );

@@ -1,0 +1,48 @@
+.calendar{
+    position: relative;
+    top: 230px;
+    width: 300px;
+    height: fit-content;
+    color: white;
+}
+
+.header{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    background: #F0BB62;
+}
+
+.weekdays_name{
+    display: inline-block;
+    width: calc(100%/7);
+    border: 1px solid black;
+    background: #064635;
+    text-align: center;
+}
+
+.week:hover > .day{
+    background: #064635;
+}
+
+.previous, .next {
+    margin: 0 20px ;
+    cursor: pointer;
+    font-size: 1.5em;
+}
+
+.day{
+    display: inline-block;
+    width: calc(100%/7);
+    height: 44px;
+    border: 1px solid black;
+    text-align: center; 
+    background: #519259;
+}
+
+.before{
+    background: #a6c9aa;
+    height: 100%;
+    color: grey;
+}
