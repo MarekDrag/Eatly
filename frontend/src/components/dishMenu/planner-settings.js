@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import Calendar from '../../../UI/calendar/calendar';
+import Calendar from '../../UI/calendar/calendar';
 import styled from 'styled-components';
 
 export default function PlannerSettings(props){

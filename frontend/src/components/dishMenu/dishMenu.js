@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import PlannerSettings from './planner-settings/planner-settings';
+import PlannerSettings from './planner-settings';
 import SiteNavbar from '../siteNav/siteNav';
 import styled from 'styled-components';
-import Days from './days/days';
+import Menu from './menu';
 
 export default function DishMenu(){
     const [dates, setDates] = useState('');
@@ -15,27 +15,12 @@ export default function DishMenu(){
             <SiteNavbar/>
             <Section>
                 <PlannerSettings update={updateDates}/>
-                <Headers/>
-                <Days dates={dates}/>
+                <Menu dates={dates}/>
             </Section>
         </PageContainer>
     );
-
-
-    function Headers(){
-        const headers = ["Plan tygodnia", "Śniadanie", "II Śniadanie", "Obiad", "Deser", "Kolacja", "Kalorie"];
-
-        return(
-            <RowContainer>
-                {headers.map(header => (
-                <Header key={header} >{header}</Header>))}
-            </RowContainer>
-    )}
-
     
 };
-
-
 
 
 const PageContainer = styled.div`
@@ -51,16 +36,6 @@ const Section = styled.section`
     width: 100%;
 `;
 
-const RowContainer = styled.div`
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-`;
 
-const Header = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    height: 50px;
-    border: 1px solid black;
-`;
+
+
