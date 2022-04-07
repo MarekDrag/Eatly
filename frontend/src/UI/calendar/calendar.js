@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import style from './calendar.module.css';
-import moment, { weekdays } from 'moment';
+import moment from 'moment';
 import buildCalendar from './build/build';
 
 export default function Calendar(props){

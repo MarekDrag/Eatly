@@ -1,23 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from '../../axios';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function Day(props){
-    let dishes = [];
+    const [dishes, setDishes] = useState([''])
 
-    // const fetchDishes = async () => {
-    //     const response = await axios.get('/api/dishes')
-    //         .then(res => console.log(res.data))
-    //     response.map(dish => {
-    //         dishes.push(dish.name)
-    //     })
-    //     console.log();
-    // }
+    const fetchDishes = async () => {
+        try {
+            const res = await axios.get('/api/dishes');
+            let newDish = [''];
+            for (const key in res.data) {
+                newDish.push(res.data[key].name)
+            }
+            setDishes(newDish)
+        } catch (err) {
+            console.log(err.response);
+        }
+    }
     
-    // useEffect(() => {
-    //     fetchDishes();
-    // }, [])
-    
+    useEffect(() => {
+        fetchDishes();
+    }, [])
+    // console.log(dishes);
 
     const nameOfMeals = ["Śniadanie", "II Śniadanie", "Obiad", "Deser", "Kolacja"];
     const numberOfMeals = [0,1,2,3,4];
@@ -29,10 +34,10 @@ export default function Day(props){
                 <DayDate>{props.date}</DayDate>
             </DayBox>
             {numberOfMeals.map(meal => (
-                <Dish>
+                <Dish key={uuidv4()} >
                     {/* return select with all dishes */}
                     <Select id={`${props.day} ${nameOfMeals[meal]}`}>
-                        {dishes.map(dish =>( <option>{dish}</option> ))}
+                        {dishes.map(dish =>( <option  key={uuidv4()}>{dish}</option> ))}
                     </Select>
                 </Dish>
             ))}
