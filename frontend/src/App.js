@@ -1,7 +1,7 @@
 import style from './App.module.css';
 import Header from './components/header/header';
-import Login from './components/login/login';
-import Register from './components/register/register';
+import Login from './pages/login';
+import Register from './pages/register';
 import DishMenu from './components/dishMenu/dishMenu';
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Footer from './components/footer/footer';

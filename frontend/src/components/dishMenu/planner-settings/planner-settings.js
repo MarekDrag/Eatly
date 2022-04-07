@@ -1,21 +1,39 @@
 import {useState} from 'react';
 import Calendar from '../../../UI/calendar/calendar';
-import style from './planner-settings.module.css';
+import styled from 'styled-components';
 
-function PlannerSettings(props){
+export default function PlannerSettings(props){
     const [isOpen, setIsOpen] = useState(false);
    
     return(
-        <div className={style.container}>
-            <button className={style.text}>Edytuj</button>
-            <button className={style.text}>Składniki</button>
-            <button className={style.text}>Przepis</button>
-            <button onClick={() => setIsOpen(!isOpen)} className={style.text}>Kalendarz</button>
+        <Container>
+            <Button>Edytuj</Button>
+            <Button>Składniki</Button>
+            <Button>Przepis</Button>
+            <Button onClick={() => setIsOpen(!isOpen)}>Kalendarz</Button>
             {isOpen === true ?
                 <Calendar update={props.update} />
                 : null}
-        </div>
+        </Container>
     );
 };
 
-export default PlannerSettings;
+const Container = styled.div`
+    display: flex;
+    align-items: flex-end;
+    width: 100%;
+    height: 40px;
+`;
+    
+const Button = styled.button`
+    background: rgb(18, 153, 18);;
+    color: white;
+    border: none;
+    font-weight: 600;
+    border-radius:5px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    padding: 5px;
+    cursor: pointer;
+`;
+

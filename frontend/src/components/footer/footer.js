@@ -1,14 +1,23 @@
 import React from 'react';
-import style from './footer.module.css';
+import styled from 'styled-components';
 
-function Footer(){
+export default function Footer(){
     return(
-        <footer className={style.footer}>
-            <div className={style.copyrights}>
+        <FooterWrapper>
+            <div>
                 Copyright © 2022 Eatly
             </div>
-        </footer>
+        </FooterWrapper>
     )
 }
 
-export default Footer;
+const FooterWrapper = styled.footer`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100px;
+    background: rgb(90, 89, 89);
+    color: white;
+`;
+    

@@ -1,6 +1,5 @@
-import style from './layout.module.css';
 
-function Layout(props){
+export default function Layout(props){
     return(
         <div>
             <div>{props.header}</div>
@@ -9,5 +8,3 @@ function Layout(props){
         </div>
     )
 }
-
-export default Layout;

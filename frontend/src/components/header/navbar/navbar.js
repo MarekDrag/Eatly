@@ -1,18 +1,36 @@
 import React from 'react';
-import style from './navbar.module.css';
+import styled from 'styled-components';
 import { Link } from "react-router-dom";
 
-function Navbar(){
+export default function Navbar(){
     return(
         <nav>
-            <ul className={style.nav__container}>
-                <li className={style.nav__listItem}><Link to="/logowanie">Zaloguj się</Link></li>
-                <li className={style.nav__listItem}><Link to="/rejestracja">Zarejestruj się</Link></li>
-                <li className={style.nav__listItem}><Link to="#">Ustawienia</Link></li>
-                <li className={style.nav__listItem}><Link to="#">FAQ</Link></li>
-            </ul>
+            <List>
+                <Li><Link to="/logowanie">Zaloguj się</Link></Li>
+                <Li><Link to="/rejestracja">Zarejestruj się</Link></Li>
+                <Li><Link to="#">Ustawienia</Link></Li>
+                <Li><Link to="#">FAQ</Link></Li>
+            </List>
         </nav>
     );
 };
 
-export default Navbar;
+
+
+const List = styled.ul`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    height: 70px;
+`;
+    
+const Li = styled.li`
+    margin-right: 30px;
+    list-style: none;
+    a{
+        color: white;
+        text-decoration: none;
+    }
+`;
+  
