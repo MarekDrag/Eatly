@@ -6,12 +6,12 @@ const dishSchema = mongoose.Schema({
         type: String,
         required: [true, 'Please add a name']
     },
-    ingredients: {
+    ingredient: {
         type: Array,
         required: [true, 'Please add a ingredients']
     },
     recipe: {
-        type: Object,
+        type: String,
         required: [true, 'Please add a recipe']
     },
     description: {

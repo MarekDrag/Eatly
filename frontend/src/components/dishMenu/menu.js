@@ -1,9 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import Day from './day';
+
 
 export default function Menu(props){
     const headers = ["Plan tygodnia", "Śniadanie", "II Śniadanie", "Obiad", "Deser", "Kolacja", "Kalorie"];
     const dates = [...props.dates];
+    
 
     return(
         <> 
@@ -24,31 +27,6 @@ export default function Menu(props){
 };
 
 
-function Day(props){
-    const dishes = ['','Ogórkowa', 'Pomidorowa', 'Placki']
-    const nameOfMeals = ["Śniadanie", "II Śniadanie", "Obiad", "Deser", "Kolacja"];
-    const numberOfMeals = [0,1,2,3,4];
-    return(
-        <RowContainer>
-            <DayBox>
-                <DayText>{props.day}</DayText>
-                <DayDate>{props.date}</DayDate>
-            </DayBox>
-            {numberOfMeals.map(meal => (
-                <Dish>
-                    {/* return select with all dishes */}
-                    <Select id={`${props.day} ${nameOfMeals[meal]}`}>
-                        {dishes.map(dish =>( <option>{dish}</option> ))}
-                    </Select>
-                </Dish>
-            ))}
-            
-            <Calories></Calories>
-
-        </RowContainer>
-)}
-
-
 const RowContainer = styled.div`
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -63,50 +41,7 @@ const Header = styled.div`
     border: 1px solid black;
 `;
 
-const DayBox = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    height: 50px;
-    border: 1px solid black;
-`;
 
-const DayText = styled.span`
-    width: 100%;
-    text-align: center;
-`;
 
-const DayDate = styled.span`
-    width: 100%;
-    text-align: center;
-    font-size: 0.75em;
-`;
-
-const Dish = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50px;
-    border: 1px solid black;
-`;
-
-const Select = styled.select`
-    width: 100%;
-    height: 100%;
-    appearance: none;
-    border:none;
-    option{
-    text-align: center;
-    }
-`;
-
-const Calories = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50px;
-    border: 1px solid black;
-`;
 
 

@@ -2,14 +2,19 @@ import React, { useRef, useState } from 'react';
 import { FiPlusCircle } from 'react-icons/fi';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
+import axios from '../axios';
+
 
 export default function AddDish(){
-    
-    const [ingredient, setIngredient] = useState([])
-    const [ingredientList, setIngredientList] = useState(null)
+    const [name, setName] = useState('');
+    const [recipe, setRecipe] = useState('');
+    const [description, setDescription] = useState('');
+
+    const [ingredient, setIngredient] = useState([]);
+    const [ingredientList, setIngredientList] = useState(null);
     const ingredientInput = useRef('');
 
-    function AddIngredient(){
+    function IngredientsList(){
         const value = ingredientInput.current.value;
         
         if(value){
@@ -27,11 +32,24 @@ export default function AddDish(){
         return ingredientList
     }
 
+    function submit(e){
+        e.preventDefault();
+        const dish = {
+            name,
+            ingredient,
+            recipe,
+            description
+        }
+
+        axios.post('/api/dishes', dish)
+        .then(res => console.log(res.data));
+    }
+
     return(
         <PageContainer>
             <Container>
-                <Title>Dodaj posiłek</Title>
-                <Form>
+                <Title>Stwórz przepis</Title>
+                <Form onSubmit={submit}>
 
                     <FormItem>
                         <Label htmlFor='name'>Nazwa posiłku:</Label>
@@ -39,6 +57,8 @@ export default function AddDish(){
                         type='text' 
                         id='name' 
                         name='name' 
+                        value={name}
+                        onChange={e => setName(e.target.value)}
                         placeholder='nazwa' />
                     </FormItem>
                     
@@ -51,8 +71,8 @@ export default function AddDish(){
                             id='ingredients' 
                             name='ingredients' 
                             placeholder='składnik'/>
-                            <PlusButton onClick={() => AddIngredient()}/>
-                            <AddIngredient/>
+                            <PlusButton onClick={() => IngredientsList()}/>
+                            <IngredientsList/>
                         </Ingredients>
                     </FormItem>
                     
@@ -62,6 +82,8 @@ export default function AddDish(){
                         type='text' 
                         id='recipe' 
                         name='recipe' 
+                        value={recipe}
+                        onChange={e => setRecipe(e.target.value)}
                         placeholder='przepis' />
                     </FormItem>
                     
@@ -71,11 +93,15 @@ export default function AddDish(){
                         type='text' 
                         id='description' 
                         name='description' 
+                        value={description}
+                        onChange={e => setDescription(e.target.value)}
                         placeholder='opis'/>
                     </FormItem>
                     
-                    <SubmitButton type='submit' value='Zapisz'/>
-                
+                    <SubmitButton 
+                    type='submit' 
+                    value='Stwórz przepis'
+                    />
                 </Form>
             </Container>
         </PageContainer>

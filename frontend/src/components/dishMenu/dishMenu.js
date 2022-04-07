@@ -11,19 +11,19 @@ export default function DishMenu(){
       };
     
     return(
-        <PageContainer>
+        <Container>
             <SiteNavbar/>
             <Section>
                 <PlannerSettings update={updateDates}/>
                 <Menu dates={dates}/>
             </Section>
-        </PageContainer>
+        </Container>
     );
     
 };
 
 
-const PageContainer = styled.div`
+const Container = styled.div`
     display: flex;
     width: 100%;
     height: calc(100vh - 70px);
