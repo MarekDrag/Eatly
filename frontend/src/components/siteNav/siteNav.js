@@ -1,6 +1,6 @@
 import React from 'react';
 import style from './siteNav.module.css';
-
+import { Link } from 'react-router-dom'; 
 function SiteNavbar(){
     
     return(
@@ -14,7 +14,7 @@ function SiteNavbar(){
                 <NavItem href='#' text="Zobacz"/>
             </NavList>
             <NavList summary="Potrawy">
-                <NavItem href='#' text="Dodaj potrawe"/>
+                <NavItem href='/dodaj-potrawe' text="Dodaj potrawe"/>
                 <NavItem href='#' text="Zobacz"/>
             </NavList>
             <NavList summary="Alergeny">
@@ -40,7 +40,7 @@ function SiteNavbar(){
     function NavItem(props){
         return(
             <li className={style.listItem}>
-                <a href={props.href}>{props.text}</a>
+                <Link to={props.href}>{props.text}</Link>
             </li>
         )
     }

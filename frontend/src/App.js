@@ -6,6 +6,7 @@ import DishMenu from './components/dishMenu/dishMenu';
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Footer from './components/footer/footer';
 import Layout from './components/layout/layout';
+import AddDish from './pages/addDish';
 
 
 function App(){
@@ -20,6 +21,7 @@ function App(){
       <Route path="/" element={<DishMenu/>}/>
       <Route path='/logowanie' element={<Login/>}/>
       <Route path='/rejestracja' element={<Register/>}/>
+      <Route path='/dodaj-potrawe' element={<AddDish/>}/>
     </Routes>
   )
   const footer = (

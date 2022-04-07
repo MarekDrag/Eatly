@@ -3,7 +3,7 @@ import Calendar from '../../../UI/calendar/calendar';
 import style from './planner-settings.module.css';
 
 function PlannerSettings(props){
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
    
     return(
         <div className={style.container}>

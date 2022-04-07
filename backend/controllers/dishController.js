@@ -16,7 +16,7 @@ const getDishes = asyncHandler(async (req, res) => {
 // @access Private
 const setDish = asyncHandler(async (req, res) => {
     if(!req.body.text) {
-        res.stats(400).json({ message: 'please add a text field'})
+        res.status(400).json({ message: 'please add a text field'})
         throw new Error('Please add a text field')
     }
 

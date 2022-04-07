@@ -2,7 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv').config();
 const errorHandler = require("./middleware/errorMiddleware");
 const connectDB = require("./config/db");
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 const Dish = require('./models/dishModel');
 
 connectDB();
@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 
-app.use('/api/dish', require('./routes/dishRoutes'));
+app.use('/api/dishes', require('./routes/dishRoutes'));
 
 app.use(errorHandler);
 

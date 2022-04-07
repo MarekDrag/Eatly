@@ -14,10 +14,6 @@ const dishSchema = mongoose.Schema({
         type: Object,
         required: [true, 'Please add a recipe']
     },
-    calories : {
-        type: Number,
-        required: [true, 'Please add a calories']
-    },
     description: {
         type: String,
         required: [true, 'Please add a description']
