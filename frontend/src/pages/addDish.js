@@ -9,6 +9,14 @@ export default function AddDish(){
     const [name, setName] = useState('');
     const [recipe, setRecipe] = useState('');
     const [description, setDescription] = useState('');
+    const [slug, setSlug] = useState('');
+    const [nutrition, setNutrition] = useState('');
+    const [num_servings, setNumServings] = useState('');
+    const [cooking_time, setCookingTime] = useState('');
+    const [topics, setTopics] = useState('');
+    const [img_url, setImgUrl] = useState('');
+    const [img_alt, setImgAlt] = useState('');
+
 
     const [ingredient, setIngredient] = useState([]);
     const [ingredientList, setIngredientList] = useState(null);
@@ -36,9 +44,16 @@ export default function AddDish(){
         e.preventDefault();
         const dish = {
             name,
+            slug,
             ingredient,
             recipe,
-            description
+            description,
+            nutrition,
+            num_servings,
+            cooking_time,
+            topics,
+            img_url,
+            img_alt
         }
 
         axios.post('/api/dishes', dish)
@@ -96,6 +111,72 @@ export default function AddDish(){
                         value={description}
                         onChange={e => setDescription(e.target.value)}
                         placeholder='opis'/>
+                    </FormItem>
+
+                    <FormItem>
+                        <Label htmlFor='nutrition'>Składniki odżywcze:</Label>
+                        <Input 
+                        type='text' 
+                        id='nutrition' 
+                        name='nutrition' 
+                        value={nutrition}
+                        onChange={e => setNutrition(e.target.value)}
+                        placeholder='Składniki odżywcze'/>
+                    </FormItem>
+
+                    <FormItem>
+                        <Label htmlFor='num_servings'>Liczba posiłków:</Label>
+                        <Input 
+                        type='number' 
+                        id='num_servings' 
+                        name='num_servings' 
+                        value={num_servings}
+                        onChange={e => setNumServings(e.target.value)}
+                        placeholder='Liczba posiłków'/>
+                    </FormItem>
+
+                    <FormItem>
+                        <Label htmlFor='cooking_time'>Czas gotowania:</Label>
+                        <Input 
+                        type='number' 
+                        id='cooking_time' 
+                        name='cooking_time' 
+                        value={cooking_time}
+                        onChange={e => setCookingTime(e.target.value)}
+                        placeholder='Czas gotowania'/>
+                    </FormItem>
+                    
+                    <FormItem>
+                        <Label htmlFor='topics'>Tematy gotowania:</Label>
+                        <Input 
+                        type='text' 
+                        id='topics' 
+                        name='topics' 
+                        value={topics}
+                        onChange={e => setTopics(e.target.value)}
+                        placeholder='Tematy gotowania'/>
+                    </FormItem>
+
+                    <FormItem>
+                        <Label htmlFor='img_url'>Zdjęcie:</Label>
+                        <Input 
+                        type='text' 
+                        id='img_url' 
+                        name='img_url' 
+                        value={img_url}
+                        onChange={e => setImgUrl(e.target.value)}
+                        placeholder='Zdjęcie'/>
+                    </FormItem>
+
+                    <FormItem>
+                        <Label htmlFor='img_alt'>Opis zdjęcia:</Label>
+                        <Input 
+                        type='text' 
+                        id='img_alt' 
+                        name='img_alt' 
+                        value={img_alt}
+                        onChange={e => setImgAlt(e.target.value)}
+                        placeholder='Opis zdjęcia'/>
                     </FormItem>
                     
                     <SubmitButton 

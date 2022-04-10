@@ -4,7 +4,7 @@ import SiteNavbar from '../siteNav/siteNav';
 import styled from 'styled-components';
 import Menu from './menu';
 
-export default function DishMenu(){
+export default function MealPlanner(){
     const [dates, setDates] = useState('');
     const updateDates = (data) => {
         setDates(data);

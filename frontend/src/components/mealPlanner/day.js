@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from '../../axios';
 import { v4 as uuidv4 } from 'uuid';
+import fetchDishes from '../../tastyApi/tastyApi'
 
 export default function Day(props){
     const [dishes, setDishes] = useState([''])
-
+    
     const fetchDishes = async () => {
         try {
             const res = await axios.get('/api/dishes');
@@ -18,11 +19,11 @@ export default function Day(props){
             console.log(err.response);
         }
     }
-    
+       
     useEffect(() => {
-        fetchDishes();
+        fetchDishes()
     }, [])
-    // console.log(dishes);
+    console.log(dishes);
 
     const nameOfMeals = ["Śniadanie", "II Śniadanie", "Obiad", "Deser", "Kolacja"];
     const numberOfMeals = [0,1,2,3,4];

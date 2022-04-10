@@ -12,10 +12,12 @@
   "author": "Marek Drąg",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.26.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "express-async-handler": "^1.2.0",
+    "jsdom": "^19.0.0",
     "mongoose": "^6.2.9"
   },
   "devDependencies": {

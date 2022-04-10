@@ -35,7 +35,6 @@ const PageContainer = styled.div`
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: calc(100vh - 70px);
 `;
     
 const Container = styled.div`
@@ -49,6 +48,7 @@ const Container = styled.div`
     width: 50%;
     min-width: 300px;
     height: 600px;
+    margin: 10vh 0 30vh 0;
 `;
 
 const Title = styled.h2`

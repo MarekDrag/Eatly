@@ -21,15 +21,30 @@ const setDish = asyncHandler(async (req, res) => {
     }
     
     const name = req.body.name;
+    const slug = req.body.slug;
     const ingredient = req.body.ingredient;
     const recipe = req.body.recipe;
     const description = req.body.description;
+    const nutrition = req.body.nutrition;
+    const num_servings = req.body.num_servings;
+    const cooking_time = req.body.cooking_time;
+    const topics = req.body.topics;
+    const img_url = req.body.img_url;
+    const img_alt = req.body.img_alt;
+            
     
     const newDish = new Dish({
-        name,
-        ingredient,
-        recipe,
-        description
+            name,
+            slug,
+            ingredient,
+            recipe,
+            description,
+            nutrition,
+            num_servings,
+            cooking_time,
+            topics,
+            img_url,
+            img_alt
     });
 
     newDish.save()

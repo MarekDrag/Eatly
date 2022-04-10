@@ -21,7 +21,7 @@ const List = styled.ul`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 300px;
+    width: 400px;
     height: 70px;
 `;
     

@@ -4,7 +4,6 @@ const cors = require('cors');
 const errorHandler = require("./middleware/errorMiddleware");
 const connectDB = require("./config/db");
 const port = process.env.PORT || 5000;
-const Dish = require('./models/dishModel');
 
 connectDB();
 
@@ -21,5 +20,3 @@ app.use('/api/dishes', require('./routes/dishRoutes'));
 app.use(errorHandler);
 
 app.listen(port, () => console.log(`Server started on port: ${port}`));
-
-
