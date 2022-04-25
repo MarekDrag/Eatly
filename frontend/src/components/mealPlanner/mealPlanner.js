@@ -35,7 +35,3 @@ const Section = styled.section`
     margin-right: 10px;
     width: 100%;
 `;
-
-
-
-

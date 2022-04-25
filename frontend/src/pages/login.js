@@ -1,67 +1,70 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import axios from 'axios';
+import axios from '../axios';
+import AuthContext from '../contexts/authContext';
 
 export default function Login(){
-    const fetchDishes = async() => {
-        const options = {
-            method: 'GET',
-            url: 'https://tasty.p.rapidapi.com/recipes/list',
-            params: {from: '0', size: '1', tags: 'under_30_minutes'},
-            headers: {
-              'X-RapidAPI-Host': 'tasty.p.rapidapi.com',
-              'X-RapidAPI-Key': 'fd365bc74amshc7de2402ecd9e44p13b0eejsn7b20538b4486'
-            }
-        };
-    
-        const res = await axios.request(options);
+    const [formValues, setFormValues] = useState({ email: '', password: ''});
+    const [userValid, setUserValid] = useState(false);
+    const [errMsg, setErrMsG] = useState(true);
+    const {auth, setAuth} = useContext(AuthContext);
+    const navigate = useNavigate();
+
         
-        let newDishes = [];
-        for(const key in res.data.results){
-            const dish = res.data.results[key]
-    
-            const name = dish.name;
-            const slug = dish.slug;
-            const ingredient = dish.sections;
-            const recipe = dish.instructions;
-            const description = dish.description;
-            const nutrition = dish.nutrition;
-            const num_servings = dish.num_servings;
-            const cooking_time = dish.total_time_minutes;
-            const topics = dish.topics;
-            const img_url = dish.thumbnail_url;
-            const img_alt = dish.thumbnail_alt_text;
-    
-            newDishes.push({
-                name,
-                slug,
-                ingredient,
-                recipe,
-                description,
-                nutrition,
-                num_servings,
-                cooking_time,
-                topics,
-                img_url,
-                img_alt
+    async function submit(e){
+        e.preventDefault();
+        await axios.get('/api/users')
+            .then(res => {
+                let response = res.data;
+                for(const key in response){
+                    if(formValues.email === response[key].email && formValues.password === response[key].password){
+                        setUserValid(true)
+                        setErrMsG(true)
+                        break;
+                    }
+                    setErrMsG(false)
+                }
             })
+        if(userValid){
+            setAuth(!auth)
+            localStorage.setItem('email', formValues.email);
+            navigate('/');
         }
-        return newDishes;
     }
+
+    function handleChange(e){
+        const { name, value } = e.target;
+        setFormValues({...formValues, [name]: value});
+    }
+
     return(
         <PageContainer>
             <Container>
                 <Title>Logowanie</Title>
-                <Form>
+                <Form onSubmit={submit}>
                     <FormItem>
                         <Label htmlFor='email'>E-mail</Label>
-                        <Input id='email' name='email' type='email'/>
+                        <Input 
+                            id='email' 
+                            name='email' 
+                            type='email'
+                            value={formValues.email}
+                            onChange={handleChange}
+                            />
                     </FormItem>
                     <FormItem>
                         <Label htmlFor='password'>Hasło</Label>
-                        <Input type='password' id='password' name='password'/>
+                        <Input 
+                            type='password' 
+                            id='password' 
+                            name='password'
+                            value={formValues.password}
+                            onChange={handleChange}
+                            />
                     </FormItem>
-                    <Submit type='submit' value='Zaloguj się'/>
+                    <Error>{errMsg ? '' : "Email lub Hasło jest nieprawidłowe"}</Error>
+                    <Submit type='submit'>Zaloguj się</Submit>
                 </Form>
             </Container>
         </PageContainer>
@@ -124,7 +127,7 @@ const Input = styled.input`
     border: 1px solid #767676;
 `;
 
-const Submit = styled.input`
+const Submit = styled.button`
     font-size: 1em;
     font-weight: 600;
     background: #129912;
@@ -136,6 +139,12 @@ const Submit = styled.input`
     &:hover{
         background: #4aaf4a;
     }   
+`;
+
+const Error = styled.p`
+    margin-top:1px;
+    color: #ff2929;
+    font-weight:600;
 `;
 
 
