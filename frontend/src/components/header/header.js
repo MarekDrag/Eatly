@@ -18,7 +18,8 @@ const HeaderWrapper = styled.header`
     display: flex;
     width: 100%;
     height: 70px;
-    background: rgb(18, 153, 18);
+    background: #F5F7FA;
+    box-shadow: 0 0 1em;
 `;
     
 const Logo = styled.div`
@@ -29,7 +30,7 @@ const Logo = styled.div`
         width: 150px;
         font-size: 3em;
         font-weight: 800;
-        color: white;
+        color: #30b353;
         text-decoration: none;
     }
 `;

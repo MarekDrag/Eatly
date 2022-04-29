@@ -43,7 +43,7 @@ const updateUser = async (req, res) => {
 
     if(!user) {
         res.status(400);
-        throw new Error('Dishes not found');
+        throw new Error('User not found');
     };
 
     const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {

@@ -1,21 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom'; 
+import Calendar from '../../UI/calendar/calendar';
 
 export default function SiteNavbar(){
-    
+    const [isOpen, setIsOpen] = useState(false);
+
     return(
         <Aside>
-            <NavList summary="Plan Tygodnia">
+            <Button onClick={() => setIsOpen(!isOpen)}>Calendar</Button>
+            {isOpen ?
+                <Calendar/>
+                : null}
+            <NavList summary="Meal Planner">
                 <NavItem href='#' text="Edytuj"/>
                 <NavItem href='#' text="Zobacz"/>
             </NavList>
-            <NavList summary="Lista zakupów">
+            <NavList summary="Shopping list">
                 <NavItem href='#' text="Edytuj"/>
                 <NavItem href='#' text="Zobacz"/>
             </NavList>
-            <NavList summary="Potrawy">
-                <NavItem href='/dodaj-potrawe' text="Dodaj potrawe"/>
+            <NavList summary="Recipes">
+                <NavItem href='/add-recipe' text="Add Recipe"/>
                 <NavItem href='#' text="Zobacz"/>
             </NavList>
             <NavList summary="Alergeny">
@@ -71,17 +77,15 @@ const Summary = styled.summary `
     justify-content: center;
     width: 100%;
     height:50px;
-    background-color: rgb(18, 153, 18);
-    color: white;
     border: none;
     cursor: pointer;
     list-style-type: none;
+    background-color: rgb(18, 153, 18);
+    color: white;
     &:hover{
-    color: rgb(202, 197, 197);
+        color: rgb(202, 197, 197);
     }
 `;
-
-
 
 const ListItem = styled.div `
     list-style: none;
@@ -97,3 +101,17 @@ const ListItem = styled.div `
     }
 `;
 
+
+
+const Button = styled.button`
+    width: 100%;
+    height:50px;
+    background: rgb(18, 153, 18);
+    color: white;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    &:hover{
+        color: rgb(202, 197, 197);
+        }
+`;

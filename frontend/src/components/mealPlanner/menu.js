@@ -1,44 +1,56 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+import DateContext from '../../contexts/dateContext';
 import Day from './day';
 
 
 export default function Menu(props){
-    const headers = ["Plan tygodnia", "Śniadanie", "II Śniadanie", "Obiad", "Deser", "Kolacja", "Kalorie"];
-    const dates = [...props.dates];
+    const mealNames = ['', "Breakfast", "Lunch", "Dinner", "Summary"];
+    const {date} = useContext(DateContext);
     
 
     return(
-        <> 
-            <RowContainer>
-                {headers.map(header => (
+        <Container> 
+            
+            <MealNames>
+                {mealNames.map(header => (
                 <Header key={header} >{header}</Header>))}
-            </RowContainer>
-         
-            <Day day='Poniedziałek' date={dates[0]}/>
-            <Day day='Wtorek'       date={dates[1]}/>
-            <Day day='Środa'        date={dates[2]}/>
-            <Day day='Czwartek'     date={dates[3]}/>
-            <Day day='Piątek'       date={dates[4]}/>
-            <Day day='Sobota'       date={dates[5]}/>
-            <Day day='Niedziela'    date={dates[6]}/>
-        </>
+            </MealNames>
+
+            <Day day='Monday'    date={date[0]}/>
+            <Day day='Tuesday'   date={date[1]}/>
+            <Day day='Wednesday' date={date[2]}/>
+            <Day day='Thursday'  date={date[3]}/>
+            <Day day='Friday'    date={date[4]}/>
+            <Day day='Saturday'  date={date[5]}/>
+            <Day day='Sunday'    date={date[6]}/>
+        </Container>
     )   
 };
 
 
-const RowContainer = styled.div`
+const Container = styled.div`
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: 2em repeat(7, 1fr);
+    background: #F5F7FA;
+    border-radius: 5px;
+    margin-right: 10px;
+    width: 100%;
+    border: 1px solid grey;
+`;
+
+const MealNames = styled.div`
+    display: grid;
+    grid-template-rows: 50px repeat(4, 1fr);
 `;
 
 const Header = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    text-align: center;
-    height: 50px;
-    border: 1px solid black;
+    font-size: 15px;
+    transform: rotate(-90deg);
+    max-width:2em;
 `;
 
 

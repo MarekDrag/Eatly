@@ -1,66 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import style from './calendar.module.css';
+import React, { useState, useEffect, useContext } from 'react';
+import styled from 'styled-components';
 import moment from 'moment';
 import buildCalendar from './build/build';
+import DateContext from '../../contexts/dateContext';
 
 export default function Calendar(props){
     const [calendar, setCalendar] = useState([]);
     const [value, setValue] = useState(moment());
-    const [actualWeek, setActualWeek] = useState('');
+    const {setDate} = useContext(DateContext);
 
 
     useEffect(() => {
         setCalendar(buildCalendar(value));
     }, [value]);
-
-    function beforeToday(day) {
-        return day.isBefore(new Date(), "day");
-    }
-
-    function dayStyles(day) {
-        if(beforeToday(day)) return `${style.before}`;
-        return ''
-    }
     
     function choiceWeek(week){
-        const months = {
-            0: "Styczeń", 
-            1: "Luty", 
-            2: "Marzec", 
-            3: "Kwiecień", 
-            4: "Maj", 
-            5: "Czerwiec", 
-            6: "Lipiec", 
-            7: "Sierpień", 
-            8: "Wrzesień", 
-            9: "Październik", 
-            10: "Listopad", 
-            11: "Grudzień"
-        }
-
-        setActualWeek(week.map(day => {
-            return `${day.date()}  ${months[day.month()]}`
+        setDate(week.map(day => {
+            return `${day.date()}  ${value.format("MMMM")}`
         }))
-        props.update(actualWeek)
     }
 
     function currMontName() {
-        let month = value.format("MMMM");
-        const months = {
-            January: "Styczeń", 
-            February: "Luty", 
-            March: "Marzec", 
-            April: "Kwiecień", 
-            May: "Maj", 
-            June: "Czerwiec", 
-            July: "Lipiec", 
-            August: "Sierpień", 
-            September: "Wrzesień", 
-            October: "Październik", 
-            November: "Listopad", 
-            December: "Grudzień"
-        }
-        return months[month]
+        return value.format("MMMM");
     };
 
     function currYear(){
@@ -77,41 +38,90 @@ export default function Calendar(props){
 
 
     return(
-        <div className={style.calendar}>
+        <Container>
 
-            <div className={style.header}>
-                <div className={style.previous} onClick={() => setValue(prevMonth())}>
+            <Header>
+                <Previous onClick={() => setValue(prevMonth())}>
                     {String.fromCharCode(171)}
-                </div>
-                <div className={style.current}>
+                </Previous>
+                <div>
                     {currMontName()} {currYear()}
                 </div>
-                <div className={style.next} onClick={() => setValue(nextMonth())}>  
+                <Next onClick={() => setValue(nextMonth())}>  
                     {String.fromCharCode(187)}
-                </div>
-            </div>
+                </Next>
+            </Header>
 
-            <div>
-                <div className={style.weekdays_name}>Pn</div>
-                <div className={style.weekdays_name}>Wt</div>
-                <div className={style.weekdays_name}>Śr</div>
-                <div className={style.weekdays_name}>Czw</div>
-                <div className={style.weekdays_name}>Pt</div>
-                <div className={style.weekdays_name}>So</div>
-                <div className={style.weekdays_name}>Nd</div>
-            </div>
-            
-            <div className={style.body}>
+                <WeekdaysName>Mon</WeekdaysName>
+                <WeekdaysName>Tue</WeekdaysName>
+                <WeekdaysName>Wed</WeekdaysName>
+                <WeekdaysName>Thu</WeekdaysName>
+                <WeekdaysName>Fri</WeekdaysName>
+                <WeekdaysName>Sat</WeekdaysName>
+                <WeekdaysName>Sun</WeekdaysName>
                 {calendar.map((week) => (
-                    <div className={style.week} onClick={() => choiceWeek(week)}>
+                    <Week onClick={() => choiceWeek(week)}>
                         {week.map((day) => (
-                            <div className={style.day} onClick={() => setValue(day)}>
-                                <div className={dayStyles(day)}>
+                            <Day onClick={() => setValue(day)}>
                                     {day.format("D").toString()}
-                                </div>
-                        </div>))}
-                </div>))}
-            </div>
-        </div>
+                            </Day>))}
+                    </Week>))}
+        </Container>
     )
 }
+
+const Container = styled.div`
+    position: relative;
+    width: 300px;
+    height: fit-content;
+    color: white;
+    z-index: 1;
+`;
+
+const Header = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    background: #F0BB62;
+`;
+
+const WeekdaysName = styled.div`
+    display: inline-block;
+    width: calc(100%/7);
+    border: 1px solid black;
+    background: #064635;
+    text-align: center;
+`;
+
+const Previous = styled.div`
+    margin: 0 20px ;
+    cursor: pointer;
+    font-size: 1.5em;
+`;
+const Next = styled.div`
+    margin: 0 20px ;
+    cursor: pointer;
+    font-size: 1.5em;
+`;
+
+const Day = styled.div`
+    display: inline-block;
+    width: calc(100%/7);
+    height: 44px;
+    border: 1px solid black;
+    text-align: center; 
+`;
+
+const Before = styled.div`
+    background: #a6c9aa;
+    height: 100%;
+    color: grey;
+`;
+
+const Week = styled.div`
+    background: #519259;
+    &:hover {
+        background: #064635;
+    }
+`;

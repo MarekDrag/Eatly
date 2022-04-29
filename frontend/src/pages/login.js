@@ -41,7 +41,7 @@ export default function Login(){
     return(
         <PageContainer>
             <Container>
-                <Title>Logowanie</Title>
+                <Title>Sign In</Title>
                 <Form onSubmit={submit}>
                     <FormItem>
                         <Label htmlFor='email'>E-mail</Label>
@@ -54,7 +54,7 @@ export default function Login(){
                             />
                     </FormItem>
                     <FormItem>
-                        <Label htmlFor='password'>Hasło</Label>
+                        <Label htmlFor='password'>Password</Label>
                         <Input 
                             type='password' 
                             id='password' 
@@ -63,8 +63,8 @@ export default function Login(){
                             onChange={handleChange}
                             />
                     </FormItem>
-                    <Error>{errMsg ? '' : "Email lub Hasło jest nieprawidłowe"}</Error>
-                    <Submit type='submit'>Zaloguj się</Submit>
+                    <Error>{errMsg ? '' : "Email or Password is invalid"}</Error>
+                    <Submit type='submit'>Sign In</Submit>
                 </Form>
             </Container>
         </PageContainer>
@@ -142,9 +142,10 @@ const Submit = styled.button`
 `;
 
 const Error = styled.p`
-    margin-top:1px;
     color: #ff2929;
     font-weight:600;
+    width: 100%;
+    text-align:center;
 `;
 
 

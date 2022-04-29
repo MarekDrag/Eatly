@@ -11,16 +11,16 @@ export default function Navbar(){
             <List>
                 {auth ? 
                     <>
-                        <Li><Link to="/logowanie">Moje konto</Link></Li>
-                        <Li onClick={() => setAuth(!auth)}>Wyloguj się</Li>
+                        <Li><Link to="/login">My account</Link></Li>
+                        <Li onClick={() => setAuth(!auth)}>Log out</Li>
                     </>
                 : 
                     <>
-                        <Li><Link to="/logowanie">Zaloguj się</Link></Li>
-                        <Li><Link to="/rejestracja">Zarejestruj się</Link></Li>
+                        <Li><Link to="/login">Sign In</Link></Li>
+                        <Li><Link to="/register">Sign Up</Link></Li>
                     </>
                 }
-                <Li><Link to="#">Ustawienia</Link></Li>
+                <Li><Link to="#">Settings</Link></Li>
                 <Li><Link to="#">FAQ</Link></Li>
             </List>
         </nav>
@@ -33,18 +33,25 @@ const List = styled.ul`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 400px;
+    width: 450px;
     height: 70px;
 `;
     
 const Li = styled.li`
     margin-right: 30px;
+    font-weight: 600;
     list-style: none;
-    color:white;
     cursor: pointer;
+    color: #30b353;
+    &:hover{
+        color:#44e36f;
+    }
     a{
-        color: white;
+        color: #30b353;
         text-decoration: none;
+        &:hover{
+            color:#44e36f;
+        }
     }
 `;
   
