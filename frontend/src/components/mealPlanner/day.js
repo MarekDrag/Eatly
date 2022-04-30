@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "../../axios";
 import { v4 as uuidv4 } from "uuid";
 import { FiPlusCircle } from "react-icons/fi";
+
 
 export default function Day(props) {
   const [recipes, setRecipes] = useState([""]);
@@ -10,22 +11,21 @@ export default function Day(props) {
   const [addLunch, setAddLunch] = useState(false);
   const [addDinner, setAddDinner] = useState(false);
 
-  const fetchRecipes = async () => {
-    try {
-      const res = await axios.get("/api/dishes");
-      let newRecipe = [""];
-      for (const key in res.data) {
-        newRecipe.push(res.data[key].name);
-      }
-      setRecipes(newRecipe);
-    } catch (err) {
-      console.log(err.response);
-    }
-  };
+  async function fetchRecipesNames(){
+    await axios.get('/api/recipes')
+    .then(res => {
+        let arr = ['']
+        res.data.map(recipe => {
+          arr.push(recipe.name);
+      })
+        setRecipes(arr)
+    })
+  }
+  
 
   useEffect(() => {
-    fetchRecipes();
-  }, []);
+    fetchRecipesNames()
+  },[])
 
   return (
     <div>
@@ -100,9 +100,6 @@ const Select = styled.select`
   height: 70%;
   width: 100%;
   background: #f5f7fa;
-  option {
-    text-align: center;
-  }
 `;
 
 const Summary = styled.div`
