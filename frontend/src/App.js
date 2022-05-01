@@ -9,11 +9,19 @@ import Layout from "./components/layout/layout";
 import AddRecipe from "./pages/addRecipe";
 import AuthContext from "./contexts/authContext";
 import DateContext from "./contexts/dateContext";
+import LoadingContext from "./contexts/loadingContext";
 import { useEffect, useState } from "react";
+import getCurrentWeek from "./helpers/getCurrentWeek";
 
 function App() {
   const [auth, setAuth] = useState(false);
   const [date, setDate] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let week = getCurrentWeek();
+    setDate(week);
+  },[])
 
   const header = <Header />;
   const content = (
@@ -29,9 +37,11 @@ function App() {
   return (
     <AuthContext.Provider value={{ auth, setAuth }}>
       <DateContext.Provider value={{ date, setDate }}>
-        <Router>
-          <Layout header={header} content={content} footer={footer} />
-        </Router>
+        <LoadingContext.Provider value={{ loading, setLoading }}>
+          <Router>
+            <Layout header={header} content={content} footer={footer} />
+          </Router>
+        </LoadingContext.Provider>
       </DateContext.Provider>
     </AuthContext.Provider>
   );

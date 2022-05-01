@@ -2,8 +2,8 @@ import axios from "axios";
 
 // fetch recipes from tastyApi and send to the Database
 
-export default async function tastyAp() {
-  let type = "snacks";
+export default async function tastyApi() {
+  let type = "dinner";
 
   const options = {
     method: "GET",
@@ -26,10 +26,10 @@ export default async function tastyAp() {
     });
 
   async function sendRecipes(props) {
+    let i = 111;
     for (const key in props) {
       let name = props[key].name;
       let slug = props[key].slug;
-      let id = props[key].id;
       let cooking_time = props[key].total_time_minutes;
       let nutrition = props[key].nutrition;
       let img_url = props[key].thumbnail_url;
@@ -64,9 +64,6 @@ export default async function tastyAp() {
       if(!slug) {
         continue;
       }
-      if(!id) {
-        continue;
-      }
       if(!ingredients) {
         continue;
       }
@@ -85,7 +82,9 @@ export default async function tastyAp() {
       if(video === undefined) {
         video = {};
       }
-
+      let id = i;
+      i++;
+      
       const recipe = {
         name,
         slug,

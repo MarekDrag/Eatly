@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import moment from 'moment';
 import buildCalendar from './build/build';
 import DateContext from '../../contexts/dateContext';
+import { v4 as uuidv4 } from "uuid";
 
 export default function Calendar(props){
     const [calendar, setCalendar] = useState([]);
@@ -52,17 +53,17 @@ export default function Calendar(props){
                 </Next>
             </Header>
 
-                <WeekdaysName>Mon</WeekdaysName>
-                <WeekdaysName>Tue</WeekdaysName>
-                <WeekdaysName>Wed</WeekdaysName>
-                <WeekdaysName>Thu</WeekdaysName>
-                <WeekdaysName>Fri</WeekdaysName>
-                <WeekdaysName>Sat</WeekdaysName>
-                <WeekdaysName>Sun</WeekdaysName>
+                <WeekdaysName >Mon</WeekdaysName>
+                <WeekdaysName >Tue</WeekdaysName>
+                <WeekdaysName >Wed</WeekdaysName>
+                <WeekdaysName >Thu</WeekdaysName>
+                <WeekdaysName >Fri</WeekdaysName>
+                <WeekdaysName >Sat</WeekdaysName>
+                <WeekdaysName >Sun</WeekdaysName>
                 {calendar.map((week) => (
-                    <Week onClick={() => choiceWeek(week)}>
+                    <Week key={uuidv4()} onClick={() => choiceWeek(week)}>
                         {week.map((day) => (
-                            <Day onClick={() => setValue(day)}>
+                            <Day key={uuidv4()} onClick={() => setValue(day)}>
                                     {day.format("D").toString()}
                             </Day>))}
                     </Week>))}
@@ -113,11 +114,6 @@ const Day = styled.div`
     text-align: center; 
 `;
 
-const Before = styled.div`
-    background: #a6c9aa;
-    height: 100%;
-    color: grey;
-`;
 
 const Week = styled.div`
     background: #519259;
