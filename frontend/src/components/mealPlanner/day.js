@@ -68,6 +68,7 @@ export default function Day(props) {
           <DayDate>{props.date}</DayDate>
         </DayBox>
         <Dish key={uuidv4()}>
+            <BoxType>Breakfast</BoxType>
             <Select name='breakfast' onChange={handleChange}>
                 <option value={meals.breakfast}>{mealsNames.breakfast}</option>
                 {props.options.breakfast.map(recipe => (
@@ -78,6 +79,7 @@ export default function Day(props) {
             </Select>
         </Dish>
         <Dish key={uuidv4()}>
+            <BoxType>Lunch</BoxType>
             <Select name='lunch' onChange={handleChange}>
               <option value={meals.lunch}>{mealsNames.lunch}</option>
                 {props.options.lunch.map(recipe => (
@@ -88,6 +90,7 @@ export default function Day(props) {
             </Select>
         </Dish>
         <Dish key={uuidv4()}>
+            <BoxType>Dinner</BoxType>
             <Select name='dinner' onChange={handleChange}>
               <option value={meals.dinner}>{mealsNames.dinner}</option>
                 {props.options.dinner.map(recipe => (
@@ -99,12 +102,13 @@ export default function Day(props) {
         </Dish>
 
         <Summary>
-          <p>calories: {nutritions.calories}</p>
-          <p>carbo: {nutritions.carbohydrates}</p>
-          <p>fat: {nutritions.fat}</p>
-          <p>sugar: {nutritions.fiber}</p>
-          <p>fiber: {nutritions.sugar}</p>
-          <p>protein: {nutritions.protein}</p>
+          <span>Summary</span>
+          <p>calories:{nutritions.calories}</p>
+          <p>carbohydrates:{nutritions.carbohydrates}</p>
+          <p>fat:{nutritions.fat}</p>
+          <p>sugar:{nutritions.fiber}</p>
+          <p>fiber:{nutritions.sugar}</p>
+          <p>protein:{nutritions.protein}</p>
         </Summary>
       </div>
   );
@@ -116,6 +120,9 @@ const DayBox = styled.div`
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  height:3em;
+  background: #475a78;
+  color: #fff;
 `;
 
 const DayText = styled.span`
@@ -134,8 +141,19 @@ const Dish = styled.div`
   justify-content: center;
   align-items: flex-start;
   flex-wrap: wrap;
+  position: relative;
   height: 100px;
   border: 1px solid black;
+  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+`;
+
+const BoxType = styled.div`
+  position:absolute;
+  width:inherit;
+  height:inherit;
+  text-align:center;
+  font-size:20px;
+  opacity:0.3;
 `;
 
 const Select = styled.select`
@@ -143,18 +161,35 @@ const Select = styled.select`
   width: 100%;
   border:none;
   background: #f5f7fa;
-`;
-
-const Summary = styled.div`
-  display: gird;
-  grid-template-columns: 1fr 1fr;
-  height: 100px;
-  border: 1px solid black;
-  & p {
-    font-size:10px;
-    width:100%;
-    margin-left:5px;
+  & option {
+    
   }
 `;
 
+
+const Summary = styled.div`
+  display:flex;
+  justify-content: space-around;
+  align-items:center;
+  position:relative;
+  height: 100px;
+  border: 1px solid black;
+  font-size:1em;
+  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  & span{
+    position:absolute;
+    width:100%;
+    height:inherit;
+    text-align:center;
+    font-size:20px;
+    opacity:0.3;
+  }
+  @media only screen and (max-width: 660px) {
+    display: grid;
+    grid-template-columns:1fr 1fr;
+    grid-column-gap:30%;
+    padding-top:40px;
+    font-size: 15px;
+  }
+`;
 

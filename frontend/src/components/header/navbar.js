@@ -20,8 +20,6 @@ export default function Navbar(){
                         <Li><Link to="/register">Sign Up</Link></Li>
                     </>
                 }
-                <Li><Link to="#">Settings</Link></Li>
-                <Li><Link to="#">FAQ</Link></Li>
             </List>
         </nav>
     );
@@ -33,7 +31,7 @@ const List = styled.ul`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 450px;
+    width: 200px;
     height: 70px;
 `;
     

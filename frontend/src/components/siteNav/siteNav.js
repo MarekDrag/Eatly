@@ -62,8 +62,8 @@ const Aside = styled.aside `
     font-weight: 600;
     width: 150px;
     height:fit-content;
-    margin-top: 40px;
     margin-right: 1em;
+    position:fixed;
 `;
 
 const Toggle = styled.div `

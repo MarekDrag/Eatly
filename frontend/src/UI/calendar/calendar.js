@@ -42,15 +42,15 @@ export default function Calendar(props){
         <Container>
 
             <Header>
-                <Previous onClick={() => setValue(prevMonth())}>
+                <ArrowButton onClick={() => setValue(prevMonth())}>
                     {String.fromCharCode(171)}
-                </Previous>
+                </ArrowButton>
                 <div>
                     {currMontName()} {currYear()}
                 </div>
-                <Next onClick={() => setValue(nextMonth())}>  
+                <ArrowButton onClick={() => setValue(nextMonth())}>  
                     {String.fromCharCode(187)}
-                </Next>
+                </ArrowButton>
             </Header>
 
                 <WeekdaysName >Mon</WeekdaysName>
@@ -72,17 +72,18 @@ export default function Calendar(props){
 }
 
 const Container = styled.div`
-    position: relative;
-    width: 300px;
+    position:absolute;
+    width: 150px;
     height: fit-content;
     color: white;
-    z-index: 1;
+    font-size:10px;
 `;
 
 const Header = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size:15px;
     height: 40px;
     background: #F0BB62;
 `;
@@ -95,15 +96,10 @@ const WeekdaysName = styled.div`
     text-align: center;
 `;
 
-const Previous = styled.div`
+const ArrowButton = styled.div`
     margin: 0 20px ;
-    cursor: pointer;
     font-size: 1.5em;
-`;
-const Next = styled.div`
-    margin: 0 20px ;
     cursor: pointer;
-    font-size: 1.5em;
 `;
 
 const Day = styled.div`
@@ -112,6 +108,7 @@ const Day = styled.div`
     height: 44px;
     border: 1px solid black;
     text-align: center; 
+    cursor: pointer;
 `;
 
 

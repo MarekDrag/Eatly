@@ -1,52 +1,50 @@
 import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import DateContext from "../../contexts/dateContext";
 import Day from "./day";
+import DateContext from "../../contexts/dateContext";
+import Loading from '../../UI/loading/loading';
 import axios from "../../axios";
-import LoadingContext from "../../contexts/loadingContext";
-import Loading from "../loading/loading";
 
-export default function Menu(props) {
-  const mealNames = ["", "Breakfast", "Lunch", "Dinner", "Summary"];
+export default function MenuMobile() {
   const { date } = useContext(DateContext);
-  const [recipes, setRecipes] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [recipes, setRecipes] = useState([]);
   const [options, setOptions] = useState({});
-  const { loading, setLoading } = useContext(LoadingContext);
 
-  async function fetchRecipes() {
-    await axios.get("/api/recipes").then((res) => {
-      let arr = [];
-      res.data.map((recipe) => {
-        const dish = {
-          name: recipe.name,
-          id: recipe.id,
-          nutrition: recipe.nutrition,
-          type: recipe.type,
-        };
-        arr.push(dish);
-      });
-      let breakfast = arr.filter((recipe) => recipe.type === "breakfast");
-      let lunch = arr.filter((recipe) => recipe.type === "lunch");
-      let dinner = arr.filter((recipe) => recipe.type === "dinner");
-      setOptions({ breakfast, lunch, dinner });
-      setRecipes(arr);
-      setLoading(!loading);
-    });
-  }
-  useEffect(() => {
-    fetchRecipes();
-  }, []);
+    const fetchRecipes = async () => {
+        try{
+            const res = await axios.get("/api/recipes")
+              const arr = [];
+              res.data.map((recipe) => {
+                const dish = {
+                  name: recipe.name,
+                  id: recipe.id,
+                  nutrition: recipe.nutrition,
+                  type: recipe.type,
+                };
+                arr.push(dish);
+              });
+              let breakfast = arr.filter(recipe => recipe.type === "breakfast");
+              let lunch = arr.filter(recipe => recipe.type === "lunch");
+              let dinner = arr.filter(recipe => recipe.type === "dinner");
+              setOptions({ breakfast, lunch, dinner });
+              setRecipes(arr);
+              setLoading(!loading);
+        } catch (ex) {
+            console.log(ex.response);
+        }}
+
+    useEffect(() => {
+        fetchRecipes()
+    },[])
+    
+
 
   return (
     <Container>
-      {!loading ? (
+       {loading ? (
         <Wrapper>
-          <MealNames>
-            {mealNames.map((header) => (
-              <Header key={header}>{header}</Header>
-            ))}
-          </MealNames>
-          <Day
+        <Day
             day="Monday"
             options={options}
             recipes={recipes}
@@ -89,9 +87,9 @@ export default function Menu(props) {
             date={date[6]}
           />
         </Wrapper>
-      ) : (
-        <Loading />
-      )}
+        ) : (
+          <WrapperLoading><Loading/></WrapperLoading>
+        )}
     </Container>
   );
 }
@@ -103,26 +101,33 @@ const Container = styled.div`
   background: #f5f7fa;
   border-radius: 5px;
   margin-right: 10px;
-  width: 100%;
+  margin-left:160px;
+  width:100%;
   border: 1px solid grey;
 `;
 
 const Wrapper = styled.div`
   display: grid;
-  grid-template-columns: 2em repeat(7, 1fr);
+  grid-template-columns: 1fr;
   width: 100%;
+  height: 80vh;
+  overflow-y:scroll;
+  &::-webkit-scrollbar {
+  width: 12px;
+  }
+  &::-webkit-scrollbar-thumb {
+  background-color:  #475A78;
+  border-radius: 10px;
+  border: 2px solid #98bdf2;
+  }
 `;
 
-const MealNames = styled.div`
-  display: grid;
-  grid-template-rows: 50px repeat(4, 1fr);
-`;
-
-const Header = styled.div`
+const WrapperLoading = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 15px;
-  transform: rotate(-90deg);
-  max-width: 2em;
+  height: 80vh;
 `;
+
+
+

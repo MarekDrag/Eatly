@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 export default function Header(){
     return(
         <HeaderWrapper>
-            <Logo><Link to='/'>EATLY</Link></Logo>
+            <Logo><Link to='/meal-planner'>EATLY</Link></Logo>
             <Navbar/>
         </HeaderWrapper>
     );
