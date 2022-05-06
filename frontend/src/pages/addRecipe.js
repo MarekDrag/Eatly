@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FiPlusCircle } from 'react-icons/fi';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
@@ -34,6 +34,7 @@ export default function AddRecipe(){
     function submit(e){
         e.preventDefault();
         const name = formValues.name;
+        const slug = formValues.name
         const ingredients = formValues.ingredients;
         const instructions = formValues.instructions;
         const cooking_time = formValues.cooking_time;

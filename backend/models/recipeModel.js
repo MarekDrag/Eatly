@@ -25,8 +25,8 @@ const recipeSchema = mongoose.Schema({
     type: Number,
     required: [true, "Please add a cooking time"],
   },
-  nutrition: {
-    type: Object
+  calories: {
+    type: Number
   },
   type: {
     type: String,
@@ -34,10 +34,7 @@ const recipeSchema = mongoose.Schema({
   },
   img_url: {
     type: String,
-  },
-  video: {
-    type: Object
-  },
+  }
 });
 
 module.exports = mongoose.model("Recipe", recipeSchema);

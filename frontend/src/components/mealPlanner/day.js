@@ -68,7 +68,7 @@ export default function Day(props) {
           <DayDate>{props.date}</DayDate>
         </DayBox>
         <Dish key={uuidv4()}>
-            <BoxType>Breakfast</BoxType>
+            <BoxType>Śniadanie</BoxType>
             <Select name='breakfast' onChange={handleChange}>
                 <option value={meals.breakfast}>{mealsNames.breakfast}</option>
                 {props.options.breakfast.map(recipe => (
@@ -79,7 +79,7 @@ export default function Day(props) {
             </Select>
         </Dish>
         <Dish key={uuidv4()}>
-            <BoxType>Lunch</BoxType>
+            <BoxType>Obiad</BoxType>
             <Select name='lunch' onChange={handleChange}>
               <option value={meals.lunch}>{mealsNames.lunch}</option>
                 {props.options.lunch.map(recipe => (
@@ -90,7 +90,7 @@ export default function Day(props) {
             </Select>
         </Dish>
         <Dish key={uuidv4()}>
-            <BoxType>Dinner</BoxType>
+            <BoxType>Kolacja</BoxType>
             <Select name='dinner' onChange={handleChange}>
               <option value={meals.dinner}>{mealsNames.dinner}</option>
                 {props.options.dinner.map(recipe => (
@@ -101,15 +101,9 @@ export default function Day(props) {
             </Select>
         </Dish>
 
-        <Summary>
-          <span>Summary</span>
-          <p>calories:{nutritions.calories}</p>
-          <p>carbohydrates:{nutritions.carbohydrates}</p>
-          <p>fat:{nutritions.fat}</p>
-          <p>sugar:{nutritions.fiber}</p>
-          <p>fiber:{nutritions.sugar}</p>
-          <p>protein:{nutritions.protein}</p>
-        </Summary>
+        <Calories>
+          <p>Kalorie:{props.calories}</p>
+        </Calories>
       </div>
   );
 }
@@ -162,34 +156,18 @@ const Select = styled.select`
   border:none;
   background: #f5f7fa;
   & option {
-    
+    text-align:center;
   }
 `;
 
 
-const Summary = styled.div`
+const Calories = styled.div`
   display:flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items:center;
-  position:relative;
-  height: 100px;
+  height: 50px;
   border: 1px solid black;
   font-size:1em;
   font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  & span{
-    position:absolute;
-    width:100%;
-    height:inherit;
-    text-align:center;
-    font-size:20px;
-    opacity:0.3;
-  }
-  @media only screen and (max-width: 660px) {
-    display: grid;
-    grid-template-columns:1fr 1fr;
-    grid-column-gap:30%;
-    padding-top:40px;
-    font-size: 15px;
-  }
 `;
 

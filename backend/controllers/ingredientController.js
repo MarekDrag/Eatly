@@ -1,4 +1,4 @@
-const ingredient = require('../models/ingredientModel');
+const Ingredient = require('../models/ingredientModel');
 
 // @desc Get user
 // @route GET /api/users
@@ -21,11 +21,17 @@ const setIngredient = async (req, res) => {
     
     const name = req.body.name;
     const id = req.body.id;
+    const calories = req.body.calories;
+    const measure = req.body.measure;
+    const price = req.body.price;
             
     
     const newIngredient = new Ingredient({
             name,
-            id
+            id,
+            calories,
+            measure,
+            price
     });
 
     newIngredient.save()

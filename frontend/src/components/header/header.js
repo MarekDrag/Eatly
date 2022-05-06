@@ -4,10 +4,13 @@ import Navbar from './navbar';
 import { Link } from "react-router-dom";
 
 
+
 export default function Header(){
+    
+
     return(
         <HeaderWrapper>
-            <Logo><Link to='/meal-planner'>EATLY</Link></Logo>
+            <Logo><Link to='/planer-posilkow'>EATLY</Link></Logo>
             <Navbar/>
         </HeaderWrapper>
     );
@@ -16,22 +19,29 @@ export default function Header(){
 
 const HeaderWrapper = styled.header`
     display: flex;
+    justify-content: center;
     width: 100%;
     height: 70px;
-    background: #F5F7FA;
+    background: #1da508;
     box-shadow: 0 0 1em;
+    position: fixed;
+    z-index:2
 `;
     
 const Logo = styled.div`
     text-align: left;
-    margin-left: 30px;
+    margin-left: 20px;
     width: 100%;
     a{
         width: 150px;
         font-size: 3em;
         font-weight: 800;
-        color: #30b353;
+        color: #fff;
         text-decoration: none;
+    }
+    @media(max-width:1000px){
+        text-align: center;
+        margin-left: 100px;
     }
 `;
     

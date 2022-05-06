@@ -7,8 +7,17 @@ const ingredientSchema = mongoose.Schema({
         required: true
     },
     id: {
-        type: String,
+        type: Number,
         required: true
+    },
+    calories: {
+        type: Number
+    },
+    measure: {
+        type: String
+    },
+    price: {
+        type: Number
     }
 });
 

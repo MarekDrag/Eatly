@@ -10,7 +10,6 @@ export default function Loading(){
 const CircleIcon = styled(AiOutlineLoading3Quarters)`
     font-size:30px;
     animation: spin 0.7s infinite;
-
     @keyframes spin{
         0% {transform: rotate(0deg)}
         20% {transform: rotate(72deg)}

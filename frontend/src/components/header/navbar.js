@@ -1,55 +1,59 @@
-import React, { useContext, useEffect, useState } from 'react';
-import styled from 'styled-components';
+import React, { useContext, useState } from 'react';
+import style from './navbar.module.css';
 import { Link } from "react-router-dom";
 import AuthContext from '../../contexts/authContext';
+import {GiExitDoor, GiEntryDoor, GiArchiveRegister} from 'react-icons/gi';
+import {AiOutlineShoppingCart} from 'react-icons/ai';
+import {RiCreativeCommonsByLine} from 'react-icons/ri';
+import {HiOutlineClipboardList} from 'react-icons/hi';
+import {GoCalendar} from 'react-icons/go';
+
 
 export default function Navbar(){
     const {auth, setAuth} = useContext(AuthContext);
+    const [isOpen, setIsOpen] = useState(false);
 
     return(
         <nav>
-            <List>
+            <ul className={`${style.list} ${isOpen ? style.active : ''}`}>
+                <li className={style.li}>
+                    <Link to="/planer-posilkow"><GoCalendar/> Planer</Link>
+                </li>
+                <li className={style.li}>
+                    <Link to=""><AiOutlineShoppingCart/> Zakupy</Link>
+                </li>
+                <li className={style.li}>
+                    <Link to=''><HiOutlineClipboardList/> Przepisy</Link>
+                </li>
                 {auth ? 
                     <>
-                        <Li><Link to="/login">My account</Link></Li>
-                        <Li onClick={() => setAuth(!auth)}>Log out</Li>
+                        <li className={style.li}>
+                            <Link to=""><RiCreativeCommonsByLine/> Moje konto</Link>
+                        </li>
+                        <li className={style.li} onClick={() => setAuth(!auth)}>
+                            <GiEntryDoor/> Wyloguj się
+                        </li>
                     </>
                 : 
                     <>
-                        <Li><Link to="/login">Sign In</Link></Li>
-                        <Li><Link to="/register">Sign Up</Link></Li>
+                        <li className={style.li}>
+                            <Link to="/zarejstruj-sie"><GiArchiveRegister/> Zarejstruj się</Link>
+                        </li>
+                        <li className={style.li}>
+                            <Link to="/zaloguj-sie"><GiExitDoor/> Zaloguj się</Link>
+                        </li>
                     </>
                 }
-            </List>
+            </ul>
+            <div 
+            className={`${style.hamburger} ${isOpen ? style.active : ''}`} 
+            onClick={() => setIsOpen(!isOpen)}
+            >
+                <span className={style.bar}></span>
+                <span className={style.bar}></span>
+                <span className={style.bar}></span>
+            </div>
         </nav>
     );
 };
 
-
-
-const List = styled.ul`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 200px;
-    height: 70px;
-`;
-    
-const Li = styled.li`
-    margin-right: 30px;
-    font-weight: 600;
-    list-style: none;
-    cursor: pointer;
-    color: #30b353;
-    &:hover{
-        color:#44e36f;
-    }
-    a{
-        color: #30b353;
-        text-decoration: none;
-        &:hover{
-            color:#44e36f;
-        }
-    }
-`;
-  

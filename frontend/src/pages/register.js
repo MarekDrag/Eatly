@@ -51,36 +51,36 @@ export default function Register() {
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if (!values.email) {
-      errors.email = "Email is required";
+      errors.email = "Email jest wymagany";
     } else if (!regex.test(values.email)) {
-      errors.email = "Email is invalid";
+      errors.email = "Email jest nieprawidłowy";
     } else if (checkUser.email) {
-      errors.email = `${values.email} already exists`;
+      errors.email = `${values.email} już istnieje`;
     }
     if (!values.name) {
-      errors.name = "User name is required";
+      errors.name = "Nazwa użytkownika jest wymagana";
     } else if (checkUser.name) {
-      errors.name = `${values.name} already exists`;
+      errors.name = `${values.name} już istnieje`;
     }
     if (!values.password) {
-      errors.password = "Password is required";
+      errors.password = "Hasło jest wymagane";
     } else if (values.password.length < 8) {
-      errors.password = "Password must be at least 8 characters long";
+      errors.password = "Hasło musi mieć min. 8 znaków";
     }
     if (!values.confirmPassword) {
-      errors.confirmPassword = "You have to confirm password";
+      errors.confirmPassword = "Musisz potwierdzić hasło";
     } else if (values.confirmPassword !== values.password) {
-      errors.confirmPassword = "Passwords are not the same";
+      errors.confirmPassword = "Hasła nie są takie same";
     }
     return errors;
   };
 
   return (
     <PageContainer>
-      <Container>
+      <Wrapper>
         {!isRegistered ? (
           <>
-            <Title>Sign Up</Title>
+            <Title>Rejestracja</Title>
             <Form onSubmit={submit}>
               <FormItem>
                 <Label htmlFor="email">E-mail</Label>
@@ -95,52 +95,52 @@ export default function Register() {
                 <Error>{formErrors.email}</Error>
               </FormItem>
               <FormItem>
-                <Label htmlFor="name">User Name</Label>
+                <Label htmlFor="name">Nazwa użytkownika</Label>
                 <Input
                   id="name"
                   name="name"
                   type="text"
-                  placeholder="User Name"
+                  placeholder="nazwa użytkownika"
                   value={formValues.name}
                   onChange={handleChange}
                 />
                 <Error>{formErrors.name}</Error>
               </FormItem>
               <FormItem>
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">Hasło</Label>
                 <Input
                   type="password"
                   id="password"
                   name="password"
-                  placeholder="at least 8 characters"
+                  placeholder="minimum 8 znaków"
                   value={formValues.password}
                   onChange={handleChange}
                 />
                 <Error>{formErrors.password}</Error>
               </FormItem>
               <FormItem>
-                <Label htmlFor="confirmPassword">Confirm Password</Label>
+                <Label htmlFor="confirmPassword">Powtórz hasło</Label>
                 <Input
                   type="password"
                   id="confirmPassword"
                   name="confirmPassword"
-                  placeholder="Repeat Password"
+                  placeholder="powtórz hasło"
                   value={formValues.confirmPassword}
                   onChange={handleChange}
                 />
                 <Error>{formErrors.confirmPassword}</Error>
               </FormItem>
-              <Submit type="submit">Create Account</Submit>
+              <Submit type="submit">Stwórz konto</Submit>
             </Form>
           </>
         ) : (
-          <Wrapper>
-            <Text>Hi {formValues.name}!</Text>
-            <Text>Your account has been created!</Text>
-            <Link href="/login">Now you can Sign In</Link>
-          </Wrapper>
+          <Container>
+            <Text>Witaj {formValues.name}!</Text>
+            <Text>Twoje konto zostało utworzone!</Text>
+            <Link href="/zaloguj-sie">Teraz możesz się zalogować</Link>
+          </Container>
         )}
-      </Container>
+      </Wrapper>
     </PageContainer>
   );
 }
@@ -152,7 +152,7 @@ const PageContainer = styled.div`
   width: 100%;
 `;
 
-const Container = styled.div`
+const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -162,10 +162,10 @@ const Container = styled.div`
   border-radius: 5px;
   width: 50%;
   height: 700px;
-  margin: 10vh 0 30vh 0;
+  margin: 15vh 0 30vh 0;
 `;
 
-const Wrapper = styled.div`
+const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;

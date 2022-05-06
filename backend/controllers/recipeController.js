@@ -26,10 +26,9 @@ const setRecipes = asyncHandler(async (req, res) => {
   const ingredients = req.body.ingredients;
   const instructions = req.body.instructions;
   const cooking_time = req.body.cooking_time;
-  const nutrition = req.body.nutrition;
+  const calories = req.body.calories;
   const type = req.body.type;
-  const img_url = req.body.img_url;
-  const video = req.body.video;
+  const img_url = req.body.img_url
 
   const newRecipe = new Recipe({
     name,
@@ -38,10 +37,9 @@ const setRecipes = asyncHandler(async (req, res) => {
     ingredients,
     instructions,
     cooking_time,
-    nutrition,
+    calories,
     type,
-    img_url,
-    video
+    img_url
   });
 
   newRecipe.save()

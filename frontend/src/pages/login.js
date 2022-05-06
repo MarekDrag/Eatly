@@ -11,7 +11,6 @@ export default function Login(){
     const {auth, setAuth} = useContext(AuthContext);
     const navigate = useNavigate();
 
-        
     async function submit(e){
         e.preventDefault();
         await axios.get('/api/users')
@@ -39,8 +38,8 @@ export default function Login(){
     }
 
     return(
-        <PageContainer>
-            <Container>
+        <Container>
+            <Wrapper>
                 <Title>Sign In</Title>
                 <Form onSubmit={submit}>
                     <FormItem>
@@ -54,7 +53,7 @@ export default function Login(){
                             />
                     </FormItem>
                     <FormItem>
-                        <Label htmlFor='password'>Password</Label>
+                        <Label htmlFor='password'>Hasło</Label>
                         <Input 
                             type='password' 
                             id='password' 
@@ -63,23 +62,23 @@ export default function Login(){
                             onChange={handleChange}
                             />
                     </FormItem>
-                    <Error>{errMsg ? '' : "Email or Password is invalid"}</Error>
-                    <Submit type='submit'>Sign In</Submit>
+                    <Error>{errMsg ? '' : "Email lub hasło jest nieprawidłowe"}</Error>
+                    <Submit type='submit'>Zaloguj się</Submit>
                 </Form>
-            </Container>
-        </PageContainer>
+            </Wrapper>
+        </Container>
     )
 }
 
 
-const PageContainer = styled.div`
+const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
 `;
     
-const Container = styled.div`
+const Wrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -90,7 +89,7 @@ const Container = styled.div`
     width: 50%;
     min-width: 300px;
     height: 500px;
-    margin: 10vh 0 30vh 0;
+    margin: 15vh 0 30vh 0;
 `;
 
 const Title = styled.h2`
