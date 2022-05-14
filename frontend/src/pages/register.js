@@ -80,8 +80,8 @@ export default function Register() {
       <Wrapper>
         {!isRegistered ? (
           <>
-            <Title>Rejestracja</Title>
             <Form onSubmit={submit}>
+              <Title>Rejestracja</Title>
               <FormItem>
                 <Label htmlFor="email">E-mail</Label>
                 <Input
@@ -161,7 +161,7 @@ const Wrapper = styled.div`
   box-shadow: 0 0 1em;
   border-radius: 5px;
   width: 50%;
-  height: 700px;
+  height: 60vh;
   margin: 15vh 0 30vh 0;
 `;
 
@@ -175,16 +175,14 @@ const Container = styled.div`
 const Text = styled.span`
   width: 100%;
   text-align: center;
-  margin-bottom: 2em;
   font-size: 30px;
   font-weight: 600;
-  color: #129912;
+  color: #00857A;
 `;
 
 const Link = styled.a`
   width: 100%;
   text-align: center;
-  margin-bottom: 2em;
   font-size: 30px;
   font-weight: 600;
   color: #c9c9c9;
@@ -205,7 +203,7 @@ const Form = styled.form`
   justify-content: center;
   flex-wrap: wrap;
   width: 400px;
-  height: 600px;
+  height: 60vh;
 `;
 
 const FormItem = styled.div`
@@ -232,14 +230,14 @@ const Input = styled.input`
 const Submit = styled.button`
   font-size: 1em;
   font-weight: 600;
-  background: #129912;
+  background: #00857A;
   color: white;
   border-radius: 4px;
   border: none;
   width: 50%;
   padding: 1em;
   &:hover {
-    background: #4aaf4a;
+    background: #00756F;
   }
 `;
 

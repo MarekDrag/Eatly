@@ -22,7 +22,7 @@ const HeaderWrapper = styled.header`
     justify-content: center;
     width: 100%;
     height: 70px;
-    background: #1da508;
+    background: #FAF2E8;
     box-shadow: 0 0 1em;
     position: fixed;
     z-index:2
@@ -36,7 +36,7 @@ const Logo = styled.div`
         width: 150px;
         font-size: 3em;
         font-weight: 800;
-        color: #fff;
+        color: #00857A;
         text-decoration: none;
     }
     @media(max-width:1000px){

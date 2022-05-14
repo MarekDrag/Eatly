@@ -28,7 +28,7 @@ export default function Login(){
         if(userValid){
             setAuth(!auth)
             localStorage.setItem('email', formValues.email);
-            navigate('/');
+            navigate('/planer-posilkow');
         }
     }
 
@@ -129,14 +129,14 @@ const Input = styled.input`
 const Submit = styled.button`
     font-size: 1em;
     font-weight: 600;
-    background: #129912;
+    background: #00857A;
     color: white;
     border-radius:4px;
     border: none;
     width: 50%;
     padding: 1em;
     &:hover{
-        background: #4aaf4a;
+        background: #00756F;
     }   
 `;
 

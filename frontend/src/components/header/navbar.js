@@ -15,15 +15,16 @@ export default function Navbar(){
 
     return(
         <nav>
+            <div className={`${isOpen ? style.darkBgActive : style.darkBg}`}></div>
             <ul className={`${style.list} ${isOpen ? style.active : ''}`}>
                 <li className={style.li}>
                     <Link to="/planer-posilkow"><GoCalendar/> Planer</Link>
                 </li>
                 <li className={style.li}>
-                    <Link to=""><AiOutlineShoppingCart/> Zakupy</Link>
+                    <Link to="zakupy"><AiOutlineShoppingCart/> Zakupy</Link>
                 </li>
                 <li className={style.li}>
-                    <Link to=''><HiOutlineClipboardList/> Przepisy</Link>
+                    <Link to="przepisy"><HiOutlineClipboardList/> Przepisy</Link>
                 </li>
                 {auth ? 
                     <>

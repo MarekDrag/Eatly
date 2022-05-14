@@ -1,7 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
-import CalcNutritions from "../../helpers/calcNutritions";
 
 export default function Day(props) {
   const initialMeals = {
@@ -9,15 +8,7 @@ export default function Day(props) {
     lunch: '',
     dinner: ''
   }
-  const initialNutritions = {
-    calories: 0,
-    carbohydrates:  0,
-    fat: 0,
-    fiber:  0,
-    protein:  0,
-    sugar:  0,
-  }
-  const [nutritions, setNutritions] = useState(initialNutritions);
+  const [calories, setCalories] = useState(0);
   const [meals, setMeals] = useState(initialMeals);
   const [mealsNames, setMealsNames] = useState(initialMeals);
   
@@ -39,10 +30,12 @@ export default function Day(props) {
 
   // filters meal by id and set nutritions of this meal to the summary
   function filterMealsByID(){
+    let calculatedCalories = 0;
     let filteredMeals = props.recipes
       .filter(recipe => recipe.id == meals.breakfast || recipe.id == meals.lunch || recipe.id == meals.dinner);
-    const calculatedNutritons = CalcNutritions(filteredMeals);
-    setNutritions(calculatedNutritons);
+    filteredMeals.map(meal => {
+      calculatedCalories += meal.calories;});
+      setCalories(calories);
     filteredMeals.map(m => {
       setMealsNames({...mealsNames, [m.type]: m.name})
     })
@@ -102,7 +95,7 @@ export default function Day(props) {
         </Dish>
 
         <Calories>
-          <p>Kalorie:{props.calories}</p>
+          <p>Kalorie:{calories}</p>
         </Calories>
       </div>
   );

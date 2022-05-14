@@ -4,7 +4,7 @@ const Ingredient = require('../models/ingredientModel');
 // @route GET /api/users
 // @access Private
 const getIngredient = async(req, res) => {
-        const ingredients = await ingredient.find()
+    const ingredients = await Ingredient.find()
     
     
     res.json(ingredients)

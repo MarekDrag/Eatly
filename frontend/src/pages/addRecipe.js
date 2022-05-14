@@ -14,9 +14,9 @@ export default function AddRecipe(){
           const res = await axios.get("/api/ingredients");
           let newIngredients = [""];
           for (const key in res.data) {
-            newIngredients.push(res.data[key].name);
+            newIngredients.push(res.data[key]);
           }
-          setIngredients(newIngredients);
+          console.log(newIngredients);
         } catch (err) {
           console.log(err.response);
         }
@@ -71,7 +71,7 @@ export default function AddRecipe(){
                     </FormItem>
 
                     <FormItem>
-                        <Label>Add ingredient:</Label>
+                        <Label>Składniki:</Label>
                         <Select key={uuidv4()}>
                             {ingredients.map((ingredient) => (
                                 <option key={ingredient}>-{ingredient}</option>
@@ -81,7 +81,7 @@ export default function AddRecipe(){
                     </FormItem>
                     
                     <FormItem>
-                        <Label htmlFor='instructions'>Instructions:</Label>
+                        <Label htmlFor='instructions'>Instrukcje:</Label>
                         <TextArea 
                         type='text' 
                         id='instructions' 
@@ -92,7 +92,7 @@ export default function AddRecipe(){
                     </FormItem>
 
                     <FormItem>
-                        <Label htmlFor='cooking_time'>Cooking time</Label>
+                        <Label htmlFor='cooking_time'>Czas gotowania:</Label>
                         <Input 
                         type='number' 
                         id='cooking_time' 
@@ -101,20 +101,9 @@ export default function AddRecipe(){
                         onChange={e => handleChange}
                         placeholder='cooking time'/>
                     </FormItem>
-                    
-                    <FormItem>
-                        <Label htmlFor='tags'>Add tags</Label>
-                        <Input 
-                        type='text' 
-                        id='tags' 
-                        name='tags' 
-                        value={formValues.tags}
-                        onChange={e => handleChange}
-                        placeholder='Add tags'/>
-                    </FormItem>
 
                     <FormItem>
-                        <Label htmlFor='img_url'>Image link</Label>
+                        <Label htmlFor='img_url'>Link do zdjęcia</Label>
                         <Input 
                         type='text' 
                         id='img_url' 
