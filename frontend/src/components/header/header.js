@@ -23,7 +23,7 @@ const HeaderWrapper = styled.header`
     width: 100%;
     height: 70px;
     background: #FAF2E8;
-    box-shadow: 0 0 1em;
+    box-shadow: 0 0 0.5em;
     position: fixed;
     z-index:2
 `;

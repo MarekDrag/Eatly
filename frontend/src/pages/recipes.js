@@ -28,6 +28,7 @@ const Container = styled.div`
     justify-content:center;
     flex-wrap:wrap;
     width:100%;
+    min-height:100vh;
     padding-top:70px;
 `;
 
@@ -72,6 +73,7 @@ const Wrapper = styled.div`
 
 const Recipe = styled.div`
     border:1px solid #adadad;
+    width:250px;
 `;
 
 

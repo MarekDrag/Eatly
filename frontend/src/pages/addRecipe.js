@@ -5,18 +5,14 @@ import styled from 'styled-components';
 import axios from '../axios';
 
 export default function AddRecipe(){
-    const initialValue = { name: '', ingredients:[], instructions:[], cooking_time:'',tags:[], img_url:''};
+    const initialValue = { name: '', ingredients:[], instructions:[], cooking_time:'', img_url:''};
     const [formValues, setFormValues] = useState(initialValue);
     const [ingredients, setIngredients] = useState([]);
 
     const fetchIngredients = async () => {
         try {
           const res = await axios.get("/api/ingredients");
-          let newIngredients = [""];
-          for (const key in res.data) {
-            newIngredients.push(res.data[key]);
-          }
-          console.log(newIngredients);
+          setIngredients(res.data)
         } catch (err) {
           console.log(err.response);
         }
@@ -34,19 +30,18 @@ export default function AddRecipe(){
     function submit(e){
         e.preventDefault();
         const name = formValues.name;
-        const slug = formValues.name
+        const slug = formValues.name.split(' ').join('-');
         const ingredients = formValues.ingredients;
         const instructions = formValues.instructions;
         const cooking_time = formValues.cooking_time;
-        const tags = formValues.tags;
         const img_url = formValues.img_url;
 
         const recipe = {
             name,
+            slug,
             ingredients,
             instructions,
             cooking_time,
-            tags,
             img_url
         }
 
@@ -56,30 +51,20 @@ export default function AddRecipe(){
 
     return(
         <PageContainer>
-                <Title>Add Recipe</Title>
+                <Title>Dodaj przepis</Title>
                 <Form onSubmit={submit}>
 
                     <FormItem>
-                        <Label htmlFor='name'>Dish name:</Label>
+                        <Label htmlFor='name'>Nazwa przepisu:</Label>
                         <Input 
                         type='text' 
                         id='name' 
                         name='name' 
                         value={formValues.name}
                         onChange={e => handleChange}
-                        placeholder='dish name'/>
+                        placeholder='nazwa przepisu'/>
                     </FormItem>
-
-                    <FormItem>
-                        <Label>Składniki:</Label>
-                        <Select key={uuidv4()}>
-                            {ingredients.map((ingredient) => (
-                                <option key={ingredient}>-{ingredient}</option>
-                            ))}
-                        </Select>
-                        <PlusButton onClick={() => {}}/>
-                    </FormItem>
-                    
+   
                     <FormItem>
                         <Label htmlFor='instructions'>Instrukcje:</Label>
                         <TextArea 
@@ -88,7 +73,18 @@ export default function AddRecipe(){
                         name='instructions' 
                         value={formValues.instructions}
                         onChange={e => handleChange}
-                        placeholder='instructions' />
+                        placeholder='instrukcje' />
+                    </FormItem>
+                  
+                    <FormItem>
+                        <Label htmlFor='ingredients'>Wybierz składniki:</Label>
+                        <Select name='ingredients'>
+                            {ingredients.map(ingredient => {
+
+                              return <option>{ingredient.name}</option>
+                            })}
+                        </Select>
+                        <MeasureInput type='number' id='measure'/>
                     </FormItem>
 
                     <FormItem>
@@ -99,29 +95,26 @@ export default function AddRecipe(){
                         name='cooking_time' 
                         value={formValues.cooking_time}
                         onChange={e => handleChange}
-                        placeholder='cooking time'/>
+                        placeholder='czas gotowania'/>
                     </FormItem>
 
                     <FormItem>
-                        <Label htmlFor='img_url'>Link do zdjęcia</Label>
+                        <Label htmlFor='img_url'>Link do zdjęcia:</Label>
                         <Input 
                         type='text' 
                         id='img_url' 
                         name='img_url' 
                         value={formValues.img_url}
                         onChange={e => handleChange}
-                        placeholder='image'/>
+                        placeholder='link'/>
                     </FormItem>
 
                     <SubmitButton 
                     type='submit' 
-                    value='Create Recipe'
+                    value='Stwórz przepis'
                     />
 
                 </Form>
-                <Output>
-
-                </Output>
         </PageContainer>
     )
 }
@@ -135,6 +128,7 @@ const PageContainer = styled.div`
     flex-wrap: wrap;
     width: 100%;
     height: 100vh;
+    padding-top:80px;
 `;
 
 const Title = styled.h2`
@@ -142,9 +136,6 @@ const Title = styled.h2`
     text-align: center;
 `;
 
-const Output = styled.div`
-    width: 50%;
-`;
 
 // Forms styles
 const Form = styled.form`
@@ -152,38 +143,35 @@ const Form = styled.form`
     justify-content: center;
     flex-wrap:wrap;
     padding: 2em;
-    width: 50%;
+    width: 80%;
     height: 90%;
 `;
 
 const FormItem = styled.div`
     display: flex;
-    justify-content: center;
+    justify-content: start;
     flex-wrap: wrap;
     width: 100%;
-    padding: 0.75em;
 `;
 
 const Label = styled.label`
-    width: 100%;
-    padding: 10px;
-    text-align:center;
+    width: 30%;
+    padding:10px;
+    text-align:end;
 `;
 
 const Input = styled.input`
     width: 50%;
     height: 3em;
     border-radius:4px;
-    border: none;
     padding: 10px;
     border: 1px solid #767676;
 `;
 
 const TextArea = styled.textarea`
     width: 50%;
-    min-height: 5em;
+    height:6em;
     border-radius:4px;
-    border: none;
     padding: 10px;
     border: 1px solid #767676;
     resize: none;
@@ -192,7 +180,7 @@ const TextArea = styled.textarea`
 const SubmitButton = styled.input`
     font-size: 1em;
     font-weight: 600;
-    background: #129912;
+    background: #00857A;
     color: white;
     border-radius:4px;
     border: none;
@@ -201,37 +189,25 @@ const SubmitButton = styled.input`
     padding: 1em;
     margin-top: 2em;
     &:hover{
-        background: #4aaf4a;
-    }
-`;
-
-//ignredients list styles
-const Ingredients = styled.div`
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    width: 60%;
-    margin-left: 10%;
-`;
-
-const PlusButton = styled(FiPlusCircle)`
-    font-size: 30px;
-    color: #129912;
-    margin-left: 15px;
-    background: none;
-    border: none;
-    &:hover{
-        color: #1bff1b;
+        background: #069b8c;
     }
 `;
 
 const Select = styled.select`
-    height: 70%;
-    width: 100%;
-    background: #f5f7fa;
-    width: 50%;
+    width: 40%;
+    height: 3em;
+    border-radius:4px;
+    border: 1px solid #767676;
+`;
+
+const MeasureInput = styled.input`
+    width: 10%;
     height: 3em;
     border-radius:4px;
     padding: 10px;
     border: 1px solid #767676;
+    &::-webkit-inner-spin-button,::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0; 
+    }
 `;
