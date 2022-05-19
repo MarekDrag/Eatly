@@ -62,8 +62,17 @@ export default function AddRecipe(){
                         name='name' 
                         value={formValues.name}
                         onChange={e => handleChange}
-                        placeholder='nazwa przepisu'/>
+                        placeholder='np. Ogórkowa'/>
                     </FormItem>
+
+                    <Fieldset>
+                            <Label htmlfor='breakfast'>Śniadanie</Label>
+                            <Input type='radio' id='breakfast' name='type' value='breakfast'/>
+                            <Label htmlfor='lunch'>Obiad</Label>
+                            <Input type='radio' id='lunch' name='type' value='lunch'/>
+                            <Label htmlfor='dinner'>Kolacja</Label>
+                            <Input type='radio' id='dinner' name='type' value='dinner'/>
+                    </Fieldset>
    
                     <FormItem>
                         <Label htmlFor='instructions'>Instrukcje:</Label>
@@ -73,7 +82,7 @@ export default function AddRecipe(){
                         name='instructions' 
                         value={formValues.instructions}
                         onChange={e => handleChange}
-                        placeholder='instrukcje' />
+                        placeholder='np. Zagotuj wode i wrzuć do niej wcześniej pokrojonego ogórka' />
                     </FormItem>
                   
                     <FormItem>
@@ -85,6 +94,7 @@ export default function AddRecipe(){
                             })}
                         </Select>
                         <MeasureInput type='number' id='measure'/>
+                        <div>ml</div>
                     </FormItem>
 
                     <FormItem>
@@ -95,18 +105,18 @@ export default function AddRecipe(){
                         name='cooking_time' 
                         value={formValues.cooking_time}
                         onChange={e => handleChange}
-                        placeholder='czas gotowania'/>
+                        placeholder='np. 130m'/>
                     </FormItem>
 
                     <FormItem>
                         <Label htmlFor='img_url'>Link do zdjęcia:</Label>
                         <Input 
-                        type='text' 
+                        type='url' 
                         id='img_url' 
                         name='img_url' 
                         value={formValues.img_url}
                         onChange={e => handleChange}
-                        placeholder='link'/>
+                        placeholder='https://sfsd.pl'/>
                     </FormItem>
 
                     <SubmitButton 
@@ -143,7 +153,7 @@ const Form = styled.form`
     justify-content: center;
     flex-wrap:wrap;
     padding: 2em;
-    width: 80%;
+    min-width: 80%;
     height: 90%;
 `;
 
@@ -152,6 +162,25 @@ const FormItem = styled.div`
     justify-content: start;
     flex-wrap: wrap;
     width: 100%;
+`;
+
+const Fieldset = styled.fieldset`
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-left:10%;
+    width: 50%;
+    margin-top:-5%;
+    border:none;
+    & input {
+        height:1em;
+        padding:0;
+        width:10%;
+    }
+    & label {
+        padding:0;
+        width:20%;
+    }
 `;
 
 const Label = styled.label`
@@ -166,6 +195,9 @@ const Input = styled.input`
     border-radius:4px;
     padding: 10px;
     border: 1px solid #767676;
+    &::-webkit-inner-spin-button,::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    }
 `;
 
 const TextArea = styled.textarea`
@@ -194,20 +226,20 @@ const SubmitButton = styled.input`
 `;
 
 const Select = styled.select`
-    width: 40%;
+    width: 30%;
     height: 3em;
     border-radius:4px;
     border: 1px solid #767676;
 `;
 
 const MeasureInput = styled.input`
-    width: 10%;
+    width: 14%;
     height: 3em;
     border-radius:4px;
     padding: 10px;
+    margin:0 1%;
     border: 1px solid #767676;
     &::-webkit-inner-spin-button,::-webkit-outer-spin-button { 
     -webkit-appearance: none; 
-    margin: 0; 
     }
 `;

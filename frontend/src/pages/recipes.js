@@ -57,8 +57,13 @@ const Title = styled.button`
         cursor:pointer;
     }
     & a{
+        display:flex;
+        justify-content:center;
+        align-items:center;
         color:#fff;
         text-decoration:none;
+        width:10em;
+        height:3em;
     }
 `;
 
