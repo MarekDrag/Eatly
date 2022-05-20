@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { FiPlusCircle } from 'react-icons/fi';
-import { v4 as uuidv4 } from 'uuid';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import axios from '../axios';
+import {AiOutlinePlus} from 'react-icons/ai';
 
 export default function AddRecipe(){
     const initialValue = { name: '', ingredients:[], instructions:[], cooking_time:'', img_url:''};
     const [formValues, setFormValues] = useState(initialValue);
     const [ingredients, setIngredients] = useState([]);
-
+    const ingredientInput = useRef('');
+    const measureInput = useRef('');
+    const instructionInput = useRef('');
+    
     const fetchIngredients = async () => {
         try {
           const res = await axios.get("/api/ingredients");
@@ -25,6 +27,23 @@ export default function AddRecipe(){
     function handleChange(e) {
         const { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
+        
+    }
+
+    function handleClick(name){
+        const ingredient = ingredientInput.current.value;
+        const measure = measureInput.current.value;
+        const instruction = instructionInput.current.value;
+
+        if(name === 'ingredients' && ingredient !== '' && measure !== ''){
+            setFormValues({...formValues, ingredients:[...formValues.ingredients, {name:ingredient, measure}]});
+            ingredientInput.current.value='';
+            measureInput.current.value='';
+        }
+        else if(name === 'instructions' && instruction !== ''){
+            setFormValues({...formValues, instructions:[...formValues.instructions, instruction]});
+            instructionInput.current.value='';
+        }
     }
 
     function submit(e){
@@ -60,8 +79,7 @@ export default function AddRecipe(){
                         type='text' 
                         id='name' 
                         name='name' 
-                        value={formValues.name}
-                        onChange={e => handleChange}
+                        onChange={e => handleChange(e)}
                         placeholder='np. Ogórkowa'/>
                     </FormItem>
 
@@ -80,21 +98,32 @@ export default function AddRecipe(){
                         type='text' 
                         id='instructions' 
                         name='instructions' 
-                        value={formValues.instructions}
-                        onChange={e => handleChange}
+                        ref={instructionInput}
                         placeholder='np. Zagotuj wode i wrzuć do niej wcześniej pokrojonego ogórka' />
+                        <PlusInstruction onClick={e => handleClick('instructions')}/>
+                        <Components>
+                                {formValues.instructions.map(instruction => {
+                                return <div>-{instruction}</div>
+                                })}
+                        </Components>
                     </FormItem>
                   
                     <FormItem>
                         <Label htmlFor='ingredients'>Wybierz składniki:</Label>
-                        <Select name='ingredients'>
+                        <Select ref={ingredientInput} name='ingredients'>
                             {ingredients.map(ingredient => {
-
-                              return <option>{ingredient.name}</option>
+                              return <option key={ingredient.name} value={ingredient.name}>{ingredient.name} {ingredient.measure}</option>
                             })}
                         </Select>
-                        <MeasureInput type='number' id='measure'/>
-                        <div>ml</div>
+                        <MeasureInput ref={measureInput} type='number' id='measure'/>
+                        <PlusIngredient onClick={e => handleClick('ingredients')}/>
+                        <Components>
+                            {formValues.ingredients.map(ingredient => {
+                                return <div>{ingredient.name} - {ingredient.measure}
+                                {ingredients.find(ingred => ingred.name === ingredient.name).measure}
+                                </div>
+                            })}
+                        </Components>
                     </FormItem>
 
                     <FormItem>
@@ -103,8 +132,7 @@ export default function AddRecipe(){
                         type='number' 
                         id='cooking_time' 
                         name='cooking_time' 
-                        value={formValues.cooking_time}
-                        onChange={e => handleChange}
+                        onChange={e => handleChange(e)}
                         placeholder='np. 130m'/>
                     </FormItem>
 
@@ -114,8 +142,7 @@ export default function AddRecipe(){
                         type='url' 
                         id='img_url' 
                         name='img_url' 
-                        value={formValues.img_url}
-                        onChange={e => handleChange}
+                        onChange={e => handleChange(e)}
                         placeholder='https://sfsd.pl'/>
                     </FormItem>
 
@@ -137,7 +164,7 @@ const PageContainer = styled.div`
     justify-content: center;
     flex-wrap: wrap;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     padding-top:80px;
 `;
 
@@ -152,9 +179,9 @@ const Form = styled.form`
     display: flex;
     justify-content: center;
     flex-wrap:wrap;
-    padding: 2em;
+    padding: 2rem;
     min-width: 80%;
-    height: 90%;
+    min-height: 90vh;
 `;
 
 const FormItem = styled.div`
@@ -162,25 +189,33 @@ const FormItem = styled.div`
     justify-content: start;
     flex-wrap: wrap;
     width: 100%;
+    margin: 1%;
 `;
 
 const Fieldset = styled.fieldset`
     display:flex;
     justify-content:center;
     align-items:center;
-    margin-left:10%;
     width: 50%;
-    margin-top:-5%;
+    margin: 1%;
+    margin-left:10%;
     border:none;
     & input {
-        height:1em;
-        padding:0;
-        width:10%;
+        height:1rem;
+        margin-left:5px;
+        width:1rem;
     }
     & label {
         padding:0;
         width:20%;
     }
+`;
+
+const Components = styled.div`
+    width:50%;
+    margin: 1%;
+    margin-left:30%;
+    overflow-wrap:break-word;
 `;
 
 const Label = styled.label`
@@ -191,7 +226,7 @@ const Label = styled.label`
 
 const Input = styled.input`
     width: 50%;
-    height: 3em;
+    height: 3rem;
     border-radius:4px;
     padding: 10px;
     border: 1px solid #767676;
@@ -202,13 +237,55 @@ const Input = styled.input`
 
 const TextArea = styled.textarea`
     width: 50%;
-    height:6em;
+    height:5rem;
     border-radius:4px;
     padding: 10px;
     border: 1px solid #767676;
     resize: none;
 `;
 
+const Select = styled.select`
+    width: 30%;
+    height: 3rem;
+    border-radius:4px;
+    border: 1px solid #767676;
+`;
+
+const MeasureInput = styled.input`
+    width: 19%;
+    height: 3rem;
+    border-radius:4px;
+    padding: 10px;
+    margin-left:1%;
+    border: 1px solid #767676;
+    &::-webkit-inner-spin-button,::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    }
+`;
+
+
+
+const PlusInstruction = styled(AiOutlinePlus)`
+    align-items:center;
+    height:5rem;
+    margin-left:10px;
+    font-size:20px;
+    color: #00857A;
+    &:hover{
+        color:#0afc3a
+    }
+`;
+
+const PlusIngredient = styled(AiOutlinePlus)`
+    align-items:center;
+    height:3rem;
+    margin-left:10px;
+    font-size:20px;
+    color: #00857A;
+    &:hover{
+        color:#0afc3a
+    }
+`;
 const SubmitButton = styled.input`
     font-size: 1em;
     font-weight: 600;
@@ -222,24 +299,5 @@ const SubmitButton = styled.input`
     margin-top: 2em;
     &:hover{
         background: #069b8c;
-    }
-`;
-
-const Select = styled.select`
-    width: 30%;
-    height: 3em;
-    border-radius:4px;
-    border: 1px solid #767676;
-`;
-
-const MeasureInput = styled.input`
-    width: 14%;
-    height: 3em;
-    border-radius:4px;
-    padding: 10px;
-    margin:0 1%;
-    border: 1px solid #767676;
-    &::-webkit-inner-spin-button,::-webkit-outer-spin-button { 
-    -webkit-appearance: none; 
     }
 `;

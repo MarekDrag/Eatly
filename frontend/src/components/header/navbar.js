@@ -15,7 +15,7 @@ export default function Navbar(){
 
     return(
         <nav>
-            <div className={`${isOpen ? style.darkBgActive : style.darkBg}`}></div>
+            <div className={`${isOpen ? style.darkBgActive : style.darkBg}`} onClick={() => setIsOpen(!isOpen)}></div>
             <ul className={`${style.list} ${isOpen ? style.active : ''}`}>
                 <li className={style.li}>
                     <Link to="/planer-posilkow"><GoCalendar/> Planer</Link>
