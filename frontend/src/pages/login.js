@@ -40,7 +40,7 @@ export default function Login(){
     return(
         <Container>
             <Wrapper>
-                <Title>Sign In</Title>
+                <Title>Zaloguj się</Title>
                 <Form onSubmit={submit}>
                     <FormItem>
                         <Label htmlFor='email'>E-mail</Label>
@@ -76,6 +76,7 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     width: 100%;
+    background:#F0F2F5;
 `;
     
 const Wrapper = styled.div`
@@ -90,11 +91,17 @@ const Wrapper = styled.div`
     min-width: 300px;
     height: 500px;
     margin: 15vh 0 30vh 0;
+    background:#F0F2F5;
+    @media(max-width:1000px){
+        width:100%;
+        box-shadow:none;
+  }
 `;
 
 const Title = styled.h2`
     width: 100%;
     text-align: center;
+    color: #00857A;
 `;
 
 const Form = styled.form`
@@ -127,14 +134,14 @@ const Input = styled.input`
 `;
 
 const Submit = styled.button`
+    width: 50%;
+    padding: 1em;
     font-size: 1em;
     font-weight: 600;
     background: #00857A;
     color: white;
     border-radius:4px;
     border: none;
-    width: 50%;
-    padding: 1em;
     &:hover{
         background: #00756F;
     }   

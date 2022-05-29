@@ -46,14 +46,14 @@ export default function Navbar(){
                     </>
                 }
             </ul>
-            <div 
+            <button 
             className={`${style.hamburger} ${isOpen ? style.active : ''}`} 
             onClick={() => setIsOpen(!isOpen)}
             >
                 <span className={style.bar}></span>
                 <span className={style.bar}></span>
                 <span className={style.bar}></span>
-            </div>
+            </button>
         </nav>
     );
 };

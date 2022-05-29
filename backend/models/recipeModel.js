@@ -10,30 +10,36 @@ const recipeSchema = mongoose.Schema({
     required: [true, "Please add a slug"],
   },
   id: {
-    type: Number,
-    required: [true, "Please add a id"],
+    type: String,
+    required: [true, "Please add id"],
   },
   ingredients: {
     type: Array,
-    required: [true, "Please add a ingredient"],
+    required: [true, "Please add ingredient"],
   },
   instructions: {
     type: Array,
-    required: [true, "Please add a instructions"],
+    required: [true, "Please add instructions"],
   },
   cooking_time: {
     type: Number,
-    required: [true, "Please add a cooking time"],
-  },
-  calories: {
-    type: Number
+    required: [true, "Please add cooking time"],
   },
   type: {
     type: String,
-    required: [true, "Please add a type of meal"],
+    required: [true, "Please add type of meal"],
+  },
+  price: {
+    type: Number,
+    required: [true, "Please add price"],
+  },
+  calories: {
+    type: Number,
+    required: [true, "Please add calories"],
   },
   img_url: {
     type: String,
+    required: [true, "Please add price"],
   }
 });
 

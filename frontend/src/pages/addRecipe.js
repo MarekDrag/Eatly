@@ -1,95 +1,103 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import axios from '../axios';
-import {AiOutlinePlus} from 'react-icons/ai';
+import { v4 as uuidv4 } from "uuid";
+import { Link, useNavigate } from 'react-router-dom';
+import { AiOutlineArrowLeft, AiOutlinePlus } from 'react-icons/ai';
+import calculatePriceAndCalories from '../helpers/calculateRecipe';
 
 export default function AddRecipe(){
-    const initialValue = { name: '', ingredients:[], instructions:[], cooking_time:'', img_url:''};
+    const initialValue = { name: '', ingredients:[], instructions:[], cooking_time:'', img_url:'', type:''};
     const [formValues, setFormValues] = useState(initialValue);
     const [ingredients, setIngredients] = useState([]);
     const ingredientInput = useRef('');
-    const measureInput = useRef('');
+    const quantityInput = useRef('');
     const instructionInput = useRef('');
-    
-    const fetchIngredients = async () => {
+    const navigate = useNavigate();
+  
+    async function fetchIngredients(){
         try {
           const res = await axios.get("/api/ingredients");
-          setIngredients(res.data)
+          const arr = ['', ...res.data];
+          setIngredients(arr);
         } catch (err) {
           console.log(err.response);
         }
-      };
-    
-      useEffect(() => {
-        fetchIngredients();
-      }, []);
+    };
+    useEffect(() => {
+    fetchIngredients();
+    }, []);
 
     function handleChange(e) {
         const { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
-        
     }
 
     function handleClick(name){
-        const ingredient = ingredientInput.current.value;
-        const measure = measureInput.current.value;
+        const ingredient = ingredientInput.current.value.split('/');
+        const quantity = quantityInput.current.value;
         const instruction = instructionInput.current.value;
 
-        if(name === 'ingredients' && ingredient !== '' && measure !== ''){
-            setFormValues({...formValues, ingredients:[...formValues.ingredients, {name:ingredient, measure}]});
+        if(name === 'ingredients' && ingredient !== '' && quantity !== ''){
+            const name = ingredient[0];
+            const measure = ingredient[1];
+            setFormValues({...formValues, ingredients:[...formValues.ingredients, {name, measure, quantity}]});
             ingredientInput.current.value='';
-            measureInput.current.value='';
+            quantityInput.current.value='';
+            ingredientInput.current.focus();
         }
         else if(name === 'instructions' && instruction !== ''){
             setFormValues({...formValues, instructions:[...formValues.instructions, instruction]});
             instructionInput.current.value='';
+            instructionInput.current.focus();
         }
     }
 
     function submit(e){
         e.preventDefault();
-        const name = formValues.name;
-        const slug = formValues.name.split(' ').join('-');
-        const ingredients = formValues.ingredients;
-        const instructions = formValues.instructions;
-        const cooking_time = formValues.cooking_time;
-        const img_url = formValues.img_url;
-
+        const [price, calories] = calculatePriceAndCalories(ingredients, formValues.ingredients);
         const recipe = {
-            name,
-            slug,
-            ingredients,
-            instructions,
-            cooking_time,
-            img_url
+            name: formValues.name,
+            slug: formValues.name.split(' ').join('-'),
+            id: uuidv4(),
+            type: formValues.type,
+            ingredients: formValues.ingredients,
+            instructions:  formValues.instructions,
+            cooking_time: formValues.cooking_time,
+            price,
+            calories,
+            img_url: formValues.img_url
         }
-
+        
         axios.post('/api/recipes', recipe)
         .then(res => console.log(res.data));
+        navigate('/przepisy');
     }
 
     return(
         <PageContainer>
                 <Title>Dodaj przepis</Title>
+                <Link to='/przepisy'><ArrowIcon/></Link>
                 <Form onSubmit={submit}>
 
                     <FormItem>
                         <Label htmlFor='name'>Nazwa przepisu:</Label>
                         <Input 
+                        required
                         type='text' 
                         id='name' 
                         name='name' 
                         onChange={e => handleChange(e)}
-                        placeholder='np. Ogórkowa'/>
+                        placeholder='Nazwa dania'/>
                     </FormItem>
 
-                    <Fieldset>
+                    <Fieldset required>
                             <Label htmlfor='breakfast'>Śniadanie</Label>
-                            <Input type='radio' id='breakfast' name='type' value='breakfast'/>
+                            <Input type='radio' id='breakfast' name='type' value='breakfast' onChange={e => handleChange(e)}/>
                             <Label htmlfor='lunch'>Obiad</Label>
-                            <Input type='radio' id='lunch' name='type' value='lunch'/>
+                            <Input type='radio' id='lunch' name='type' value='lunch' onChange={e => handleChange(e)}/>
                             <Label htmlfor='dinner'>Kolacja</Label>
-                            <Input type='radio' id='dinner' name='type' value='dinner'/>
+                            <Input type='radio' id='dinner' name='type' value='dinner' onChange={e => handleChange(e)}/>
                     </Fieldset>
    
                     <FormItem>
@@ -99,8 +107,8 @@ export default function AddRecipe(){
                         id='instructions' 
                         name='instructions' 
                         ref={instructionInput}
-                        placeholder='np. Zagotuj wode i wrzuć do niej wcześniej pokrojonego ogórka' />
-                        <PlusInstruction onClick={e => handleClick('instructions')}/>
+                        placeholder='np. Pokrój marchewkę w kostkę' />
+                        <PlusInstruction onClick={() => handleClick('instructions')}/>
                         <Components>
                                 {formValues.instructions.map(instruction => {
                                 return <div>-{instruction}</div>
@@ -112,15 +120,18 @@ export default function AddRecipe(){
                         <Label htmlFor='ingredients'>Wybierz składniki:</Label>
                         <Select ref={ingredientInput} name='ingredients'>
                             {ingredients.map(ingredient => {
-                              return <option key={ingredient.name} value={ingredient.name}>{ingredient.name} {ingredient.measure}</option>
+                              return <option 
+                                key={ingredient.name} 
+                                value={`${ingredient.name}/${ingredient.measure}`}>
+                                    {ingredient.name} {ingredient.measure}
+                              </option>
                             })}
                         </Select>
-                        <MeasureInput ref={measureInput} type='number' id='measure'/>
-                        <PlusIngredient onClick={e => handleClick('ingredients')}/>
+                        <MeasureInput ref={quantityInput} type='number' id='quanity' placeholder='Podaj ilość'/>
+                        <PlusIngredient onClick={() => handleClick('ingredients')}/>
                         <Components>
                             {formValues.ingredients.map(ingredient => {
-                                return <div>{ingredient.name} - {ingredient.measure}
-                                {ingredients.find(ingred => ingred.name === ingredient.name).measure}
+                                return <div>{ingredient.name} - {ingredient.quantity}{ingredient.measure}
                                 </div>
                             })}
                         </Components>
@@ -129,21 +140,23 @@ export default function AddRecipe(){
                     <FormItem>
                         <Label htmlFor='cooking_time'>Czas gotowania:</Label>
                         <Input 
+                        required
                         type='number' 
                         id='cooking_time' 
                         name='cooking_time' 
                         onChange={e => handleChange(e)}
-                        placeholder='np. 130m'/>
+                        placeholder='Czas podaj w minutach'/>
                     </FormItem>
 
                     <FormItem>
                         <Label htmlFor='img_url'>Link do zdjęcia:</Label>
                         <Input 
-                        type='url' 
+                        required
+                        type='text' 
                         id='img_url' 
                         name='img_url' 
                         onChange={e => handleChange(e)}
-                        placeholder='https://sfsd.pl'/>
+                        placeholder='https://zdjęcie.com'/>
                     </FormItem>
 
                     <SubmitButton 
@@ -166,11 +179,19 @@ const PageContainer = styled.div`
     width: 100%;
     min-height: 100vh;
     padding-top:80px;
+    background:#F0F2F5;
 `;
 
 const Title = styled.h2`
     width: 100%;
     text-align: center;
+`;
+
+const ArrowIcon = styled(AiOutlineArrowLeft)`
+    position:absolute;
+    color: #00857A;
+    font-size:30px;
+    left:30px;
 `;
 
 

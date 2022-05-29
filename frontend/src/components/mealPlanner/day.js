@@ -3,13 +3,9 @@ import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
 export default function Day(props) {
-  const initialMeals = {
-    breakfast: '',
-    lunch: '',
-    dinner: ''
-  }
+  const initialMeals = {breakfast: '', lunch: '', dinner: ''}
   const [calories, setCalories] = useState(0);
-  const [meals, setMeals] = useState(initialMeals);
+  const [mealsID, setMealsID] = useState(initialMeals);
   const [mealsNames, setMealsNames] = useState(initialMeals);
   
   function setToLocalStorage(meal){
@@ -22,36 +18,21 @@ export default function Day(props) {
 
   function handleChange(e) {
     const {name} = e.target;
-    const {id, recipe} = JSON.parse(e.target.value);
-    setMeals({ ...meals, [name]: id });
+    const {id, recipe} = e.target.value;
+    setMealsID({ ...mealsID, [name]: id });
     setMealsNames({...mealsNames, [name]: recipe})
-    setToLocalStorage({ ...meals, [name]: id });
-  };
-
-  // filters meal by id and set nutritions of this meal to the summary
-  function filterMealsByID(){
-    let calculatedCalories = 0;
-    let filteredMeals = props.recipes
-      .filter(recipe => recipe.id == meals.breakfast || recipe.id == meals.lunch || recipe.id == meals.dinner);
-    filteredMeals.map(meal => {
-      calculatedCalories += meal.calories;});
-      setCalories(calories);
-    filteredMeals.map(m => {
-      setMealsNames({...mealsNames, [m.type]: m.name})
-    })
+    setToLocalStorage({ ...mealsID, [name]: id });
   };
   
   useEffect(() => {
     let existing = localStorage.getItem(props.date);
     if(existing){
-      setMeals(JSON.parse(existing)); 
+      setMealsID(JSON.parse(existing)); 
     }
-    filterMealsByID();
   }, []);
 
   useEffect(() => {
-    filterMealsByID();
-  }, [meals]);
+  }, [mealsID]);
   
   
   return (
@@ -62,10 +43,10 @@ export default function Day(props) {
         </DayBox>
         <Dish key={uuidv4()}>
             <BoxType>Śniadanie</BoxType>
-            <Select name='breakfast' onChange={handleChange}>
-                <option value={meals.breakfast}>{mealsNames.breakfast}</option>
+            <Select name='breakfast' onChange={e => handleChange(e)}>
+                <option value={mealsID.breakfast}>{mealsNames.breakfast}</option>
                 {props.options.breakfast.map(recipe => (
-                  <option key={uuidv4()} value={JSON.stringify({id:recipe.id, recipe:recipe.name})}>
+                  <option key={uuidv4()} value={{id:recipe.id, recipe:recipe.name}}>
                     {recipe.name}
                   </option>
                 ))}
@@ -73,10 +54,10 @@ export default function Day(props) {
         </Dish>
         <Dish key={uuidv4()}>
             <BoxType>Obiad</BoxType>
-            <Select name='lunch' onChange={handleChange}>
-              <option value={meals.lunch}>{mealsNames.lunch}</option>
+            <Select name='lunch' onChange={e => handleChange(e)}>
+                <option value={mealsID.breakfast}>{mealsNames.lunch}</option>
                 {props.options.lunch.map(recipe => (
-                  <option key={uuidv4()} value={JSON.stringify({id:recipe.id, recipe:recipe.name})}>
+                  <option key={uuidv4()} value={{id:recipe.id, recipe:recipe.name}}>
                     {recipe.name}
                   </option>
                 ))}
@@ -84,10 +65,10 @@ export default function Day(props) {
         </Dish>
         <Dish key={uuidv4()}>
             <BoxType>Kolacja</BoxType>
-            <Select name='dinner' onChange={handleChange}>
-              <option value={meals.dinner}>{mealsNames.dinner}</option>
+            <Select name='dinner' onChange={e => handleChange(e)}>
+              <option value={mealsID.dinner}>{mealsNames.dinner}</option>
                 {props.options.dinner.map(recipe => (
-                  <option key={uuidv4()} value={JSON.stringify({id:recipe.id, recipe:recipe.name})}>
+                  <option key={uuidv4()} value={{id:recipe.id, recipe:recipe.name}}>
                     {recipe.name}
                   </option>
                 ))}
@@ -130,17 +111,14 @@ const Dish = styled.div`
   flex-wrap: wrap;
   position: relative;
   height: 100px;
-  border: 1px solid black;
+  border: 1px solid #B9BBBD;
   font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 `;
 
 const BoxType = styled.div`
   position:absolute;
-  width:inherit;
-  height:inherit;
-  text-align:center;
   font-size:20px;
-  opacity:0.3;
+  color:#B9BBBD;
 `;
 
 const Select = styled.select`
@@ -159,7 +137,8 @@ const Calories = styled.div`
   justify-content: center;
   align-items:center;
   height: 50px;
-  border: 1px solid black;
+  border: 1px solid #B9BBBD;
+  color: #686a6b;
   font-size:1em;
   font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 `;

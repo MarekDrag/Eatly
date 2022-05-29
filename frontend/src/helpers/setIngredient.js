@@ -18,6 +18,4 @@ export default async function setIngredient() {
     };
     await axios.post("http://localhost:5000/api/ingredients", ingredient);
     console.log('ok');
-   
-  
 }

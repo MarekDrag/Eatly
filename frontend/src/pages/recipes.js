@@ -1,23 +1,55 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import axios from '../axios';
+import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
+import { AiOutlineArrowLeft } from 'react-icons';
 
 export default function Recipes(){
+    const [recipes, setRecipes] = useState([]);
+    const [type, setType] = useState('breakfast');
+    const navigate = useNavigate();
+
+    const fetchRecipes = async () => {
+        try {
+          const res = await axios.get("/api/recipes");
+          setRecipes(res.data);
+        } catch (err) {
+          console.log(err.response);
+        }
+    };
+    useEffect(() => {
+        fetchRecipes();
+    }, []);
+
+    function changeMealType(value){
+        setType(value)
+    }
+
+
+
     return(
         <Container>
-            <Titles>
-                <Title>Śniadanie</Title>
-                <Title>Obiad</Title>
-                <Title>Kolacja</Title>
-                <Title>
+            <Meals>
+                <MealButton onClick={() => changeMealType('breakfast')}>Śniadanie</MealButton>
+                <MealButton onClick={() => changeMealType('lunch')}>Obiad</MealButton>
+                <MealButton onClick={() => changeMealType('dinner')}>Kolacja</MealButton>
+                <MealButton>
                     <Link to='/dodaj-przepis'>+Dodaj Przepis</Link>
-                </Title>
-            </Titles>
+                </MealButton>
+            </Meals>
+
             <Wrapper>
-                <Recipe>
-                    <Image src="https://cdn.aniagotuje.com/pictures/articles/2021/10/20290192-v-1080x1080.jpg"/>
-                    <Name>name</Name>
-                    <CookingTime>czas gotowania: 30 m</CookingTime>
-                </Recipe>
+                        {recipes.filter(recipe => recipe.type === type).map(recipe => {
+                            return(
+                                    <Recipe key={recipe.id} 
+                                    onClick={() => {navigate(`/przepisy/${recipe.slug}`)}}>
+                                        <Image src={recipe.img_url}/>
+                                        <Name>{recipe.name}</Name>
+                                        <CookingTime>Czas gotowania: {recipe.cooking_time}m</CookingTime>
+                                    </Recipe>
+                            )})}
+
             </Wrapper>
         </Container>
     )
@@ -30,9 +62,10 @@ const Container = styled.div`
     width:100%;
     min-height:100vh;
     padding-top:70px;
+    background:#F0F2F5;
 `;
 
-const Titles = styled.div`
+const Meals = styled.div`
     display:flex;
     justify-content: center;
     gap:10px;
@@ -41,7 +74,7 @@ const Titles = styled.div`
     margin-top:10%;
 `;
 
-const Title = styled.button`
+const MealButton = styled.button`
     display:flex;
     justify-content:center;
     align-items:center;
@@ -78,7 +111,12 @@ const Wrapper = styled.div`
 
 const Recipe = styled.div`
     border:1px solid #adadad;
-    width:250px;
+    width:251px;
+    height:300px;
+    &:hover{
+        background:#FFF;
+        box-shadow: 0px 0px 14px 0px rgba(66, 68, 90, 1);
+    }
 `;
 
 
@@ -87,10 +125,14 @@ const Image = styled.img`
 `;
 
 const Name = styled.div`
+    margin-top:10px;
+    text-align:center;
     width:250px;
     font-size:1.5em;
 `;
 
 const CookingTime = styled.div`
+    margin-top:10px;
+    text-align:center;
     width:250px;
 `;

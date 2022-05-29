@@ -12,6 +12,7 @@ import AuthContext from "./contexts/authContext";
 import DateContext from "./contexts/dateContext";
 import { useEffect, useState } from "react";
 import getCurrentWeek from "./helpers/getCurrentWeek";
+import DetailRecipePage from "./pages/detailRecipePage";
 
 function App() {
   const [auth, setAuth] = useState(false);
@@ -27,6 +28,7 @@ function App() {
     <Routes>
       <Route exact path="/planer-posilkow" element={<MealPlanner />} />
       <Route path="/przepisy" element={<Recipes />} />
+      <Route path="/przepisy/:slug" element={<DetailRecipePage/>}/>
       <Route path="/zaloguj-sie" element={<Login />} />
       <Route path="/zarejstruj-sie" element={<Register />} />
       <Route path="/dodaj-przepis" element={<AddRecipe />} />

@@ -150,6 +150,7 @@ const PageContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  background:#F0F2F5;
 `;
 
 const Wrapper = styled.div`
@@ -163,6 +164,11 @@ const Wrapper = styled.div`
   width: 50%;
   height: 60vh;
   margin: 15vh 0 30vh 0;
+  background:#F0F2F5;
+  @media(max-width:1000px){
+    width:100%;
+    box-shadow:none;
+  }
 `;
 
 const Container = styled.div`
@@ -195,6 +201,7 @@ const Link = styled.a`
 const Title = styled.h2`
   width: 100%;
   text-align: center;
+  color: #00857A;
 `;
 
 const Form = styled.form`
@@ -202,7 +209,7 @@ const Form = styled.form`
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  width: 400px;
+  width: 70%;
   height: 60vh;
 `;
 
@@ -228,14 +235,15 @@ const Input = styled.input`
 `;
 
 const Submit = styled.button`
+  width: 50%;
+  padding: 1em;
+  margin-top:2em;
   font-size: 1em;
   font-weight: 600;
   background: #00857A;
   color: white;
   border-radius: 4px;
   border: none;
-  width: 50%;
-  padding: 1em;
   &:hover {
     background: #00756F;
   }
