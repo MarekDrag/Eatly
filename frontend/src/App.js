@@ -13,6 +13,7 @@ import DateContext from "./contexts/dateContext";
 import { useEffect, useState } from "react";
 import getCurrentWeek from "./helpers/getCurrentWeek";
 import DetailRecipePage from "./pages/detailRecipePage";
+import PageNotFound from "./pages/pageNotFound";
 
 function App() {
   const [auth, setAuth] = useState(false);
@@ -23,24 +24,26 @@ function App() {
     setDate(week);
   }, []);
 
-  const header = <Header />;
   const content = (
     <Routes>
-      <Route exact path="/planer-posilkow" element={<MealPlanner />} />
+      <Route path="/planer-posilkow" element={<MealPlanner />} />
       <Route path="/przepisy" element={<Recipes />} />
       <Route path="/przepisy/:slug" element={<DetailRecipePage/>}/>
+      <Route path="/przepisy/dodaj-przepis" element={<AddRecipe />} />
       <Route path="/zaloguj-sie" element={<Login />} />
       <Route path="/zarejstruj-sie" element={<Register />} />
-      <Route path="/dodaj-przepis" element={<AddRecipe />} />
+      <Route path="*" element={<PageNotFound/>} />
     </Routes>
   );
-  const footer = <Footer />;
 
   return (
     <AuthContext.Provider value={{ auth, setAuth }}>
       <DateContext.Provider value={{ date, setDate }}>
         <Router>
-          <Layout header={header} content={content} footer={footer} />
+          <Layout 
+          header={ <Header />} 
+          content={content} 
+          footer={<Footer />} />
         </Router>
       </DateContext.Provider>
     </AuthContext.Provider>

@@ -84,18 +84,17 @@ const Wrapper = styled.div`
     justify-content: center;
     align-items: center;
     flex-wrap:wrap;
-    background: white;
-    box-shadow: 0 0 1em;
-    border-radius: 5px;
     width: 50%;
     min-width: 300px;
     height: 500px;
     margin: 15vh 0 30vh 0;
     background:#F0F2F5;
+    box-shadow: 0 0 1em;
+    border-radius: 5px;
     @media(max-width:1000px){
         width:100%;
         box-shadow:none;
-  }
+    }
 `;
 
 const Title = styled.h2`
@@ -127,9 +126,9 @@ const Label = styled.label`
 const Input = styled.input`
     width: 90%;
     height: 3em;
+    padding: 10px;
     border-radius:4px;
     border: none;
-    padding: 10px;
     border: 1px solid #767676;
 `;
 

@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import axios from '../axios';
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import { AiOutlineArrowLeft } from 'react-icons';
 
 export default function Recipes(){
     const [recipes, setRecipes] = useState([]);
@@ -26,8 +25,6 @@ export default function Recipes(){
         setType(value)
     }
 
-
-
     return(
         <Container>
             <Meals>
@@ -35,7 +32,7 @@ export default function Recipes(){
                 <MealButton onClick={() => changeMealType('lunch')}>Obiad</MealButton>
                 <MealButton onClick={() => changeMealType('dinner')}>Kolacja</MealButton>
                 <MealButton>
-                    <Link to='/dodaj-przepis'>+Dodaj Przepis</Link>
+                    <Link to='/przepisy/dodaj-przepis'>+Dodaj Przepis</Link>
                 </MealButton>
             </Meals>
 

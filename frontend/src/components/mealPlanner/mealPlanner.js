@@ -8,18 +8,15 @@ import axios from '../../axios';
 export default function MealPlanner() {
   const { date } = useContext(DateContext);
   const [loading, setLoading] = useState(false);
-  const [recipes, setRecipes] = useState([]);
   const [options, setOptions] = useState({});
 
     async function fetchRecipes(){
     try{
         const res = await axios.get("/api/recipes")
-        const arr = res.data;
-        let breakfast = arr.filter(recipe => recipe.type === "breakfast");
-        let lunch = arr.filter(recipe => recipe.type === "lunch");
-        let dinner = arr.filter(recipe => recipe.type === "dinner");
+        let breakfast = res.data.filter(recipe => recipe.type === "breakfast");
+        let lunch = res.data.filter(recipe => recipe.type === "lunch");
+        let dinner = res.data.filter(recipe => recipe.type === "dinner");
         setOptions({ breakfast, lunch, dinner });
-        setRecipes(arr);
         setLoading(!loading);
     } catch (ex) {
         console.log(ex.response);
@@ -35,43 +32,36 @@ export default function MealPlanner() {
         <Day
             day="Poniedziałek"
             options={options}
-            recipes={recipes}
             date={date[0]}
           />
           <Day
             day="Wtorek"
             options={options}
-            recipes={recipes}
             date={date[1]}
           />
           <Day
             day="Środa"
             options={options}
-            recipes={recipes}
             date={date[2]}
           />
           <Day
             day="Czwartek"
             options={options}
-            recipes={recipes}
             date={date[3]}
           />
           <Day
             day="Piątek"
             options={options}
-            recipes={recipes}
             date={date[4]}
           />
           <Day
             day="Sobota"
             options={options}
-            recipes={recipes}
             date={date[5]}
           />
           <Day
             day="Niedziela"
             options={options}
-            recipes={recipes}
             date={date[6]}
           />
         </Wrapper>
@@ -95,6 +85,7 @@ const Wrapper = styled.div`
   grid-template-columns: repeat(7, 1fr);
   width: 100%;
   margin: 200px 0 40vh 0;
+  box-shadow: 0 0 3px;
   background: #f5f7fa;
   @media(max-width: 1000px){
     grid-template-columns: 1fr;

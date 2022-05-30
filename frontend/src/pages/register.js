@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "../axios";
+import validateRegister from "../helpers/validateRegister";
 
 export default function Register() {
   const initialValue = {
@@ -16,7 +17,7 @@ export default function Register() {
 
   async function submit(e) {
     e.preventDefault();
-    let err = await validate(formValues);
+    let err = await validateRegister(formValues);
     setFormErrors(err);
     setIsSubmit(true);
   }
@@ -32,48 +33,6 @@ export default function Register() {
       axios.post("/api/users", formValues).then((res) => console.log(res.data));
     }
   }, [formErrors]);
-
-  const validate = async (values) => {
-    const errors = {};
-    let checkUser = { name: false, email: false };
-    await axios.get("/api/users").then((res) => {
-      let response = res.data;
-      for (const key in response) {
-        if (values.email === response[key].email) {
-          checkUser.email = true;
-        }
-        if (values.name === response[key].name) {
-          checkUser.name = true;
-        }
-      }
-    });
-    const regex =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-    if (!values.email) {
-      errors.email = "Email jest wymagany";
-    } else if (!regex.test(values.email)) {
-      errors.email = "Email jest nieprawidłowy";
-    } else if (checkUser.email) {
-      errors.email = `${values.email} już istnieje`;
-    }
-    if (!values.name) {
-      errors.name = "Nazwa użytkownika jest wymagana";
-    } else if (checkUser.name) {
-      errors.name = `${values.name} już istnieje`;
-    }
-    if (!values.password) {
-      errors.password = "Hasło jest wymagane";
-    } else if (values.password.length < 8) {
-      errors.password = "Hasło musi mieć min. 8 znaków";
-    }
-    if (!values.confirmPassword) {
-      errors.confirmPassword = "Musisz potwierdzić hasło";
-    } else if (values.confirmPassword !== values.password) {
-      errors.confirmPassword = "Hasła nie są takie same";
-    }
-    return errors;
-  };
 
   return (
     <PageContainer>
@@ -158,12 +117,11 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  background: white;
-  box-shadow: 0 0 1em;
-  border-radius: 5px;
   width: 50%;
   height: 60vh;
   margin: 15vh 0 30vh 0;
+  box-shadow: 0 0 1em;
+  border-radius: 5px;
   background:#F0F2F5;
   @media(max-width:1000px){
     width:100%;
