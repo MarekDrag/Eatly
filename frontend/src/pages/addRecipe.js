@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import axios from '../axios';
-import { v4 as uuidv4 } from "uuid";
 import { Link, useNavigate } from 'react-router-dom';
 import { AiOutlineArrowLeft, AiOutlinePlus } from 'react-icons/ai';
 import calculatePriceAndCalories from '../helpers/calculateRecipe';
@@ -58,8 +57,6 @@ export default function AddRecipe(){
         const [price, calories] = calculatePriceAndCalories(ingredients, formValues.ingredients);
         const recipe = {
             name: formValues.name,
-            slug: formValues.name.split(' ').join('-'),
-            id: uuidv4(),
             type: formValues.type,
             ingredients: formValues.ingredients,
             instructions:  formValues.instructions,

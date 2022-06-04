@@ -11,7 +11,6 @@ export default async function setIngredient() {
 
     const ingredient = {
         name,
-        id,
         calories,
         measure,
         price,

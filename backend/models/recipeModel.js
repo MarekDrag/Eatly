@@ -5,14 +5,6 @@ const recipeSchema = mongoose.Schema({
     type: String,
     required: [true, "Please add a name"],
   },
-  slug: {
-    type: String,
-    required: [true, "Please add a slug"],
-  },
-  id: {
-    type: String,
-    required: [true, "Please add id"],
-  },
   ingredients: {
     type: Array,
     required: [true, "Please add ingredient"],

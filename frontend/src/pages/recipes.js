@@ -1,8 +1,7 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from '../axios';
 import { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
 
 export default function Recipes(){
     const [recipes, setRecipes] = useState([]);
@@ -35,17 +34,17 @@ export default function Recipes(){
                     <Link to='/przepisy/dodaj-przepis'>+Dodaj Przepis</Link>
                 </MealButton>
             </Meals>
-
             <Wrapper>
-                        {recipes.filter(recipe => recipe.type === type).map(recipe => {
-                            return(
-                                    <Recipe key={recipe.id} 
-                                    onClick={() => {navigate(`/przepisy/${recipe.slug}`)}}>
-                                        <Image src={recipe.img_url}/>
-                                        <Name>{recipe.name}</Name>
-                                        <CookingTime>Czas gotowania: {recipe.cooking_time}m</CookingTime>
-                                    </Recipe>
-                            )})}
+                {recipes.filter(recipe => recipe.type === type).map(recipe => {
+                    return(
+
+                            <Recipe key={recipe._id} 
+                            onClick={() => {navigate(`/przepisy/${recipe._id}`)}}>
+                                <Image src={recipe.img_url}/>
+                                <Name>{recipe.name}</Name>
+                                <CookingTime>Czas gotowania: {recipe.cooking_time}m</CookingTime>
+                            </Recipe>
+                    )})}
 
             </Wrapper>
         </Container>
@@ -110,8 +109,8 @@ const Recipe = styled.div`
     border:1px solid #adadad;
     width:251px;
     height:300px;
+    background:#FFF;
     &:hover{
-        background:#FFF;
         box-shadow: 0px 0px 14px 0px rgba(66, 68, 90, 1);
     }
 `;
@@ -119,6 +118,7 @@ const Recipe = styled.div`
 
 const Image = styled.img`
     width:250px;
+    height:200px;
 `;
 
 const Name = styled.div`

@@ -10,6 +10,14 @@ const getRecipes = asyncHandler(async (req, res) => {
   res.json(recipes);
 });
 
+// @desc Get one recipe
+// @route GET /api/recipes/:id
+const getRecipe = asyncHandler(async (req, res) => {
+  const recipe = await Recipe.findById(req.params.id);
+
+  res.json(recipe);
+});
+
 
 
 // @desc Set recipe
@@ -21,8 +29,6 @@ const setRecipes = asyncHandler(async (req, res) => {
   }
 
   const name = req.body.name;
-  const slug = req.body.slug;
-  const id = req.body.id;
   const ingredients = req.body.ingredients;
   const instructions = req.body.instructions;
   const cooking_time = req.body.cooking_time;
@@ -33,8 +39,6 @@ const setRecipes = asyncHandler(async (req, res) => {
 
   const newRecipe = new Recipe({
     name,
-    slug,
-    id,
     ingredients,
     instructions,
     cooking_time,
@@ -84,6 +88,7 @@ const deleteRecipes = asyncHandler(async (req, res) => {
 
 module.exports = {
   getRecipes,
+  getRecipe,
   setRecipes,
   updateRecipes,
   deleteRecipes,

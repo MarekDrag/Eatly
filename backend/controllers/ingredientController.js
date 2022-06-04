@@ -20,7 +20,6 @@ const setIngredient = async (req, res) => {
     }
     
     const name = req.body.name;
-    const id = req.body.id;
     const calories = req.body.calories;
     const measure = req.body.measure;
     const price = req.body.price;
@@ -28,7 +27,6 @@ const setIngredient = async (req, res) => {
     
     const newIngredient = new Ingredient({
             name,
-            id,
             calories,
             measure,
             price

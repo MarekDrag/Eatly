@@ -4,8 +4,8 @@ import styled from "styled-components"
 export default function PageNotFound(){
     return(
     <Container>
-        <NotFound>Strona nie istnieje</NotFound>
-        <NotFound>404</NotFound>
+        <Number>404</Number>
+        <NotFound>Strony nie znaleziono</NotFound>
         <Link to='/planer-posilkow'>Wróć do strony głównej</Link>
     </Container>
     )
@@ -30,5 +30,12 @@ const NotFound = styled.div`
     margin-bottom:1em;
     text-align:center;
     font-size:2em;
+`;
+
+const Number = styled.div`
+    width:100%;
+    margin-bottom:1em;
+    text-align:center;
+    font-size:4em;
 `;
 

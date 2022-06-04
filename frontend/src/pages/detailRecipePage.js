@@ -1,20 +1,20 @@
 import axios from '../axios';
 import {useState, useEffect} from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { BiTimeFive } from 'react-icons/bi';
 
 
 export default function DetailRecipePage(){
-    const initialRecipe = {name:'', cooking_time:'', instructions:[], ingredients:[], img_url:''}
-    const [recipe, setRecipe] = useState(initialRecipe)
+    const initialRecipe = {name:'Ładowowanie...', cooking_time:'...', instructions:[], ingredients:[], img_url:''}
+    const [recipe, setRecipe] = useState(initialRecipe);
+    const { id } = useParams();
 
     const fetchRecipe = async () => {
         try {
-          const res = await axios.get(`/api/recipes`);
-          const slug = document.URL.slice(31);
-          setRecipe(...res.data.filter(recipe => recipe.slug === slug))
+          const res = await axios.get(`/api/recipes/${id}`);
+          setRecipe(res.data);
         } catch (err) {
           console.log(err.response);
         }

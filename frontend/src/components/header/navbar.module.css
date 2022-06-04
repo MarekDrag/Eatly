@@ -17,7 +17,7 @@
   color: #000;
 }
 
-.li a{
+.li, .li a{
   color: #00857A;
   text-decoration: none;
 }
@@ -79,7 +79,7 @@
     margin-top: 20px;
   }
 
-  .li a{
+  .li, .li a{
     color:#fff;
   }
 

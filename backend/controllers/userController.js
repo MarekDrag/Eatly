@@ -25,9 +25,9 @@ const setUser = async (req, res) => {
             
     
     const newUser = new User({
-            email,
-            name,
-            password
+        email,
+        name,
+        password
     });
 
     newUser.save()

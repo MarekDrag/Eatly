@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import getCurrentWeek from "./helpers/getCurrentWeek";
 import DetailRecipePage from "./pages/detailRecipePage";
 import PageNotFound from "./pages/pageNotFound";
+import ShopList from "./pages/shopList";
 
 function App() {
   const [auth, setAuth] = useState(false);
@@ -28,8 +29,9 @@ function App() {
     <Routes>
       <Route path="/planer-posilkow" element={<MealPlanner />} />
       <Route path="/przepisy" element={<Recipes />} />
-      <Route path="/przepisy/:slug" element={<DetailRecipePage/>}/>
+      <Route path="/przepisy/:id" element={<DetailRecipePage/>}/>
       <Route path="/przepisy/dodaj-przepis" element={<AddRecipe />} />
+      <Route path="/zakupy" element={<ShopList/>}/>
       <Route path="/zaloguj-sie" element={<Login />} />
       <Route path="/zarejstruj-sie" element={<Register />} />
       <Route path="*" element={<PageNotFound/>} />
