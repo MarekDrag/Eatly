@@ -1,18 +1,23 @@
 const User = require('../models/userModel');
 
-// @desc Get user
+// @desc Get users
 // @route GET /api/users
-// @access Private
-const getUser = async(req, res) => {
-        const users = await User.find()
-    
+const getUsers = async(req, res) => {
+    const users = await User.find()
     
     res.json(users)
 };
 
+//@desc Get user
+//@route GET /api/users/:id
+const getUser = async(req, res) => {
+    const user = await User.findById(req.params.id)
+    
+    res.json(user)
+};
+
 // @desc Set user
 // @route POST /api/users
-// @access Private
 const setUser = async (req, res) => {
     if(!req.body) {
         res.status(400).json({ message: 'please add a text field'})
@@ -21,13 +26,15 @@ const setUser = async (req, res) => {
     
     const email = req.body.email;
     const name = req.body.name;
-    const password = req.body.password
+    const password = req.body.password;
+    const mealPlan = req.body.mealPlan;
             
     
     const newUser = new User({
         email,
         name,
-        password
+        password,
+        mealPlan
     });
 
     newUser.save()
@@ -37,7 +44,6 @@ const setUser = async (req, res) => {
 
 // @desc Update user
 // @route PUT /api/users
-// @access Private
 const updateUser = async (req, res) => {
     const user = await User.findById(req.params.id);
 
@@ -48,14 +54,13 @@ const updateUser = async (req, res) => {
 
     const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
         new: true
-    })
+    });
 
     res.json(updatedUser)
 };
 
 // @desc Delete user
 // @route DELETE /api/users
-// @access Private
 const deleteUser = async (req, res) => {
     const user = await User.findById(req.params.id);
 
@@ -71,6 +76,7 @@ const deleteUser = async (req, res) => {
 };
 
 module.exports = {
+    getUsers,
     getUser, 
     setUser,
     updateUser, 

@@ -13,6 +13,11 @@ export default function Navbar(){
     const {auth, setAuth} = useContext(AuthContext);
     const [isOpen, setIsOpen] = useState(false);
 
+    const handleChange = () => {
+        setAuth(false);
+        sessionStorage.removeItem('userId');
+    }
+
     return(
         <nav>
             <div className={`${isOpen ? style.darkBgActive : style.darkBg}`} onClick={() => setIsOpen(!isOpen)}></div>
@@ -31,7 +36,7 @@ export default function Navbar(){
                         <li className={style.li}>
                             <Link to=""><RiCreativeCommonsByLine/> Moje konto</Link>
                         </li>
-                        <li className={style.li} onClick={() => setAuth(!auth)}>
+                        <li className={style.li} onClick={handleChange}>
                             <GiEntryDoor/> Wyloguj się
                         </li>
                     </>

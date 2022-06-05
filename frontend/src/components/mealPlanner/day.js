@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios  from "./../../axios";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
@@ -7,21 +8,23 @@ export default function Day(props) {
   const [values, setValues] = useState({calories:'', price:''});
   const [mealsID, setMealsID] = useState(initialMeals);
   const [mealsNames, setMealsNames] = useState(initialMeals);
+
+ 
   
-  function setToLocalStorage(meal){
-    let existing = localStorage.getItem(props.date);
+  function setToDatabase(meal){
+    let existing = sessionStorage.getItem(props.date);
     if(existing){
-      localStorage.removeItem(props.date);
+      sessionStorage.removeItem(props.date);
     }
-    localStorage.setItem(props.date, JSON.stringify(meal));
+    sessionStorage.setItem(props.date, JSON.stringify(meal));
   };
 
   function handleChange(e) {
     const {name} = e.target;
     const {id, recipe} = JSON.parse(e.target.value);
     setMealsID({ ...mealsID, [name]: id });
-    setMealsNames({...mealsNames, [name]: recipe})
-    setToLocalStorage({ ...mealsID, [name]: id });
+    setMealsNames({...mealsNames, [name]: recipe});
+    setToDatabase({ ...mealsID, [name]: id });
   };
 
   // addUp calories and price
@@ -44,7 +47,7 @@ export default function Day(props) {
   }
   
   useEffect(() => {
-    let existing = localStorage.getItem(props.date);
+    let existing = sessionStorage.getItem(props.date);
     if(existing){
       setMealsID(JSON.parse(existing)); 
       const arr = filterMealsByID(JSON.parse(existing));
@@ -72,7 +75,7 @@ export default function Day(props) {
             <Select name='breakfast' onChange={e => handleChange(e)}>
                 <option value={mealsID.breakfast}>{mealsNames.breakfast.toLocaleUpperCase()}</option>
                 {props.options.breakfast.map(recipe => (
-                  <option key={uuidv4()} value={JSON.stringify({id:recipe.id, recipe:recipe.name})}>
+                  <option key={uuidv4()} value={JSON.stringify({id:recipe._id, recipe:recipe.name})}>
                     {recipe.name}
                   </option>
                 ))}
@@ -83,7 +86,7 @@ export default function Day(props) {
             <Select name='lunch' onChange={e => handleChange(e)}>
                 <option value={mealsID.breakfast}>{mealsNames.lunch.toLocaleUpperCase()}</option>
                 {props.options.lunch.map(recipe => (
-                  <option key={uuidv4()} value={JSON.stringify({id:recipe.id, recipe:recipe.name})}>
+                  <option key={uuidv4()} value={JSON.stringify({id:recipe._id, recipe:recipe.name})}>
                     {recipe.name}
                   </option>
                 ))}
@@ -94,7 +97,7 @@ export default function Day(props) {
             <Select name='dinner' onChange={e => handleChange(e)}>
               <option value={mealsID.dinner}>{mealsNames.dinner.toLocaleUpperCase()}</option>
                 {props.options.dinner.map(recipe => (
-                  <option key={uuidv4()} value={JSON.stringify({id:recipe.id, recipe:recipe.name})}>
+                  <option key={uuidv4()} value={JSON.stringify({id:recipe._id, recipe:recipe.name})}>
                     {recipe.name}
                   </option>
                 ))}

@@ -10,24 +10,24 @@ export default function Login(){
     const [errMsg, setErrMsG] = useState(true);
     const {auth, setAuth} = useContext(AuthContext);
     const navigate = useNavigate();
+    let userId = '';
 
     async function submit(e){
         e.preventDefault();
-        await axios.get('/api/users')
-            .then(res => {
-                let response = res.data;
-                for(const key in response){
-                    if(formValues.email === response[key].email && formValues.password === response[key].password){
-                        setUserValid(true)
-                        setErrMsG(true)
-                        break;
-                    }
-                    setErrMsG(false)
+        await axios.get('/api/users').then(res => {
+            for(const key in res.data){
+                if(formValues.email === res.data[key].email && formValues.password === res.data[key].password){
+                    setUserValid(true);
+                    setErrMsG(true);
+                    userId = res.data[key]._id;
+                    break;
                 }
-            })
+                setErrMsG(false)
+            }
+        })
         if(userValid){
-            setAuth(!auth)
-            localStorage.setItem('email', formValues.email);
+            setAuth(!auth);
+            sessionStorage.setItem('userId', userId);
             navigate('/planer-posilkow');
         }
     }

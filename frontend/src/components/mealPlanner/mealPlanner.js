@@ -9,10 +9,11 @@ export default function MealPlanner() {
   const { date } = useContext(DateContext);
   const [loading, setLoading] = useState(false);
   const [options, setOptions] = useState({});
+  const [user, setUser] = useState({})
 
     async function fetchRecipes(){
     try{
-        const res = await axios.get("/api/recipes")
+        const res = await axios.get("/api/recipes");
         let breakfast = res.data.filter(recipe => recipe.type === "breakfast");
         let lunch = res.data.filter(recipe => recipe.type === "lunch");
         let dinner = res.data.filter(recipe => recipe.type === "dinner");
@@ -22,8 +23,17 @@ export default function MealPlanner() {
         console.log(ex.response);
     }}
     useEffect(() => {
-        fetchRecipes();   
+        fetchUser();  
+        fetchRecipes(); 
     },[])
+
+    const fetchUser = async() => {
+      const userId = sessionStorage.getItem('userId');
+      const res = await axios.get(`/api/users/${userId}`);
+      if(res.data.mealPlan){
+        setUser(res.data.mealPlan);
+      }
+    }
     
   return (
     <Container>
