@@ -11,7 +11,7 @@ export default function Day(props) {
 
  
   
-  function setToDatabase(meal){
+  function setToSessionStorage(meal){
     let existing = sessionStorage.getItem(props.date);
     if(existing){
       sessionStorage.removeItem(props.date);
@@ -24,7 +24,7 @@ export default function Day(props) {
     const {id, recipe} = JSON.parse(e.target.value);
     setMealsID({ ...mealsID, [name]: id });
     setMealsNames({...mealsNames, [name]: recipe});
-    setToDatabase({ ...mealsID, [name]: id });
+    setToSessionStorage({ ...mealsID, [name]: id });
   };
 
   // addUp calories and price

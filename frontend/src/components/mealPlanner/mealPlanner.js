@@ -9,7 +9,7 @@ export default function MealPlanner() {
   const { date } = useContext(DateContext);
   const [loading, setLoading] = useState(false);
   const [options, setOptions] = useState({});
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState('123');
 
     async function fetchRecipes(){
     try{
@@ -30,15 +30,28 @@ export default function MealPlanner() {
     const fetchUser = async() => {
       const userId = sessionStorage.getItem('userId');
       const res = await axios.get(`/api/users/${userId}`);
-      if(res.data.mealPlan){
-        setUser(res.data.mealPlan);
+      if(res.data){
+        setUser(res.data);
       }
     }
+
+    const update = async(e) => {
+      let arr = [];
+      date.map(day => {
+        const meals = JSON.parse(sessionStorage.getItem(day));
+        arr.push({[day]: meals});
+      })
+      await axios.put(`/api/users/${user._id}`, arr);
+      e.target.innerText = 'Zapisano!';
+    }
+
+   
     
   return (
     <Container>
        {loading ? (
         <Wrapper>
+        <SaveButton onClick={e => update(e)}>Zapisz</SaveButton>
         <Day
             day="Poniedziałek"
             options={options}
@@ -88,6 +101,20 @@ const Container = styled.div`
   align-items: center;
   width:100%;
   background:#F0F2F5;
+`;
+
+const SaveButton = styled.button`
+  position:absolute;
+  height:30px;
+  width:100%;
+  top:170px;
+  background: #00857A;
+  color:#fff;
+  font-weight:600;
+  border:none;
+  &:hover{
+    background: #069B8C;
+  }
 `;
 
 const Wrapper = styled.div`

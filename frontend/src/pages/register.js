@@ -9,6 +9,7 @@ export default function Register() {
     name: "",
     password: "",
     confirmPassword: "",
+    mealPlan:[]
   };
   const [formValues, setFormValues] = useState(initialValue);
   const [formErrors, setFormErrors] = useState({});

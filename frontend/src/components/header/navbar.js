@@ -15,7 +15,7 @@ export default function Navbar(){
 
     const handleChange = () => {
         setAuth(false);
-        sessionStorage.removeItem('userId');
+        sessionStorage.clear();
     }
 
     return(
