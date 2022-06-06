@@ -10,13 +10,13 @@ const userSchema = mongoose.Schema({
     },
     name: {
         type: String,
-        required: [true, 'Please add a email'],
+        required: [true, 'Please add a name'],
         unique: true,
     },
     password: {
         type: String,
         min: 8,
-        required: [true, 'Please add a email']
+        required: [true, 'Please add a password']
     },
     createdAt: {
         type: Date,

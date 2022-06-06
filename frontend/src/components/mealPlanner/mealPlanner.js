@@ -24,6 +24,7 @@ export default function MealPlanner() {
     }}
     useEffect(() => {
         fetchUser();  
+        setToSessionStorage();
         fetchRecipes(); 
     },[])
 
@@ -32,15 +33,24 @@ export default function MealPlanner() {
       const res = await axios.get(`/api/users/${userId}`);
       if(res.data){
         setUser(res.data);
+        console.log(res.data);
       }
     }
 
+    const setToSessionStorage = () => {
+     
+        console.log(user.mealPlan);
+
+      
+    }
+
     const update = async(e) => {
-      let arr = [];
-      date.map(day => {
-        const meals = JSON.parse(sessionStorage.getItem(day));
-        arr.push({[day]: meals});
-      })
+      let arr = [1,2,3,4];
+      // date.map(day => {
+      //   const meals = JSON.parse(sessionStorage.getItem(day));
+      //   arr.push({[day]: meals});
+      // })
+      console.log('1232123123312312313213dfsfsdfsf');
       await axios.put(`/api/users/${user._id}`, arr);
       e.target.innerText = 'Zapisano!';
     }

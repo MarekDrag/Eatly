@@ -45,16 +45,13 @@ const setUser = async (req, res) => {
 // @desc Update user
 // @route PUT /api/users
 const updateUser = async (req, res) => {
-    const user = await User.findById(req.params.id);
+    const user = await User.findByIdAndUpdate(req.params.id, req.body);
 
     if(!user) {
         res.status(400);
         throw new Error('User not found');
     };
 
-    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body.arr);
-
-    res.json(updatedUser)
 };
 
 // @desc Delete user
