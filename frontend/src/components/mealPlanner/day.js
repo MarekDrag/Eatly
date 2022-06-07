@@ -40,9 +40,10 @@ export default function Day(props) {
   }
 
   function filterMealsByID(id){
-    const breakfast = props.options.breakfast.filter(recipe => recipe.id === id.breakfast);
-    const lunch = props.options.lunch.filter(recipe => recipe.id === id.lunch);
-    const dinner = props.options.dinner.filter(recipe => recipe.id === id.dinner);
+    const breakfast = props.options.breakfast.filter(recipe => recipe._id === id.breakfast);
+    const lunch = props.options.lunch.filter(recipe => recipe._id === id.lunch);
+    const dinner = props.options.dinner.filter(recipe => recipe._id === id.dinner);
+    console.log(breakfast);
     return [...breakfast,...lunch,...dinner];
   }
   

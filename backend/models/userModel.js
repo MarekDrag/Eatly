@@ -23,7 +23,7 @@ const userSchema = mongoose.Schema({
         default: Date.now,
     },
     mealPlan:{
-        type: Array
+        type: Object
     }
 });
 

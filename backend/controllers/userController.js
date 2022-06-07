@@ -11,7 +11,7 @@ const getUsers = async(req, res) => {
 //@desc Get user
 //@route GET /api/users/:id
 const getUser = async(req, res) => {
-    const user = await User.findById(req.params.id)
+    const user = await User.findById(req.params.id);
     
     res.json(user)
 };
@@ -43,15 +43,18 @@ const setUser = async (req, res) => {
 };
 
 // @desc Update user
-// @route PUT /api/users
+// @route PATCH /api/users
 const updateUser = async (req, res) => {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body);
+    const user = await User.findById(req.params.id);
 
-    if(!user) {
-        res.status(400);
-        throw new Error('User not found');
-    };
+    if (!user) {
+      res.status(400);
+      throw new Error("User not found");
+    }
 
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body);
+
+    res.json(updatedUser);
 };
 
 // @desc Delete user

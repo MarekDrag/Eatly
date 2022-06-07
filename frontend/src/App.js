@@ -1,5 +1,5 @@
 import style from "./App.css";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import Recipes from "./pages/recipes";
@@ -25,13 +25,15 @@ function App() {
     setDate(week);
   }, []);
 
+  
+
   const content = (
     <Routes>
       <Route path="/planer-posilkow" element={<MealPlanner />} />
       <Route path="/przepisy" element={<Recipes />} />
       <Route path="/przepisy/:id" element={<DetailRecipePage/>}/>
       <Route path="/przepisy/dodaj-przepis" element={<AddRecipe />} />
-      <Route path="/zakupy" element={<ShopList/>}/>
+      <Route path="/zakupy" element={ <ShopList/>} />
       <Route path="/zaloguj-sie" element={<Login />} />
       <Route path="/zarejstruj-sie" element={<Register />} />
       <Route path="*" element={<PageNotFound/>} />

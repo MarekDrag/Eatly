@@ -10,10 +10,10 @@ export default function Login(){
     const [errMsg, setErrMsG] = useState(true);
     const {auth, setAuth} = useContext(AuthContext);
     const navigate = useNavigate();
-    let userId = '';
-
+    
     async function submit(e){
         e.preventDefault();
+        let userId = '';
         await axios.get('/api/users').then(res => {
             for(const key in res.data){
                 if(formValues.email === res.data[key].email && formValues.password === res.data[key].password){

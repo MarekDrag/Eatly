@@ -9,7 +9,7 @@ router.get('/:id', getRecipe);
 
 router.post('/', setRecipes);
 
-router.put('/:id', updateRecipes);
+router.patch('/:id', updateRecipes);
 
 router.delete('/:id', deleteRecipes);
 

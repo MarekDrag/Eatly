@@ -9,7 +9,6 @@ export default function MealPlanner() {
   const { date } = useContext(DateContext);
   const [loading, setLoading] = useState(false);
   const [options, setOptions] = useState({});
-  const [user, setUser] = useState('123');
 
     async function fetchRecipes(){
     try{
@@ -23,35 +22,33 @@ export default function MealPlanner() {
         console.log(ex.response);
     }}
     useEffect(() => {
-        fetchUser();  
-        setToSessionStorage();
+        fetchUser();
         fetchRecipes(); 
     },[])
 
     const fetchUser = async() => {
       const userId = sessionStorage.getItem('userId');
       const res = await axios.get(`/api/users/${userId}`);
-      if(res.data){
-        setUser(res.data);
-        console.log(res.data);
+      
+      // set from sessionStorageToDatabase
+      const object = res.data.mealPlan;
+      for(const key in object){
+        sessionStorage.setItem(key, JSON.stringify(object[key]));
       }
     }
 
-    const setToSessionStorage = () => {
-     
-        console.log(user.mealPlan);
-
-      
-    }
 
     const update = async(e) => {
-      let arr = [1,2,3,4];
-      // date.map(day => {
-      //   const meals = JSON.parse(sessionStorage.getItem(day));
-      //   arr.push({[day]: meals});
-      // })
-      console.log('1232123123312312313213dfsfsdfsf');
-      await axios.put(`/api/users/${user._id}`, arr);
+      // save from sessionStorage to database
+      let mealPlan = {};
+      date.map(day => {
+        const meal = JSON.parse(sessionStorage.getItem(day));
+        if(meal){
+          mealPlan[day] = meal;
+        }
+      })
+      const userId = sessionStorage.getItem('userId');
+      await axios.patch(`/api/users/${userId}`, {mealPlan: mealPlan});
       e.target.innerText = 'Zapisano!';
     }
 

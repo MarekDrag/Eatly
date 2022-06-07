@@ -23,7 +23,7 @@ export default function Navbar(){
             <div className={`${isOpen ? style.darkBgActive : style.darkBg}`} onClick={() => setIsOpen(!isOpen)}></div>
             <ul className={`${style.list} ${isOpen ? style.active : ''}`}>
                 <li className={style.li}>
-                    <Link to="/planer-posilkow"><GoCalendar/> Planer</Link>
+                    <Link  to="/planer-posilkow"><GoCalendar/> Planer</Link>
                 </li>
                 <li className={style.li}>
                     <Link to="zakupy"><AiOutlineShoppingCart/> Zakupy</Link>
