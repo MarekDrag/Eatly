@@ -67,7 +67,7 @@ const Meals = styled.div`
     gap:10px;
     height:3em;
     width:80%;
-    margin-top:10%;
+    margin-top:5%;
 `;
 
 const MealButton = styled.button`
@@ -102,7 +102,7 @@ const Wrapper = styled.div`
     justify-content:center;
     gap:20px;
     width:90%;
-    margin:10% 0;
+    margin-bottom: 10%;
 `;
 
 const Recipe = styled.div`

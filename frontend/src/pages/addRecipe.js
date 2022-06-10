@@ -89,12 +89,12 @@ export default function AddRecipe(){
                     </FormItem>
 
                     <Fieldset required>
-                            <Label htmlfor='breakfast'>Śniadanie</Label>
-                            <Input type='radio' id='breakfast' name='type' value='breakfast' onChange={e => handleChange(e)}/>
-                            <Label htmlfor='lunch'>Obiad</Label>
-                            <Input type='radio' id='lunch' name='type' value='lunch' onChange={e => handleChange(e)}/>
-                            <Label htmlfor='dinner'>Kolacja</Label>
-                            <Input type='radio' id='dinner' name='type' value='dinner' onChange={e => handleChange(e)}/>
+                            <label htmlfor='breakfast'>Śniadanie</label>
+                            <input type='radio' id='breakfast' name='type' value='breakfast' onChange={e => handleChange(e)}/>
+                            <label htmlfor='lunch'>Obiad</label>
+                            <input type='radio' id='lunch' name='type' value='lunch' onChange={e => handleChange(e)}/>
+                            <label htmlfor='dinner'>Kolacja</label>
+                            <input type='radio' id='dinner' name='type' value='dinner' onChange={e => handleChange(e)}/>
                     </Fieldset>
    
                     <FormItem>
@@ -175,7 +175,8 @@ const PageContainer = styled.div`
     flex-wrap: wrap;
     width: 100%;
     min-height: 100vh;
-    padding-top:80px;
+    padding-top:150px;
+    padding-bottom:20vh;
     background:#F0F2F5;
 `;
 
@@ -212,20 +213,20 @@ const FormItem = styled.div`
 
 const Fieldset = styled.fieldset`
     display:flex;
-    justify-content:center;
+    flex-wrap:wrap;
     align-items:center;
-    width: 50%;
+    width: 25%;
     margin: 1%;
     margin-left:10%;
     border:none;
     & input {
         height:1rem;
-        margin-left:5px;
         width:1rem;
+        margin-left:20px;
     }
     & label {
-        padding:0;
-        width:20%;
+        width:60%;
+        text-align:right;
     }
 `;
 
@@ -252,6 +253,7 @@ const Input = styled.input`
     -webkit-appearance: none; 
     }
 `;
+
 
 const TextArea = styled.textarea`
     width: 50%;

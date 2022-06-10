@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import Day from "./day";
-import DateContext from "../../contexts/dateContext";
 import Loading from '../loading';
 import axios from '../../axios';
+import {AiOutlineArrowLeft, AiOutlineArrowRight} from 'react-icons/ai';
+import useDate from "../../hooks/useDate";
 
 export default function MealPlanner() {
-  const { date } = useContext(DateContext);
+  const [value,setValue]= useState(0);
+  const [date] = useDate(value);
   const [loading, setLoading] = useState(false);
   const [options, setOptions] = useState({});
 
@@ -37,8 +39,7 @@ export default function MealPlanner() {
       }
     }
 
-
-    const update = async(e) => {
+    const update = async() => {
       // save from sessionStorage to database
       let mealPlan = {};
       date.map(day => {
@@ -49,16 +50,15 @@ export default function MealPlanner() {
       })
       const userId = sessionStorage.getItem('userId');
       await axios.patch(`/api/users/${userId}`, {mealPlan: mealPlan});
-      e.target.innerText = 'Zapisano!';
-    }
+    }   
 
-   
     
   return (
     <Container>
        {loading ? (
-        <Wrapper>
-        <SaveButton onClick={e => update(e)}>Zapisz</SaveButton>
+        <Wrapper onChange={update}>
+        <PreviousWeek onClick={() => setValue(-1)}/>
+        <NextWeek onClick={() => setValue(1)}/>
         <Day
             day="Poniedziałek"
             options={options}
@@ -110,21 +110,9 @@ const Container = styled.div`
   background:#F0F2F5;
 `;
 
-const SaveButton = styled.button`
-  position:absolute;
-  height:30px;
-  width:100%;
-  top:170px;
-  background: #00857A;
-  color:#fff;
-  font-weight:600;
-  border:none;
-  &:hover{
-    background: #069B8C;
-  }
-`;
 
 const Wrapper = styled.div`
+  position:relative;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   width: 100%;
@@ -146,5 +134,24 @@ const WrapperLoading = styled.div`
   background: #f5f7fa;
 `;
 
+const PreviousWeek = styled(AiOutlineArrowLeft)`
+  position:absolute;
+  left:10px;
+  color:#fff;
+  font-size:2em;
+  &:hover{
+    color:#00857A;
+  }
+`;
+
+const NextWeek = styled(AiOutlineArrowRight)`
+  position:absolute;
+  right:10px;
+  color:#fff;
+  font-size:2em;
+  &:hover{
+    color:#00857A;
+  }
+`;
 
 

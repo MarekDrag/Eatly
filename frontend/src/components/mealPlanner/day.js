@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios  from "./../../axios";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
@@ -10,12 +9,7 @@ export default function Day(props) {
   const [mealsNames, setMealsNames] = useState(initialMeals);
 
  
-  
   function setToSessionStorage(meal){
-    let existing = sessionStorage.getItem(props.date);
-    if(existing){
-      sessionStorage.removeItem(props.date);
-    }
     sessionStorage.setItem(props.date, JSON.stringify(meal));
   };
 
@@ -43,7 +37,6 @@ export default function Day(props) {
     const breakfast = props.options.breakfast.filter(recipe => recipe._id === id.breakfast);
     const lunch = props.options.lunch.filter(recipe => recipe._id === id.lunch);
     const dinner = props.options.dinner.filter(recipe => recipe._id === id.dinner);
-    console.log(breakfast);
     return [...breakfast,...lunch,...dinner];
   }
   

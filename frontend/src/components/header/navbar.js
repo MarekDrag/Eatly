@@ -12,8 +12,8 @@ import {GoCalendar} from 'react-icons/go';
 export default function Navbar(){
     const {auth, setAuth} = useContext(AuthContext);
     const [isOpen, setIsOpen] = useState(false);
-
-    const handleChange = () => {
+    
+    const logout = () => {
         setAuth(false);
         sessionStorage.clear();
     }
@@ -22,21 +22,21 @@ export default function Navbar(){
         <nav>
             <div className={`${isOpen ? style.darkBgActive : style.darkBg}`} onClick={() => setIsOpen(!isOpen)}></div>
             <ul className={`${style.list} ${isOpen ? style.active : ''}`}>
-                <li className={style.li}>
-                    <Link  to="/planer-posilkow"><GoCalendar/> Planer</Link>
-                </li>
-                <li className={style.li}>
-                    <Link to="zakupy"><AiOutlineShoppingCart/> Zakupy</Link>
-                </li>
-                <li className={style.li}>
-                    <Link to="przepisy"><HiOutlineClipboardList/> Przepisy</Link>
-                </li>
                 {auth ? 
                     <>
                         <li className={style.li}>
+                            <Link  to="/planer-posilkow"><GoCalendar/> Planer</Link>
+                        </li>
+                        <li className={style.li}>
+                            <Link to="zakupy"><AiOutlineShoppingCart/> Zakupy</Link>
+                        </li>
+                        <li className={style.li}>
+                            <Link to="przepisy"><HiOutlineClipboardList/> Przepisy</Link>
+                        </li>
+                        <li className={style.li}>
                             <Link to=""><RiCreativeCommonsByLine/> Moje konto</Link>
                         </li>
-                        <li className={style.li} onClick={handleChange}>
+                        <li className={style.li} onClick={logout}>
                             <GiEntryDoor/> Wyloguj się
                         </li>
                     </>
