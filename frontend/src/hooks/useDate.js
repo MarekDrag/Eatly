@@ -1,29 +1,35 @@
 import moment from 'moment';
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 
-export default function useDate(time) {
+export default function useDate() {
     const [value, setValue] = useState([]);
-    const [dayOfWeek, setDayOfWeek] = useState(1);
+    const [count, dispatch] = useReducer(countReducer, 1)
+    
+    function countReducer(state, action) {
+        switch (action.type) {
+            case 'increment':
+                return state + 7;
+            case 'decrement':
+                return state - 7;
+            default: return;
+        }
+    }
 
     useEffect(()=> {
-        getDate(time)
-    },[time]);
+        getDate()
+    },[count]);
 
-    return [value];
+    return [value, dispatch];
 
-
-    function getDate(time){
+    function getDate(){
         let currentDate = moment();
         let weekStart = currentDate.clone().startOf('week');
         let days = [];
         // if time is true it will render next week
         // else it will render previous week
-        if(time === 1){
-        } 
-        else if(time === -1){
-        } 
+        
     
-        for (var i = dayOfWeek; i <= dayOfWeek+6; i++) {
+        for (var i = count; i <= count+6; i++) {
             let monthNumber = moment(weekStart).add(i, 'days').format("M");
             let day = moment(weekStart).add(i, 'days').format("D");
             let month = '';
@@ -65,6 +71,7 @@ export default function useDate(time) {
                 case '12':
                     month = 'Grudzień';
                     break;
+                default: return;
             }
     
         const date = `${day} ${month}`;

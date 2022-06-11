@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Day from "./day";
 import Loading from '../loading';
@@ -7,12 +7,11 @@ import {AiOutlineArrowLeft, AiOutlineArrowRight} from 'react-icons/ai';
 import useDate from "../../hooks/useDate";
 
 export default function MealPlanner() {
-  const [value,setValue]= useState(0);
-  const [date] = useDate(value);
+  const [date, dispatch] = useDate();
   const [loading, setLoading] = useState(false);
   const [options, setOptions] = useState({});
-
-    async function fetchRecipes(){
+  
+  async function fetchRecipes(){
     try{
         const res = await axios.get("/api/recipes");
         let breakfast = res.data.filter(recipe => recipe.type === "breakfast");
@@ -21,7 +20,7 @@ export default function MealPlanner() {
         setOptions({ breakfast, lunch, dinner });
         setLoading(!loading);
     } catch (ex) {
-        console.log(ex.response);
+      console.log(ex.response);
     }}
     useEffect(() => {
         fetchUser();
@@ -51,14 +50,18 @@ export default function MealPlanner() {
       const userId = sessionStorage.getItem('userId');
       await axios.patch(`/api/users/${userId}`, {mealPlan: mealPlan});
     }   
+    const onClick = (type) => {
+      dispatch({type});
+      
+    }
 
     
   return (
     <Container>
        {loading ? (
         <Wrapper onChange={update}>
-        <PreviousWeek onClick={() => setValue(-1)}/>
-        <NextWeek onClick={() => setValue(1)}/>
+        <PreviousWeek onClick={() => onClick('decrement')}/>
+        <NextWeek onClick={() => onClick('increment')}/>
         <Day
             day="Poniedziałek"
             options={options}
