@@ -10,11 +10,12 @@ export default function Day(props) {
   const [mealsNames, setMealsNames] = useState(initialMeals);
  
   function setToSessionStorage(meal){
-    //set selected meal to sessionStorage
+    // set selected meal to sessionStorage
     sessionStorage.setItem(props.date, JSON.stringify(meal));
   };
 
   function getFromSessionStorage(){
+    // get by date 
     let existing = sessionStorage.getItem(props.date);
     if(existing){
       setMealsID(JSON.parse(existing)); 

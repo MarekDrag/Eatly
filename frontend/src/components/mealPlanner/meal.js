@@ -13,11 +13,13 @@ function Meal({mealType, options, mealsID, mealsNames, handleChange}){
                 {mealsNames[mealType].toLocaleUpperCase()}
               </option>
               {/* render all options for this meal */}
-              {options[mealType].map(recipe => (
-              <option key={recipe._id} value={JSON.stringify({id:recipe._id, recipe:recipe.name})}>
-                {recipe.name}
-              </option>
-              ))}
+              {options[mealType].map(recipe => {
+                return(
+                  <option key={recipe._id} value={JSON.stringify({id:recipe._id, recipe:recipe.name})}>
+                    {recipe.name}
+                  </option>
+                )
+              })}
           </Select>
       </Dish>
   )

@@ -5,33 +5,29 @@ import Day from "../components/mealPlanner/day";
 import Loading from '../components/loading';
 import axios from '../axios';
 import useDate from "../hooks/useDate";
+import fetchRecipes from "../helpers/FetchRecipes";
 
 export default function MealPlanner() {
   const [date, dispatch] = useDate();
   const [loading, setLoading] = useState(false);
   const [options, setOptions] = useState({});
   
-  const fetchRecipes = async() => {
-    try{
-        const res = await axios.get("/api/recipes");
-        let breakfast = res.data.filter(recipe => recipe.type === "breakfast");
-        let lunch = res.data.filter(recipe => recipe.type === "lunch");
-        let dinner = res.data.filter(recipe => recipe.type === "dinner");
-        setOptions({ breakfast, lunch, dinner });
-        setLoading(!loading);
-    } catch (ex) {
-      console.log(ex.response);
-    }}
-    
-    const fetchUserData = async() => {
+ 
+  const fetchAndSortRecipes = async() => {
+    const recipes = fetchRecipes(true);
+    setOptions(...recipes);
+  }
+  
+  const fetchUserData = async() => {
     const userId = sessionStorage.getItem('userId');
     const res = await axios.get(`/api/users/${userId}`);
-    
+
     // set data from database to sessionStorage
     const object = res.data.mealPlan;
     for(const key in object){
       sessionStorage.setItem(key, JSON.stringify(object[key]));
     }
+    setLoading(!loading);
   }
 
   const update = async() => {
@@ -53,7 +49,7 @@ export default function MealPlanner() {
 
   useEffect(() => {
       fetchUserData();
-      fetchRecipes(); 
+      fetchAndSortRecipes(); 
   },[])
 
     
