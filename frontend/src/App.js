@@ -5,7 +5,7 @@ import Register from "./pages/register";
 import Recipes from "./pages/recipes";
 import AddRecipe from "./pages/addRecipe";
 import Header from "./components/header/header";
-import MealPlanner from "./components/mealPlanner/mealPlanner";
+import MealPlanner from "./pages/mealPlanner";
 import Footer from "./components/footer";
 import Layout from "./components/layout";
 import AuthContext from "./contexts/authContext";

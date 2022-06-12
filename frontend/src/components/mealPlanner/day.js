@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import Meal from "./meal";
 
 
 export default function Day(props) {
@@ -7,7 +8,6 @@ export default function Day(props) {
   const [values, setValues] = useState({calories:'', price:''});
   const [mealsID, setMealsID] = useState(initialMeals);
   const [mealsNames, setMealsNames] = useState(initialMeals);
-  const na = 'breakfast';
  
   function setToSessionStorage(meal){
     sessionStorage.setItem(props.date, JSON.stringify(meal));
@@ -64,39 +64,25 @@ export default function Day(props) {
           <DayText>{props.day}</DayText>
           <DayDate>{props.date}</DayDate>
         </DayBox>
-        <Dish key={uuidv4()}>
-            <BoxType>Śniadanie</BoxType>
-            <Select name='breakfast' onChange={e => handleChange(e)}>
-                <option value={mealsID.breakfast}>{mealsNames.breakfast.toLocaleUpperCase()}</option>
-                {props.options[na].map(recipe => (
-                  <option key={uuidv4()} value={JSON.stringify({id:recipe._id, recipe:recipe.name})}>
-                    {recipe.name}
-                  </option>
-                ))}
-            </Select>
-        </Dish>
-        <Dish key={uuidv4()}>
-            <BoxType>Obiad</BoxType>
-            <Select name='lunch' onChange={e => handleChange(e)}>
-                <option value={mealsID.breakfast}>{mealsNames.lunch.toLocaleUpperCase()}</option>
-                {props.options.lunch.map(recipe => (
-                  <option key={uuidv4()} value={JSON.stringify({id:recipe._id, recipe:recipe.name})}>
-                    {recipe.name}
-                  </option>
-                ))}
-            </Select>
-        </Dish>
-        <Dish key={uuidv4()}>
-            <BoxType>Kolacja</BoxType>
-            <Select name='dinner' onChange={e => handleChange(e)}>
-              <option value={mealsID.dinner}>{mealsNames.dinner.toLocaleUpperCase()}</option>
-                {props.options.dinner.map(recipe => (
-                  <option key={uuidv4()} value={JSON.stringify({id:recipe._id, recipe:recipe.name})}>
-                    {recipe.name}
-                  </option>
-                ))}
-            </Select>
-        </Dish>
+
+        <Meal mealType='breakfast'
+        options={props.options} 
+        mealsID={mealsID} 
+        mealsNames={mealsNames} 
+        handleChange={handleChange} />
+
+        <Meal mealType='lunch'
+        options={props.options} 
+        mealsID={mealsID} 
+        mealsNames={mealsNames} 
+        handleChange={handleChange} />
+
+        <Meal mealType='dinner'
+        options={props.options} 
+        mealsID={mealsID} 
+        mealsNames={mealsNames} 
+        handleChange={handleChange} />
+      
 
         <Values>
           <p>Kalorie: {values.calories}</p>

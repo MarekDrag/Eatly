@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Day from "./day";
-import Loading from '../loading';
-import axios from '../../axios';
+import Day from "../components/mealPlanner/day";
+import Loading from '../components/loading';
+import axios from '../axios';
 import {AiOutlineArrowLeft, AiOutlineArrowRight} from 'react-icons/ai';
-import useDate from "../../hooks/useDate";
+import useDate from "../hooks/useDate";
 
 export default function MealPlanner() {
   const [date, dispatch] = useDate();
@@ -39,7 +39,7 @@ export default function MealPlanner() {
     }
 
     const update = async() => {
-      // save from sessionStorage to database
+      // take data from sessionStorage and update it to database
       let mealPlan = {};
       date.map(day => {
         const meal = JSON.parse(sessionStorage.getItem(day));
@@ -142,8 +142,8 @@ const PreviousWeek = styled(AiOutlineArrowLeft)`
   left:10px;
   color:#fff;
   font-size:2em;
-  &:hover{
-    color:#00857A;
+  &:active{
+    left:0;
   }
 `;
 
@@ -152,8 +152,8 @@ const NextWeek = styled(AiOutlineArrowRight)`
   right:10px;
   color:#fff;
   font-size:2em;
-  &:hover{
-    color:#00857A;
+  &:active{
+    right:0;
   }
 `;
 
