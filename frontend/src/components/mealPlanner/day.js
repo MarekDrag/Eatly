@@ -10,8 +10,22 @@ export default function Day(props) {
   const [mealsNames, setMealsNames] = useState(initialMeals);
  
   function setToSessionStorage(meal){
+    //set selected meal to sessionStorage
     sessionStorage.setItem(props.date, JSON.stringify(meal));
   };
+
+  function getFromSessionStorage(){
+    let existing = sessionStorage.getItem(props.date);
+    if(existing){
+      setMealsID(JSON.parse(existing)); 
+      const arr = filterMealsByID(JSON.parse(existing));
+      let meals = {breakfast: '', lunch:'', dinner:''}
+      arr.map(recipe => {
+        meals = {...meals, [recipe.type]: recipe.name};
+      })
+      setMealsNames(meals);
+    }
+  }
 
   function handleChange(e) {
     const {name} = e.target;
@@ -41,17 +55,14 @@ export default function Day(props) {
   }
   
   useEffect(() => {
-    let existing = sessionStorage.getItem(props.date);
-    if(existing){
-      setMealsID(JSON.parse(existing)); 
-      const arr = filterMealsByID(JSON.parse(existing));
-      let meals = {breakfast: '', lunch:'', dinner:''}
-      arr.map(recipe => {
-        meals = {...meals, [recipe.type]: recipe.name};
-      })
-      setMealsNames(meals);
-    }
+    
   }, []);
+
+  useEffect(() => {
+    setMealsNames(initialMeals);
+    setMealsID(initialMeals);
+    getFromSessionStorage();
+  },[props.date])
 
   useEffect(() => {
     addUp();
