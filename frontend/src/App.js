@@ -42,7 +42,7 @@ function App() {
     <Routes>
       {/* Public Routes */}
       <Route path="/" element={<PublicRoute/>}>
-        <Route path="/zaloguj-sie" element={<Login />} />
+        <Route exact path="/zaloguj-sie" element={<Login />} />
         <Route path="/zarejstruj-sie" element={<Register />} />
       </Route>
       {/* Private Routes */}

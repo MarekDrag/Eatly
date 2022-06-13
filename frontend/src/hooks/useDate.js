@@ -25,9 +25,6 @@ export default function useDate() {
         let currentDate = moment();
         let weekStart = currentDate.clone().startOf('week');
         let days = [];
-        // if time is true it will render next week
-        // else it will render previous week
-        
     
         for (var i = count; i <= count+6; i++) {
             let monthNumber = moment(weekStart).add(i, 'days').format("M");

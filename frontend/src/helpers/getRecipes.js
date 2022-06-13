@@ -1,18 +1,22 @@
 import axios from '../axios';
 
-async function fetchRecipes(isSort){
+async function getRecipes(isSort){
     try{
-        const recipes = await axios.get("/api/recipes");
+        const res =  await axios.get("/api/recipes");
+        const recipes = res.data;
         if(isSort){
             let breakfast = recipes.filter(recipe => recipe.type === "breakfast");
             let lunch = recipes.filter(recipe => recipe.type === "lunch");
             let dinner = recipes.filter(recipe => recipe.type === "dinner");
             return { breakfast, lunch, dinner };
-        } else return recipes;
+        } 
+        else {
+            return recipes;
+        }
     } 
     catch (ex) {
         console.log(ex.response);
     }
 }
 
-export default fetchRecipes;
+export default getRecipes;

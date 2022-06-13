@@ -5,7 +5,7 @@ import Day from "../components/mealPlanner/day";
 import Loading from '../components/loading';
 import axios from '../axios';
 import useDate from "../hooks/useDate";
-import fetchRecipes from "../helpers/FetchRecipes";
+import getRecipes from "../helpers/getRecipes";
 
 export default function MealPlanner() {
   const [date, dispatch] = useDate();
@@ -14,8 +14,8 @@ export default function MealPlanner() {
   
  
   const fetchAndSortRecipes = async() => {
-    const recipes = fetchRecipes(true);
-    setOptions(...recipes);
+    const recipes = await getRecipes(true);
+    setOptions(recipes);
   }
   
   const fetchUserData = async() => {
@@ -23,9 +23,9 @@ export default function MealPlanner() {
     const res = await axios.get(`/api/users/${userId}`);
 
     // set data from database to sessionStorage
-    const object = res.data.mealPlan;
-    for(const key in object){
-      sessionStorage.setItem(key, JSON.stringify(object[key]));
+    const mealPlan = res.data.mealPlan;
+    for(const key in mealPlan){
+      sessionStorage.setItem(key, JSON.stringify(mealPlan[key]));
     }
     setLoading(!loading);
   }
@@ -48,8 +48,8 @@ export default function MealPlanner() {
   }
 
   useEffect(() => {
-      fetchUserData();
-      fetchAndSortRecipes(); 
+    fetchAndSortRecipes(); 
+    fetchUserData();
   },[])
 
     
