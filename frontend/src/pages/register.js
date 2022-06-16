@@ -110,7 +110,7 @@ const PageContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  background:#F0F2F5;
+  background:#F7F8F9;
 `;
 
 const Wrapper = styled.div`
@@ -119,14 +119,13 @@ const Wrapper = styled.div`
   align-items: center;
   flex-wrap: wrap;
   width: 50%;
-  height: 60vh;
+  height: 70vh;
   margin: 15vh 0 30vh 0;
-  box-shadow: 0 0 1em;
   border-radius: 5px;
-  background:#F0F2F5;
+  background:#FFF;
+  box-shadow: rgba(0,0,0,0.1) 0 2px 4px 0, rgba(0,0,0,0.1) 0 8px 16px 0px;
   @media(max-width:1000px){
-    width:100%;
-    box-shadow:none;
+    width:90%;
   }
 `;
 

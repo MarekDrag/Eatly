@@ -18,7 +18,7 @@ const Container = styled.div`
     flex-wrap:wrap;
     width:100%;
     height:100vh;
-    background:#F0F2F5;
+    background:#F7F8F9;
     & a {
         color: #00857A;
         text-decoration:none;

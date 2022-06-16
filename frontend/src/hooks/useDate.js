@@ -8,9 +8,9 @@ export default function useDate() {
     function countReducer(state, action) {
         switch (action.type) {
             case 'increment':
-                return state + 7;
+                return state < 15 ? state + 7 : state;
             case 'decrement':
-                return state - 7;
+                return state > -13 ? state - 7 : state;
             default: return;
         }
     }

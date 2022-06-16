@@ -52,7 +52,9 @@ const updateUser = async (req, res) => {
       throw new Error("User not found");
     }
 
-    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body);
+    const mealPlan = {mealPlan:{...user.mealPlan, ...req.body.mealPlan}};
+
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, mealPlan);
 
     res.json(updatedUser);
 };

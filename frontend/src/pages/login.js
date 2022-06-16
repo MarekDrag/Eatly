@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from '../axios';
 import AuthContext from '../contexts/authContext';
@@ -62,6 +62,9 @@ export default function Login(){
                             onChange={handleChange}
                             />
                     </FormItem>
+                    <RedirectToRegister>
+                        Nie posiadasz konta? <Link to='/zarejstruj-sie'>Zarejestruj się</Link>
+                    </RedirectToRegister>
                     <Error>{errMsg ? '' : "Email lub hasło jest nieprawidłowe"}</Error>
                     <Submit type='submit'>Zaloguj się</Submit>
                 </Form>
@@ -76,7 +79,7 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     width: 100%;
-    background:#F0F2F5;
+    background:#F7F8F9;
 `;
     
 const Wrapper = styled.div`
@@ -88,12 +91,11 @@ const Wrapper = styled.div`
     min-width: 300px;
     height: 500px;
     margin: 15vh 0 30vh 0;
-    background:#F0F2F5;
-    box-shadow: 0 0 1em;
+    background:#FFF;
+    box-shadow: rgba(0,0,0,0.1) 0 2px 4px 0, rgba(0,0,0,0.1) 0 8px 16px 0;
     border-radius: 5px;
     @media(max-width:1000px){
-        width:100%;
-        box-shadow:none;
+        width:90%;
     }
 `;
 
@@ -144,6 +146,12 @@ const Submit = styled.button`
     &:hover{
         background: #00756F;
     }   
+`;
+
+const RedirectToRegister = styled.div`
+    & a {
+        color: #00756F;
+    }
 `;
 
 const Error = styled.p`

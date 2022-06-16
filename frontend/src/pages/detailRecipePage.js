@@ -59,7 +59,7 @@ export default function DetailRecipePage(){
     )
 }
 const Container = styled.div`
-    background:#F0F2F5;
+    background:#F7F8F9;
 `;
 
 const Wrapper = styled.div`

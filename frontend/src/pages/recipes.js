@@ -58,7 +58,7 @@ const Container = styled.div`
     width:100%;
     min-height:100vh;
     padding-top:70px;
-    background:#F0F2F5;
+    background:#f7f8f9;
 `;
 
 const Meals = styled.div`
@@ -102,14 +102,15 @@ const Wrapper = styled.div`
     justify-content:center;
     gap:20px;
     width:90%;
-    margin-bottom: 10%;
+    margin:10% 0 20% 0;
 `;
 
 const Recipe = styled.div`
-    border:1px solid #adadad;
     width:251px;
     height:300px;
     background:#FFF;
+    border-radius:5px;
+    box-shadow: rgba(0,0,0,0.1) 0 2px 4px 0, rgba(0,0,0,0.1) 0 8px 16px 0;
     &:hover{
         box-shadow: 0px 0px 14px 0px rgba(66, 68, 90, 1);
     }
@@ -117,6 +118,7 @@ const Recipe = styled.div`
 
 
 const Image = styled.img`
+    border-radius:5px 5px 0 0;
     width:250px;
     height:200px;
 `;

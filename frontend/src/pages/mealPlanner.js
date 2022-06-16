@@ -6,9 +6,11 @@ import Loading from '../components/loading';
 import axios from '../axios';
 import useDate from "../hooks/useDate";
 import getRecipes from "../helpers/getRecipes";
+import useAuth from "../hooks/useAuth";
 
 export default function MealPlanner() {
   const [date, dispatch] = useDate();
+  const isAuthenticated = useAuth();
   const [loading, setLoading] = useState(false);
   const [options, setOptions] = useState({});
   
@@ -16,6 +18,7 @@ export default function MealPlanner() {
   const fetchAndSortRecipes = async() => {
     const recipes = await getRecipes(true);
     setOptions(recipes);
+    setLoading(!loading);
   }
   
   const fetchUserData = async() => {
@@ -27,7 +30,6 @@ export default function MealPlanner() {
     for(const key in mealPlan){
       sessionStorage.setItem(key, JSON.stringify(mealPlan[key]));
     }
-    setLoading(!loading);
   }
 
   const update = async() => {
@@ -40,7 +42,9 @@ export default function MealPlanner() {
       }
     })
     const userId = sessionStorage.getItem('userId');
-    await axios.patch(`/api/users/${userId}`, {mealPlan: mealPlan});
+    if(userId){
+      await axios.patch(`/api/users/${userId}`, {mealPlan});
+    }
   }   
   
   const onClick = (type) => {
@@ -48,8 +52,10 @@ export default function MealPlanner() {
   }
 
   useEffect(() => {
-    fetchAndSortRecipes(); 
-    fetchUserData();
+    if(isAuthenticated){
+      fetchAndSortRecipes(); 
+      fetchUserData();
+    }
   },[])
 
     
@@ -57,9 +63,9 @@ export default function MealPlanner() {
     <Container>
        {loading ? (
         <Wrapper onChange={update}>
-        <PreviousWeek onClick={() => onClick('decrement')}/>
-        <NextWeek onClick={() => onClick('increment')}/>
-        <Day
+          <PreviousWeek onClick={() => onClick('decrement')}/>
+          <NextWeek onClick={() => onClick('increment')}/>
+          <Day
             day="Poniedziałek"
             options={options}
             date={date[0]}
@@ -107,7 +113,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   width:100%;
-  background:#F0F2F5;
+  background:#f7f8f9;
 `;
 
 

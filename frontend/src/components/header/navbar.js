@@ -28,13 +28,13 @@ export default function Navbar(){
                             <Link  to="/planer-posilkow"><GoCalendar/> Planer</Link>
                         </li>
                         <li className={style.li}>
-                            <Link to="zakupy"><AiOutlineShoppingCart/> Zakupy</Link>
+                            <Link to="/zakupy"><AiOutlineShoppingCart/> Zakupy</Link>
                         </li>
                         <li className={style.li}>
-                            <Link to="przepisy"><HiOutlineClipboardList/> Przepisy</Link>
+                            <Link to="/przepisy"><HiOutlineClipboardList/> Przepisy</Link>
                         </li>
                         <li className={style.li}>
-                            <Link to=""><RiCreativeCommonsByLine/> Moje konto</Link>
+                            <Link to="/moje-konto"><RiCreativeCommonsByLine/> Moje konto</Link>
                         </li>
                         <li className={style.li} onClick={logout}>
                             <GiEntryDoor/> Wyloguj się

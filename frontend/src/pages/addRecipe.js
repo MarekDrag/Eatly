@@ -177,7 +177,7 @@ const PageContainer = styled.div`
     min-height: 100vh;
     padding-top:150px;
     padding-bottom:20vh;
-    background:#F0F2F5;
+    background:#F7F8F9;
 `;
 
 const Title = styled.h2`

@@ -16,6 +16,7 @@ import PageNotFound from "./pages/pageNotFound";
 import ShopList from "./pages/shopList";
 import useDate from "./hooks/useDate";
 import useAuth from "./hooks/useAuth";
+import MyAccount from "./pages/myAccount";
 
 function App() {
   const [auth , setAuth] = useState(false);
@@ -52,6 +53,7 @@ function App() {
         <Route path="/przepisy" element={<Recipes/>}/>
         <Route path="/przepisy/:id" element={<DetailRecipePage/>}/>
         <Route path="/przepisy/dodaj-przepis" element={<AddRecipe/>}/>
+        <Route path="/moje-konto" element={<MyAccount/>}/>
       </Route>
       {/* 404 Page */}
       <Route path="*" element={<PageNotFound/>} />
