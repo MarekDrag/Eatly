@@ -84,6 +84,7 @@ const MealButton = styled.button`
     &:hover{
         background: #069b8c;
         cursor:pointer;
+        box-shadow: inset 0 0 0.5em;
     }
     & a{
         display:flex;
@@ -106,7 +107,7 @@ const Wrapper = styled.div`
 `;
 
 const Recipe = styled.div`
-    width:251px;
+    width:250px;
     height:300px;
     background:#FFF;
     border-radius:5px;

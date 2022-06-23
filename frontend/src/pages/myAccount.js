@@ -15,12 +15,9 @@ export default function MyAccount(){
         setLoading(!loading);
     }
 
-    const updatePassword = () => {
-        
-    }
+    const deleteUser = (e) => {
+        e.preventDefault();
 
-    const deleteUser = () => {
-        
     }
 
     useEffect(() => {
@@ -34,21 +31,14 @@ export default function MyAccount(){
                 <Wrapper>
                     <UserData>Email: {user.email}</UserData>
                     <UserData>Nazwa: {user.name}</UserData>
-                    <form>
+                      
+
                         <FormItem>
-                            <Label>Nowe hasło:</Label>
+                            <Label>Podaj hasło:</Label>
                             <Input/>
-                            <Label>Powtórz hasło:</Label>
-                            <Input/>
+                        <DeleteButton onClick={deleteUser}>Usuń konto</DeleteButton>
                         </FormItem>
-                    </form>
-                    <Submit>Zmień hasło</Submit>
-                    <FormItem>
-                        <Label>Podaj hasło:</Label>
-                        <Input/>
-                    </FormItem>
-                    <p>*Usunięcie konta jest nie odwracalne</p>
-                    <DeleteButton>Usuń konto</DeleteButton>
+                        <p>*Usunięcie konta jest nie odwracalne</p>
                 </Wrapper>
 
             ) : (
@@ -59,6 +49,9 @@ export default function MyAccount(){
 }
 
 const Container = styled.div`
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
     padding-top: 70px;
     min-height: 100vh;
     width: 100%;
@@ -67,17 +60,15 @@ const Container = styled.div`
 
 const Title = styled.h2`
   margin-top:50px;
-  margin-left:10%;
   color: #00857a;
 `;
 
 const Wrapper = styled.div`
     margin-top:10vh;
-    margin-left:10%;
 `;
 
 
-const FormItem = styled.div`
+const FormItem = styled.form`
     width:100%;
     margin-top:20px;
 `;
@@ -101,10 +92,10 @@ const Submit = styled.button`
     margin:10px 0;
     border:none;
     border-radius:4px;
-    background: #04d111;
+    background: #00857a;
     color:#fff;
     &:hover{
-        background: #079b11;
+        background: #069B8C;
     }
 `;
 
@@ -125,7 +116,6 @@ const WrapperLoading = styled.div`
     display:flex;
     justify-content:center;
     align-items:center;
-    width:200px;
-    margin-top:10vh;
-    margin-left:10%;
+    width:100%;
+    height:100%;
 `;

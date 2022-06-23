@@ -24,12 +24,7 @@ const setUser = async (req, res) => {
         throw new Error('Please add a text field')
     }
     
-    const email = req.body.email;
-    const name = req.body.name;
-    const password = req.body.password;
-    const mealPlan = req.body.mealPlan;
-            
-    
+    const {email, name, password, mealPlan} = req.body;
     const newUser = new User({
         email,
         name,

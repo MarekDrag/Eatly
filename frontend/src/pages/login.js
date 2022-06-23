@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from '../axios';
@@ -6,30 +6,24 @@ import AuthContext from '../contexts/authContext';
 
 export default function Login(){
     const [formValues, setFormValues] = useState({ email: '', password: ''});
-    const [userValid, setUserValid] = useState(false);
     const [errMsg, setErrMsG] = useState(true);
     const {auth, setAuth} = useContext(AuthContext);
     const navigate = useNavigate();
     
     async function submit(e){
         e.preventDefault();
-        let userId = '';
         await axios.get('/api/users').then(res => {
             for(const key in res.data){
                 if(formValues.email === res.data[key].email && formValues.password === res.data[key].password){
-                    setUserValid(true);
                     setErrMsG(true);
-                    userId = res.data[key]._id;
+                    setAuth(!auth);
+                    sessionStorage.setItem('userId', res.data[key]._id);
+                    navigate('/planer-posilkow');
                     break;
                 }
-                setErrMsG(false)
+                setErrMsG(false);
             }
         })
-        if(userValid){
-            setAuth(!auth);
-            sessionStorage.setItem('userId', userId);
-            navigate('/planer-posilkow');
-        }
     }
 
     function handleChange(e){

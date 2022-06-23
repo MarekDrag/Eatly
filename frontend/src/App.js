@@ -30,24 +30,21 @@ function App() {
   },[])
 
   function PrivateRoute(){
-  
     return auth?<Outlet/>: <Navigate to="/zaloguj-sie"/>
   }
-
   function PublicRoute(){
-  
     return auth? <Navigate to="/planer-posilkow"/>:<Outlet/>
   }
 
   const content = (
     <Routes>
       {/* Public Routes */}
-      <Route path="/" element={<PublicRoute/>}>
+      <Route path="" element={<PublicRoute/>}>
         <Route exact path="/zaloguj-sie" element={<Login />} />
         <Route path="/zarejstruj-sie" element={<Register />} />
       </Route>
       {/* Private Routes */}
-      <Route path='/' element={<PrivateRoute/>}>
+      <Route path="/" element={<PrivateRoute/>}>
         <Route path="/planer-posilkow" element={<MealPlanner/>}/>
         <Route path="/zakupy" element={<ShopList/>}/>
         <Route path="/przepisy" element={<Recipes/>}/>

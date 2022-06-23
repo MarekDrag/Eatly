@@ -24,7 +24,6 @@ export default function ShopList() {
     });
     return mealPlan;
   };
-
  
   // get ingredients for recipes from the mealPlan by id from sessionStorage
   const getIngredients = (mealPlan) => {
