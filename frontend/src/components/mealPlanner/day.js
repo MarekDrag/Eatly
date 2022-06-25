@@ -28,7 +28,7 @@ export default function Day(props) {
     }
   }
 
-  function handleChange(e) {
+  function changeOption(e) {
     const {name} = e.target;
     const {id, recipe} = JSON.parse(e.target.value);
     setMealsID({ ...mealsID, [name]: id });
@@ -54,10 +54,6 @@ export default function Day(props) {
     const dinner = props.options.dinner.filter(recipe => recipe._id === id.dinner);
     return [...breakfast,...lunch,...dinner];
   }
-  
-  useEffect(() => {
-    
-  }, []);
 
   useEffect(() => {
     setMealsNames(initialMeals);
@@ -81,19 +77,19 @@ export default function Day(props) {
         options={props.options} 
         mealsID={mealsID} 
         mealsNames={mealsNames} 
-        handleChange={handleChange} />
+        handleChange={changeOption} />
 
         <Meal mealType='lunch'
         options={props.options} 
         mealsID={mealsID} 
         mealsNames={mealsNames} 
-        handleChange={handleChange} />
+        handleChange={changeOption} />
 
         <Meal mealType='dinner'
         options={props.options} 
         mealsID={mealsID} 
         mealsNames={mealsNames} 
-        handleChange={handleChange} />
+        handleChange={changeOption} />
       
 
         <Values>

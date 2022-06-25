@@ -3,15 +3,15 @@ import styled from 'styled-components';
 
 export default function Footer(){
     return(
-        <FooterWrapper>
+        <Container>
             <div>
                 Copyright © 2022 Eatly
             </div>
-        </FooterWrapper>
+        </Container>
     )
 }
 
-const FooterWrapper = styled.footer`
+const Container = styled.footer`
     display: flex;
     align-items: center;
     justify-content: center;

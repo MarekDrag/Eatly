@@ -26,6 +26,7 @@ export default function Recipes(){
 
     return(
         <Container>
+            <Title>Przepisy</Title>
             <Meals>
                 <MealButton onClick={() => changeMealType('breakfast')}>Śniadanie</MealButton>
                 <MealButton onClick={() => changeMealType('lunch')}>Obiad</MealButton>
@@ -59,6 +60,13 @@ const Container = styled.div`
     min-height:100vh;
     padding-top:70px;
     background:#f7f8f9;
+`;
+
+const Title = styled.h2`
+    width:100%;
+    margin-top:50px;
+    text-align:center;
+    color: #00857A;
 `;
 
 const Meals = styled.div`

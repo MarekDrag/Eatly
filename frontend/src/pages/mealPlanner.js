@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import {AiOutlineArrowLeft, AiOutlineArrowRight} from 'react-icons/ai';
+import {AiOutlineArrowLeft, AiOutlineArrowRight, AiOutlineClear} from 'react-icons/ai';
 import Day from "../components/mealPlanner/day";
 import Loading from '../components/loading';
 import axios from '../axios';
@@ -18,7 +18,7 @@ export default function MealPlanner() {
   const fetchAndSortRecipes = async() => {
     const recipes = await getRecipes(true);
     setOptions(recipes);
-    setLoading(!loading);
+    setLoading(true);
   }
   
   const fetchUserData = async() => {
@@ -46,8 +46,17 @@ export default function MealPlanner() {
       await axios.patch(`/api/users/${userId}`, {mealPlan});
     }
   }   
+
+  const clear = async() => {
+    const userId = sessionStorage.getItem('userId');
+    sessionStorage.clear();
+    sessionStorage.setItem('userId', userId);
+    await axios.patch(`/api/users/${userId}`, {mealPlan:{}});
+    ChangeDate('decrement');
+    ChangeDate('increment');
+  }
   
-  const onClick = (type) => {
+  const ChangeDate = (type) => {
     dispatch({type});
   }
 
@@ -61,10 +70,12 @@ export default function MealPlanner() {
     
   return (
     <Container>
+      <Title>Plan posiłków</Title>
        {loading ? (
         <Wrapper onChange={update}>
-          <PreviousWeek onClick={() => onClick('decrement')}/>
-          <NextWeek onClick={() => onClick('increment')}/>
+          <ClearButton onClick={clear}/>
+          <PreviousWeek onClick={() => ChangeDate('decrement')}/>
+          <NextWeek onClick={() => ChangeDate('increment')}/>
           <Day
             day="Poniedziałek"
             options={options}
@@ -102,7 +113,9 @@ export default function MealPlanner() {
           />
         </Wrapper>
         ) : (
-          <WrapperLoading><Loading/></WrapperLoading>
+          <WrapperLoading>
+            <Loading/>
+          </WrapperLoading>
         )}
     </Container>
   );
@@ -112,18 +125,26 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap:wrap;
   width:100%;
+  padding-top:70px;
   background:#f7f8f9;
 `;
 
+const Title = styled.h2`
+  width:100%;
+  margin-top:50px;
+  text-align:center;
+  color: #00857A;
+`;
 
 const Wrapper = styled.div`
   position:relative;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  width: 100%;
-  margin: 200px 0 40vh 0;
-  box-shadow: 0 0 3px;
+  width:100%;
+  margin-top:50px;
+  margin-bottom:40vh;
   background: #f5f7fa;
   @media(max-width: 1000px){
     grid-template-columns: 1fr;
@@ -153,10 +174,23 @@ const PreviousWeek = styled(AiOutlineArrowLeft)`
 const NextWeek = styled(AiOutlineArrowRight)`
   position:absolute;
   right:10px;
-  color:#fff;
   font-size:2em;
+  color:#fff;
   &:active{
     right:0;
+  }
+`;
+
+const ClearButton = styled(AiOutlineClear)`
+  position:absolute;
+  background:none;
+  border:none;
+  top:-35px;
+  left:10px;
+  font-size:1.5em;
+  color:#d13d32;
+  &:active{
+    top:-25px;
   }
 `;
 

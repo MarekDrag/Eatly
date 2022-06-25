@@ -1,12 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useContext } from 'react';
 import axios from '../axios';
 import styled from 'styled-components';
 import Loading from '../components/loading';
+import AuthContext from '../contexts/authContext';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function MyAccount(){
     const [user, setUser] = useState();
     const [loading, setLoading] = useState(false);
+    const {setAuth} = useContext(AuthContext);
+    const navigate = useNavigate();
+    const password = useRef();
     
     const getUser = async() => {
         const userId = sessionStorage.getItem('userId');
@@ -15,9 +20,14 @@ export default function MyAccount(){
         setLoading(!loading);
     }
 
-    const deleteUser = (e) => {
+    const deleteUser = async(e) => {
         e.preventDefault();
-
+        if(user.password === password.current.value){
+            await axios.delete(`/api/users/${user._id}`);
+            setAuth(false);
+            sessionStorage.clear();
+            navigate('/zaloguj-sie');
+        }
     }
 
     useEffect(() => {
@@ -26,96 +36,87 @@ export default function MyAccount(){
 
     return(
         <Container>
-            <Title>Moje konto</Title>
             {loading ? (
                 <Wrapper>
+                    <Title>Moje konto</Title>
                     <UserData>Email: {user.email}</UserData>
                     <UserData>Nazwa: {user.name}</UserData>
-                      
-
-                        <FormItem>
-                            <Label>Podaj hasło:</Label>
-                            <Input/>
-                        <DeleteButton onClick={deleteUser}>Usuń konto</DeleteButton>
-                        </FormItem>
+                        <Form>
+                            <Label htmlFor='password'>Podaj hasło:</Label>
+                            <Input type='password' id='password' ref={password}/>
+                            <Submit onClick={deleteUser}>Usuń konto</Submit>
+                        </Form>
                         <p>*Usunięcie konta jest nie odwracalne</p>
                 </Wrapper>
 
             ) : (
-                <WrapperLoading><Loading/></WrapperLoading>
+                <Wrapper><Loading/></Wrapper>
             )}
         </Container>
     )
 }
 
 const Container = styled.div`
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
     padding-top: 70px;
     min-height: 100vh;
     width: 100%;
     background:#F7F8F9;
 `;
 
-const Title = styled.h2`
-  margin-top:50px;
-  color: #00857a;
-`;
-
 const Wrapper = styled.div`
-    margin-top:10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap:wrap;
+    width:50%;
+    height:50vh;
+    margin:40px auto;
+    background:#FFF;
+    box-shadow: rgba(0,0,0,0.1) 0 2px 4px 0, rgba(0,0,0,0.1) 0 8px 16px 0;
+    border-radius: 5px;
+    @media(max-width:1000px){
+        width:90%;
+    }
 `;
 
-
-const FormItem = styled.form`
+const Title = styled.h2`
     width:100%;
+    height:40px;
+    margin-top:50px;
+    text-align:center;
+    color: #00857a;
+`;
+
+const UserData = styled.div`
+    width:100%;
+    margin-left:30%;
+    margin-bottom:10px;
+`;
+
+const Form = styled.form`
+    width:100%;
+    margin-left:30%;
     margin-top:20px;
 `;
 
 const Label = styled.label`
-
 `;
 
 const Input = styled.input`
     margin-top:10px;
-    margin-right:100%;
-`;
-
-const UserData = styled.div`
-    margin-bottom:10px;
+    margin-left:5px;
 `;
 
 const Submit = styled.button`
     width:100px;
     height:30px;
-    margin:10px 0;
-    border:none;
-    border-radius:4px;
-    background: #00857a;
-    color:#fff;
-    &:hover{
-        background: #069B8C;
-    }
-`;
-
-const DeleteButton = styled.button`
-    width:100px;
-    height:30px;
-    margin: 10px 0;
+    margin-left:30px;
     border:none;
     border-radius:4px;
     background: #e54747;
     color:#fff;
-    &:hover{
+    &:active{
         background: #c10000;
     }
 `;
 
-const WrapperLoading = styled.div`
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    width:100%;
-    height:100%;
-`;

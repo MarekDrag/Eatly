@@ -41,13 +41,21 @@ const setUser = async (req, res) => {
 // @route PATCH /api/users
 const updateUser = async (req, res) => {
     const user = await User.findById(req.params.id);
+    let mealPlan;
 
     if (!user) {
       res.status(400);
       throw new Error("User not found");
     }
 
-    const mealPlan = {mealPlan:{...user.mealPlan, ...req.body.mealPlan}};
+    if(Object.keys(req.body.mealPlan).length === 0){
+        // delete mealPlan
+        mealPlan = {mealPlan:{}};
+    } else {
+        // update mealPlan
+        mealPlan = {mealPlan:{...user.mealPlan, ...req.body.mealPlan}};
+    }
+
 
     const updatedUser = await User.findByIdAndUpdate(req.params.id, mealPlan);
 
